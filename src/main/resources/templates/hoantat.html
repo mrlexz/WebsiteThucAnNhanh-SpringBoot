@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Thanh toán</title>
+    <div th:replace="/header :: header"></div>
+</head>
+
+<body>
+<div th:replace="/header :: navbar"></div>
+<main class="page shopping-cart-page">
+    <section class="clean-block clean-cart dark">
+        <div class="container">
+            <div class="block-heading">
+                <h1></h1>
+                <h2 class="text-info">Đặt hàng thành công!</h2>
+                <a th:href="@{/}">Quay lại trang chủ</a>
+            </div>
+        </div>
+    </section>
+</main>
+<div th:replace="/header :: footer"></div>
+</body>
+
+</html>

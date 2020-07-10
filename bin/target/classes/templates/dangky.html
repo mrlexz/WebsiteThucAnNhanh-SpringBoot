@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head><title>Đăng ký</title>
+<div th:replace="/header :: header"></div>
+</head>
+
+<body>
+<div th:replace="/header :: navbar"></div>
+	<main class="page login-page">
+	<section class="clean-block clean-form dark">
+		<div class="container">
+			<div class="block-heading">
+				<h2 class="text-info">Đăng ký</h2>
+				<p>Đăng ký ngay để sử dụng dịch vụ</p>
+			</div>
+			<form th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
+				<p th:if="${param.error}" class="error" style="color: red">Thông tin không hợp lệ, vui lòng kiểm tra lại</p>
+				<div class="form-group">
+					<label for="username">Tên Đăng nhập</label><input
+						class="form-control item" type="text" id="username" placeholder="Tên Đăng nhập"
+						th:field="*{tenTaiKhoan}" required >
+				</div>
+				<div class="form-group">
+					<label for="password">Mật khẩu</label><input class="form-control"
+						type="password" id="password" placeholder="Mật khẩu" th:field="*{matKhau}" required>
+				</div>
+				<div class="form-group">
+					<p>
+						Họ và Tên: <input class="form-control" type="text"
+										  th:field="*{khachHang.hoTenKhachHang}" placeholder="Nhập Họ và Tên của bạn" required/>
+					</p>
+					<p>
+						Địa chỉ: <input class="form-control" type="text"
+										th:field="*{khachHang.diaChi}" placeholder="Nhập địa chỉ của bạn, đây sẽ là địa chỉ giao hàng mặc định" required/>
+					</p>
+					<p>
+						Email: <input class="form-control" type="email" placeholder="Nhập email của bạn"
+									  th:field="*{khachHang.email}" required/>
+					</p>
+					<p>
+						Số điện thoại: <input class="form-control" type="number" placeholder="Nhập số điện thoại của bạn"
+											  th:field="*{khachHang.soDienThoai}" required/>
+					</p>
+					<button class="btn btn-primary" type="submit">Đăng Ký</button>
+					<button class="btn btn-light" type="reset">Nhập lại</button>
+				</div>
+			</form>
+		</div>
+	</section>
+	</main>
+<footer>
+	<div th:replace="/header :: footer"></div>
+</footer>
+</body>
+
+</html>

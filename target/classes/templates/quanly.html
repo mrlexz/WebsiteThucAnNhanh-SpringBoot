@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Quản lý</title>
+	<div th:replace="/header :: header"></div>
+</head>
+<body>
+<div th:replace="/header :: navbar"></div>
+<main class="page">
+	<section class="clean-block slider">
+		<div class="container">
+			<div class="block-heading">
+				<h1></h1>
+				<h2 class="text-info">HQStore</h2>
+				<p>Trang quản lý</p>
+			</div>
+			<div class="col">
+				<a th:href="@{/quanly/sanpham}" class="btn btn-primary btn-lg">Quản lý Sản Phẩm</a>
+				<a th:href="@{/quanly/donhang}" class="btn btn-primary btn-lg">Quản lý Đơn hàng</a>
+				<a class="btn btn-primary btn-lg">Danh sách Nhà cung cấp</a>
+			</div>
+		</div>
+	</section>
+</main>
+<div th:replace="/header :: footer"></div>
+</body>
+</html>

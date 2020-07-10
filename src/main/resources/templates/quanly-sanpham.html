@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+	<title>Quản lý Sản phẩm</title>
+<div th:replace="/header :: header"></div>
+</head>
+
+<body>
+	<div th:replace="/header :: navbar"></div>
+	<main class="page shopping-cart-page">
+	<section class="clean-block clean-cart dark">
+		<div class="container">
+			<div class="block-heading">
+				<h1></h1>
+				<h2 class="text-info">Quản lý Sản phẩm</h2>
+				<p>Đây là trang quản lý sản phẩm.</p>
+			</div>
+			<div class="content">
+				<div class="row no-gutters">
+					<div class="col-md-12 col-lg-8">
+						<div class="items">
+							<div class="row">
+								<div class="col">
+									<div>
+										<form class="form-inline mr-auto" target="_self">
+											<div class="form-group">
+												<label for="search-field">Tìm sản phẩm&nbsp;</label><input
+													class="form-control search-field" type="search"
+													name="search" id="search-field">
+											</div>
+											<button class="btn btn-primary" type="button">search</button>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="product">
+								<div class="row justify-content-center align-items-center mt-3"
+									th:each="sanpham : ${listSanPham}">
+									<div class="col-md-3">
+										<div class="product-image">
+											<img class="img-fluid d-block mx-auto image"
+												 th:src="@{${sanpham.imgURL}}">
+										</div>
+									</div>
+									<div class="col-md-5 product-info">
+										<a href="#" class="product-name"
+											th:text="${sanpham.tenSanPham}"></a><a href="#"><i
+											class="fa fa-edit"></i></a>
+										<p class="text-black-50" th:text="${sanpham.maSanPham}"></p>
+										<div class="product-specs">
+											<div>
+												<span>Mô tả:&nbsp;</span><span class="value"
+													th:text="${sanpham.moTa}"></span>
+											</div>
+											<div>
+												<span>Loại:&nbsp;</span><span class="value"
+													th:text="${sanpham.nhaSanXuat.tenNhaSanXuat}"></span>
+											</div>
+											<div>
+												<span>Thời điểm bắt đầu:&nbsp;</span><span class="value"
+													th:text="${sanpham.namSanXuat}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-6 col-md-2 quantity">
+
+									</div>
+									<div class="col-6 col-md-2 price">
+										<span th:text="${sanpham.donGia+'00VND'}"></span>
+									</div>
+									<div class="col">
+										<div class="row">
+											<div class="col-auto ml-auto">
+												<button class="btn btn-danger" type="button">Xóa</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<nav>
+								<ul class="pagination">
+									<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
+										class="page-link"
+										th:href="@{/quanly/sanpham(page=${pageNumber})}"
+										th:text=${pageNumber}></a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<div class="col-auto col-md-12 col-lg-4">
+						<div class="summary">
+							<button class="btn btn-primary btn-block btn-sm" type="button"
+								data-toggle="modal" data-target=".inputmodal">Thêm Sản
+								Phẩm</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</main>
+	<!-- Modal -->
+	<div class="modal fade inputmodal" tabindex="-1" role="dialog"
+		aria-labelledby="inputmodal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Nhập Sản phẩm</h5>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<form action="" th:object="${sanphamnew}" method="post"
+									id="formSanPham">
+									<div class="form-group">
+										<label for="tenSanPham">Tên Sản phẩm</label> <input
+											type="text" class="form-control" id="tenSanPham"
+											th:field="*{tenSanPham}">
+									</div>
+									<div class="form-group">
+										<label for="moTa">Mô tả</label> <input type="text"
+											class="form-control" id="moTa" th:field="*{moTa}">
+									</div>
+									<div class="form-group">
+										<label for="donGia">Đơn Giá</label> <input type="text"
+											class="form-control" id="donGia" th:field="*{donGia}">
+									</div>
+									<div class="form-group">
+										<label for="namSanXuat">Năm Sản xuất</label> <input
+											type="number" class="form-control" id="namSanXuat"
+											th:field="*{namSanXuat}">
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" th:action="@{/quanly/sanpham}"
+						form="formSanPham" class="btn btn-primary">Lưu</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<footer>
+		<div th:replace="/header :: footer"></div>
+	</footer>
+</body>
+
+</html>

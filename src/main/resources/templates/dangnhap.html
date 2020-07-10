@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<header>
+	<title>Đăng nhập</title>
+	<div th:replace="/header :: header"></div></header>
+<body>
+<div th:replace="/header :: navbar"></div>
+	<main class="page login-page">
+	<section class="clean-block clean-form dark">
+		<div class="container">
+			<div class="block-heading">
+				<h2 class="text-info">Đăng Nhập</h2>
+				<p>Đây là trang Đăng Nhập&nbsp;</p>
+			</div>
+			<form th:action="@{/dangnhap}" method="POST">
+				<p th:if="${param.error}" class="error" style="color: red">Tài khoản hoặc mật khẩu không chính xác, vui lòng kiểm tra lại</p>
+				<div class="form-group">
+					<label for="username">Tài khoản</label><input
+						class="form-control item" type="text" id="username" placeholder="Tên Đăng nhập" required
+						name="username">
+				</div>
+				<div class="form-group">
+					<label for="password">Mật khẩu</label><input class="form-control" required
+						type="password" id="password" name="password" placeholder="Mật khẩu">
+				</div>
+				<div class="form-group">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="checkbox"><label
+							class="form-check-label" for="checkbox">Remember me</label>
+					</div>
+				</div>
+				<button class="btn btn-primary btn-block" type="submit">Đăng
+					Nhập</button>
+			</form>
+		</div>
+	</section>
+	</main>
+<footer>
+	<div th:replace="/header :: footer"></div>
+</footer>
+</body>
+
+</html>

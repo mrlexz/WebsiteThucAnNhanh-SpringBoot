@@ -1,0 +1,42 @@
+<body xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/header :: header">
+</head>
+<nav th:replace="/header :: navbar"></nav>
+<main class="page">
+	<section class="clean-block slider">
+		<div class="container">
+			<div class="block-heading">
+				<h2 class="text-info">HQStore</h2>
+				<p>Thông tin tài khoản</p>
+			</div>
+
+			<div class="container">
+				<form th:action="@{/update-tk}" th:object="${taikhoan}" method="post">
+					<div class="form-group">
+						<p><input class="form-control" type="hidden" th:text="${taikhoan.maTaiKhoan}"  th:value="*{maTaiKhoan}"/></p>
+						<p>
+							Tên tài khoản: <input class="form-control" type="text" th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled/>
+						</p>
+						<p>
+							Họ và Tên: <input class="form-control" type="text" th:field="*{khachHang.hoTenKhachHang}" th:value="*{khachHang.hoTenKhachHang}" required  />
+						</p>
+						<p>
+							Địa chỉ: <input class="form-control" type="text" th:field="*{khachHang.diaChi}" th:value="*{khachHang.diaChi}" required />
+						</p>
+						<p>
+							Email: <input class="form-control" type="email" th:field="*{khachHang.email}" th:value="*{khachHang.email}" required />
+						</p>
+						<p>
+							Số điện thoại: <input class="form-control" type="number" th:field="*{khachHang.soDienThoai}" th:value="*{khachHang.soDienThoai}" required />
+						</p>
+						<button type="submit" class="btn btn-primary">Lưu</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</main>
+<div th:replace="/header :: footer"></div>
+</body>
+
+</html>
