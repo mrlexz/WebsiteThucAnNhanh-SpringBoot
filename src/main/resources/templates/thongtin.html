@@ -3,114 +3,91 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-    <title>Trang chủ</title>
+    <title>Trang chá»§</title>
     <div th:replace="/header :: header"></div>
 </head>
 
-<body>
+<body class="body-custom">
 <div th:replace="/header :: navbar"></div>
 <main class="page">
-    <section class="clean-block slider">
-        <div class="container">
-            <div class="block-heading">
+	<div class="container">
+                    <div class="row">
+                        <div class="heading-title text-center">
+                            <h3 class="text-uppercase">Our professionals </h3>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="team-member">
+                                <div class="team-img">
+                                    <img src="/assets/img/avatars/vvd.jpg" alt="team member" class="img-responsive">
+                                </div>
+                                <div class="team-hover">
+                                    <div class="desk">
+                                        <h4>Hi!</h4>
+                                        <p>I wish to be a rich persion.</p>
+                                    </div>
+                                    <div class="s-link">
+                                        <a href="https://www.facebook.com/profile.php?id=100007956998515"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="https://github.com/VuVanDat0504"><i class="fa fa-github"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-title">
+                                <h5>Vu Van Dat</h5>
+                                <span>MSSV: 16130324</span><br/>
+                                <span>BE Developer</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="team-member">
+                                <div class="team-img">
+                                    <img src="/assets/img/avatars/nvq.jpg" alt="team member" class="img-responsive">
+                                </div>
+                                <div class="team-hover">
+                                    <div class="desk">
+                                        <h4>Hello!!!</h4>
+                                        <p>I'm trying to become a Fullstack Developer.</p>
+                                    </div>
+                                    <div class="s-link">
+                                        <a href="https://www.facebook.com/98VanQui"><i class="fa fa-facebook"></i></a>
+                                        <a href="https://twitter.com/MrLexZ2"><i class="fa fa-twitter"></i></a>
+                                        <a href="https://github.com/mrlexz"><i class="fa fa-github"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-title">
+                                <h5>Nguyen Van Qui</h5>
+                                <span>MSSV: 16130531</span><br/>
+                                <span>FE Developer</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="team-member">
+                                <div class="team-img">
+                                    <img src="https://scontent.fsgn3-1.fna.fbcdn.net/v/t1.0-9/86661830_1332985186908476_8422760879858122752_o.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=PS9OHM87F5oAX93j9cY&_nc_ht=scontent.fsgn3-1.fna&oh=3d6168a83613121021ccf1998754ebe9&oe=5F41A26F" alt="team member" class="img-responsive">
+                                </div>
+                                <div class="team-hover">
+                                    <div class="desk">
+                                        <h4>I love to design</h4>
+                                        <p>I love to introduce myself as a hardcore Web Designer.</p>
+                                    </div>
+                                    <div class="s-link">
+                                        <a href="https://www.facebook.com/ngochan.le.54922"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-github"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-title">
+                                <h5>Ha Thi Thanh Nhu</h5>
+                                <span>MSSV: 16130505</span><br/>
+                                <span>Fullstack Developer</span>
+                            </div>
+                        </div>
 
-                <h1></h1>
-                <h2 class="text-info">HQStore</h2>
-                <h1></h1>
-            </div>
-            <div class="row">
-                <div class="col-md-4 align-self-center">
-                    <h3>Thông tin</h3>
-                </div>
-                <div class="col-md-4 align-self-center">
-                    <p>Địa chỉ: B4.02 Khoa CNTT, Trường Đại học Công nghiệp Thành phố Hồ Chí Minh</p>
-                    <p>DHKTPM12BTT</p>
-                </div>
-                <div class="col-md-4 ">
-                    <p>Nhóm sinh viên</p>
-                    <ul>Trương Quốc Minh
-                        <li>MSSV: 16060451</li>
-                    </ul>
-                    <ul>Nguyễn Hoàng Hải
-                        <li>MSSV: 16059371</li>
-                    </ul>
-                    <ul>Trần Gia Bảo
-                        <li>MSSV: 16059211</li>
-                    </ul>
-                    <ul>Phan Hoàng Qui
-                        <li>MSSV: 16060151</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="team" class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="team-member" align="center"><img class="rounded-circle mx-auto" src="/assets/img/team/minhtruong.jpg" width="150px">
-                        <h4>Trương Quốc Minh</h4>
-                        <p class="text-muted">Lead Designer</p>
-                        <ul class="list-inline social-buttons">
-                            <li class="list-inline-item"><a href="https://www.facebook.com/minhtrxg"><i class="fa fa-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/minhtrxg"><i class="fa fa-facebook"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/minhtrxg"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="team-member" align="center"><img class="rounded-circle mx-auto" src="/assets/img/team/baogia.jpg" width="150px">
-                        <h4>Trần Gia Bảo</h4>
-                        <p class="text-muted">Lead Developer</p>
-                        <ul class="list-inline social-buttons">
-                            <li class="list-inline-item"><a href="https://www.facebook.com/baogia1340"><i class="fa fa-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/baogia1340"><i class="fa fa-facebook"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/baogia1340"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="team-member" align="center"><img class="rounded-circle mx-auto" src="/assets/img/team/haihoang.jpg" width="150px">
-                        <h4>Nguyễn Hoàng Hải</h4>
-                        <p class="text-muted">Lead Marketer</p>
-                        <ul class="list-inline social-buttons">
-                            <li class="list-inline-item"><a href="https://www.facebook.com/nguyenhoanghai.it"><i class="fa fa-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/nguyenhoanghai.it"><i class="fa fa-facebook"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/nguyenhoanghai.it"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="team-member" align="center"><img class="rounded-circle mx-auto" src="/assets/img/team/quiphan.jpg" width="150px">
-                        <h4>Phan Hoàng Qui</h4>
-                        <p class="text-muted">Lead Planner</p>
-                        <ul class="list-inline social-buttons">
-                            <li class="list-inline-item"><a href="https://www.facebook.com/qui.thienbinh"><i class="fa fa-twitter"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/qui.thienbinh"><i class="fa fa-facebook"></i></a></li>
-                            <li class="list-inline-item"><a href="https://www.facebook.com/qui.thienbinh"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="contact">
-        <div class="container">
-            <h1></h1>
-            <div class="row">
-                <div class="col-md-6 align-self-center" align="right">
-                    <h3 class="text-uppercase section-heading">Thông tin liên hệ</h3>
-                </div>
-                <div class="col-md-6" align="left">
-                    <h4 class="section-subheading text-muted">Moblie: 0968369378 (Minh)</h4>
-                    <h4 class="section-subheading text-muted">Moblie: 0763860328 (Bảo)</h4>
-                    <h4 class="section-subheading text-muted">Moblie: 0386976071 (Hải)</h4>
-                    <h4 class="section-subheading text-muted">Moblie: 0968190724 (Qui)</h4>
-                </div>
-            </div>
-        </div>
-    </section>
 
+                </div>
 </main>
 <footer>
     <div th:replace="/header :: footer"></div>
