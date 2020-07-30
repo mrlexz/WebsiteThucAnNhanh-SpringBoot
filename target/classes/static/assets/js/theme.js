@@ -10,3 +10,9 @@ if ($('.clean-product').length > 0) {
     });
 }
 
+$(function () {
+	  $(document).scroll(function () {
+	    var $nav = $(".nav-custom");
+	    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+	  });
+	});

@@ -15,15 +15,20 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
 	<link rel="stylesheet" href="/assets/css/Navigation-Clean.css">
 	<link rel="stylesheet" href="/assets/css/smoothproducts.css">
+	<link rel="stylesheet" href="/assets/css/styles.css">
 </div>
+<style type="text/css">
+::placeholder {
+  color: white;
+}</style>
 </head>
 
 <body>
 	<div th:fragment="navbar">
 		<nav
-			class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+			class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar nav-custom" id="nav-custom">
 			<div class="container">
-				<a class="navbar-brand logo" th:href="@{/}">HQStore</a>
+				<a class="navbar-brand logo nav-item-custom" th:href="@{/}">HQStore</a>
 				<button class="navbar-toggler" data-toggle="collapse"
 					data-target="#navcol-1">
 					<span class="sr-only">Toggle navigation</span><span
@@ -31,30 +36,30 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navcol-1">
 					<ul class="nav navbar-nav ml-auto">
-						<li class="nav-item" role="presentation"><a class="nav-link"
+						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/}">Trang chủ</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link"
+						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/sanpham}">Sandwiches</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link"
+						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/giohang}">Giỏ hàng<i class="fa fa-shopping-cart"></i></a></li>
 						<th:block th:if="${#request.userPrincipal}">
 						<li class="nav-item"
-							role="presentation"><a class="nav-link"
+							role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/taikhoan}">
 								<p th:text="${#request.userPrincipal.name}"></p>
 						</a></li>
 						<li th:if="${#request.userPrincipal.name} == 'admin'" role="presentation" class="nav-item">
-									<a class="nav-link" th:href="@{/quanly}">Quản Lý</a>
+									<a class="nav-link nav-item-custom" th:href="@{/quanly}">Quản Lý</a>
 								</li>
 						</th:block>
 						<li th:if="${#request.userPrincipal}" class="nav-item"
-							role="presentation"><a class="nav-link"
+							role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/dangxuat}">Đăng Xuất</a></li>
 						<li th:unless="${#request.userPrincipal}" class="nav-item"
-							role="presentation"><a class="nav-link"
+							role="presentation"><a class="nav-link nav-item-custom"
 							th:href="@{/dangnhap}">Đăng nhập</a></li>
 						<li th:unless="${#request.userPrincipal}" class="nav-item"
-							role="presentation"><a class="nav-link" th:href="@{/dangky}">Đăng
+							role="presentation"><a class="nav-link nav-item-custom" th:href="@{/dangky}">Đăng
 								Ký</a></li>
 					</ul>
 				</div>
@@ -62,7 +67,7 @@
 		</nav>
 	</div>
 	<div th:fragment="footer">
-		<footer class="page-footer dark">
+		<footer class="page-footer dark footer-custom">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
@@ -92,7 +97,7 @@
 				</div>
 			</div>
 			<div class="footer-copyright">
-				<p>© 2019 DHKTPM12BTT-THƯƠNG MẠI ĐIỆN TỬ</p>
+				<p>© 2020 Copyright by LexZ</p>
 			</div>
 		</footer>
 		<script src="/assets/js/jquery.min.js"></script>

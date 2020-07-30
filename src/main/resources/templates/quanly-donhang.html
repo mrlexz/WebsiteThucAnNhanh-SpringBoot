@@ -2,18 +2,18 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-    <title>Quản lý Đơn hàng</title>
+    <title>Quáº£n lÃ½ Ä�Æ¡n hÃ ng</title>
     <div th:replace="/header :: header"></div>
 </head>
 
-<body>
+<body class="body-custom">
 <div th:replace="/header :: navbar"></div>
 <main class="page shopping-cart-page">
     <section class="clean-block clean-cart dark">
         <div class="container">
             <div class="block-heading">
                 <h1></h1>
-                <h2 class="text-info">Quản lý Đơn hàng</h2>
+                <h2 class="text-info">Quáº£n lÃ½ Ä�Æ¡n hÃ ng</h2>
             </div>
             <div class="content">
                 <div class="row no-gutters">
@@ -24,7 +24,7 @@
                                     <div>
                                         <form class="form-inline mr-auto" target="_self">
                                             <div class="form-group">
-                                                <label for="search-field">Tìm Đơn hàng&nbsp;</label><input
+                                                <label for="search-field">TÃ¬m Ä�Æ¡n hÃ ng&nbsp;</label><input
                                                     class="form-control search-field" type="search"
                                                     name="search" id="search-field">
                                             </div>
@@ -37,18 +37,18 @@
                                 <div class="row justify-content-center align-items-center mt-3"
                                      th:each="donhang : ${listHoaDon}">
                                     <div class="col-md-6">
-                                        <h5>Thông tin khách hàng</h5>
-                                        <span class="text">Ngày Đặt hàng: </span><span class="nameValue" th:text="${donhang.ngayLap}"></span><br>
-                                        <span class="text">Họ Tên: </span><span class="nameValue" th:text="${donhang.khachHang.hoTenKhachHang}"></span><br>
-                                        <span class="text">Số điện thoại: </span><span class="nameValue" th:text="${donhang.khachHang.soDienThoai}"></span><br>
-                                        <span class="text">Địa chỉ nhận hàng: </span><span class="nameValue" th:text="${donhang.khachHang.diaChi}"></span><br>
-                                        <h4><span class="text">Tổng tiền: </span><span class="price" th:text="${donhang.getTongTien()+'00VND'}"></span></h4><br>
+                                        <h5>ThÃ´ng tin khÃ¡ch hÃ ng</h5>
+                                        <span class="text">NgÃ y Ä�áº·t hÃ ng: </span><span class="nameValue" th:text="${donhang.ngayLap}"></span><br>
+                                        <span class="text">Há»� TÃªn: </span><span class="nameValue" th:text="${donhang.khachHang.hoTenKhachHang}"></span><br>
+                                        <span class="text">Sá»‘ Ä‘iá»‡n thoáº¡i: </span><span class="nameValue" th:text="${donhang.khachHang.soDienThoai}"></span><br>
+                                        <span class="text">Ä�á»‹a chá»‰ nháº­n hÃ ng: </span><span class="nameValue" th:text="${donhang.khachHang.diaChi}"></span><br>
+                                        <h4><span class="text">Tá»•ng tiá»�n: </span><span class="price" th:text="${donhang.getTongTien()+'00VND'}"></span></h4><br>
                                     </div>
                                     <div class="col-md-6 product-info">
                                         <div class="col-" th:each="chitiet : ${donhang.dssp}">
-                                             <span class="text">Tên sản phẩm: </span><a th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}"><span class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></span></a><br>
-                                            <span class="text">Giá: </span><span class="nameValue" th:text="${chitiet.donGia+ '00VND'}"></span><br>
-                                            <span class="text">Số lượng: </span><span class="nameValue" th:text="${chitiet.soLuong}"></span><br>
+                                             <span class="text">TÃªn sáº£n pháº©m: </span><a th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}"><span class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></span></a><br>
+                                            <span class="text">GiÃ¡: </span><span class="nameValue" th:text="${chitiet.donGia+ '00VND'}"></span><br>
+                                            <span class="text">Sá»‘ lÆ°á»£ng: </span><span class="nameValue" th:text="${chitiet.soLuong}"></span><br>
                                         </div>
                                     </div>
                                     <hr>

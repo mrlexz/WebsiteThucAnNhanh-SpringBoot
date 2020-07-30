@@ -1,4 +1,4 @@
-<body xmlns:th="http://www.thymeleaf.org">
+<body xmlns:th="http://www.thymeleaf.org" class="body-custom">
 <head th:replace="/header :: header">
 </head>
 <nav th:replace="/header :: navbar"></nav>
@@ -18,7 +18,7 @@
 							Tên tài khoản: <input class="form-control" type="text" th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled/>
 						</p>
 						<p>
-							Họ và Tên: <input class="form-control" type="text" th:field="*{khachHang.hoTenKhachHang}" th:value="*{khachHang.hoTenKhachHang}" required  />
+							Họ và Tn: <input class="form-control" type="text" th:field="*{khachHang.hoTenKhachHang}" th:value="*{khachHang.hoTenKhachHang}" required  />
 						</p>
 						<p>
 							Địa chỉ: <input class="form-control" type="text" th:field="*{khachHang.diaChi}" th:value="*{khachHang.diaChi}" required />
@@ -27,7 +27,7 @@
 							Email: <input class="form-control" type="email" th:field="*{khachHang.email}" th:value="*{khachHang.email}" required />
 						</p>
 						<p>
-							Số điện thoại: <input class="form-control" type="number" th:field="*{khachHang.soDienThoai}" th:value="*{khachHang.soDienThoai}" required />
+							Số điện thoạii: <input class="form-control" type="number" th:field="*{khachHang.soDienThoai}" th:value="*{khachHang.soDienThoai}" required />
 						</p>
 						<button type="submit" class="btn btn-primary">Lưu</button>
 					</div>

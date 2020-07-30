@@ -1,26 +1,25 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Giỏ hàng</title>
+	<title>Giá»� hÃ ng</title>
 <div th:replace="/header :: header"></div>
 </head>
 
-<body>
+<body class="body-custom">
 	<div th:replace="/header :: navbar"></div>
 	<main class="page shopping-cart-page">
 	<section class="clean-block clean-cart dark">
 		<div class="container">
 			<div class="block-heading">
 				<h1></h1>
-				<h2 class="text-info">Giỏ Hàng</h2>
+				<h2 class="text-info">Giỏ hàng</h2>
 			</div>
-			<div class="content">
+			<div class="content checkout-custom">
 				<div class="row no-gutters">
 					<div class="col-md-12 col-lg-8">
 						<div class="items">
 							<div class="product">
-								<div class="row justify-content-center align-items-center"
+								<div class="row justify-content-center align-items-center" style="color: white;"
 									th:each="hang :${giohang}">
 									<div class="col-md-3">
 										<div class="product-image">
@@ -40,22 +39,22 @@
 										</div>
 									</div>
 									<div class="col-6 col-md-2 quantity">
-										<label class="d-none d-md-block" for="quantity">Số
-											lượng</label><input type="number" th:value="${hang.getValue()}"
+										<label class="d-none d-md-block" for="quantity">Sá»‘
+											lÆ°á»£ng</label><input type="number" th:value="${hang.getValue()}"
 											id="number" class="form-control quantity-input" disabled>
 									</div>
 									<div class="col-6 col-md-2">
 										<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
 									</div>
-									<a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn" type="button">Xóa</button></a>
+									<a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn add-button" type="button">XÃ³a</button></a>
 								</div>
 							</div>
 							<div class="product"></div>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-4">
-						<div class="summary">
-							<h3>Thanh toán</h3>
+						<div class="summary checkout-info">
+							<h2 style="color: white">Thanh toán</h2>
 							<h4>
 								<span class="text">Tổng tiền: </span><span class="price"
 									th:text="${tongtien+'00VND'}"></span>
