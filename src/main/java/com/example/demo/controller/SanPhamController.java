@@ -67,15 +67,17 @@ public class SanPhamController {
 	@RequestMapping(value = "/sanpham/{maSanPham}")
 	public String getChitietSanPham(Model model,Model model2,
 									@PathVariable(name = "maSanPham") String maSanPham) {
+		System.out.println(maSanPham+"jjjjjjjjjjjjjj");
 		Optional<SanPham> sp = sanPhamRepository.findById(maSanPham);
+		System.out.println(sp +"hhhhhhhhhhhhhhhhhhhhhh");
 		DanhGia danhgia = new DanhGia();
 		danhgia.setSanPham(sp.get());
 		if(sp.isPresent()) {
-			model.addAttribute("sanpham", sp.get());
+			model.addAttribute("sanpham", sp.orElse(null));
 			model.addAttribute("danhgianew",danhgia);
-			return "chitiet-sanpham";
+			
 		}
-		return "home";
+		return "chitiet-sanpham";
 	}
 	@RequestMapping(value = "/sanpham_danhgia/{maSanPham}", method = RequestMethod.POST)
 	public String danhGiaSP(@ModelAttribute("danhgianew") DanhGia danhGia) {

@@ -52,7 +52,7 @@
 								<th:block th:each="danhgia : ${sanpham.danhGias}">
 									<div class="col-12">
 										<div class="clean-product-item">
-											<span th:text="${danhgia.khachHang+' Ä‘Ã£ nháº­n xÃ©t '}"></span>
+											<span th:text="${danhgia.khachHang+' Đã nhận xét'}"></span>
 											<span th:text="${danhgia.noiDung}"></span>
 										</div>
 									</div>
@@ -63,7 +63,7 @@
 									  method="POST">
 									<div class="form-group input-comment">
 											<textarea class="form-control" required="required"
-													  placeholder="Ä�á»ƒ láº¡i Ä‘Ã¡nh giÃ¡ cá»§a báº¡n"
+													  placeholder="Để lại đánh giá của bạn"
 													  th:field="*{noiDung}" ></textarea>
 										<input class="form-control" type="hidden" th:field="*{sanPham}" th:value="*{sanPham}"/>
 										<div class="button-wrap">
