@@ -56,9 +56,17 @@ public class TaiKhoanController {
 
 	@PostMapping(value = "ajax/dangky")
 	@ResponseBody
-	public String createNewUser(@RequestBody() UserRegisterDTO taiKhoan) {
-		System.out.println(taiKhoan.getEmail());
-		System.out.println("ASdasda");
+	public Boolean createNewUser(@RequestBody() String username) {
+		
+		if (username.length() > 0) {
+			TaiKhoan tk = taiKhoanRepository.findByTenTaiKhoan(username);
+			if (tk!=null) {
+				return true;
+			}
+		}
+//		System.out.println(tk.getTenTaiKhoan());
+//		System.out.println(taiKhoan..getHoTen());
+//		System.out.println(taiKhoan.getEmail());
 //		KhachHang kh = taiKhoan.getKhachHang();
 //		kh.setTaiKhoan(taiKhoan);
 //		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
@@ -67,7 +75,7 @@ public class TaiKhoanController {
 //			khachHangRepository.save(kh);
 //			return "redirect:/";
 //		}
-		return "dangky";
+		return false;
 
 	}
 
