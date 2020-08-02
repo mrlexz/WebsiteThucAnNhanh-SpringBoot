@@ -1,73 +1,76 @@
-<!DOCTYPE html>html xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Giỏ Hàng</title>
+<title>Giỏ Hàng</title>
 <div th:replace="/header :: header"></div>
 </head>
 
 <body class="body-custom">
 	<div th:replace="/header :: navbar"></div>
 	<main class="page shopping-cart-page">
-	<section class="clean-block clean-cart dark">
-		<div class="container">
-			<div class="block-heading">
-				<h1></h1>
-				<h2 class="text-info">Giỏ hàng</h2>
-			</div>
-			<div class="content checkout-custom">
-				<div class="row no-gutters">
-					<div class="col-md-12 col-lg-8">
-						<div class="items">
-							<div class="product">
-								<div class="row justify-content-center align-items-center" style="color: white;"
-									th:each="hang :${giohang}">
-									<div class="col-md-3">
-										<div class="product-image">
-											<img class="img-fluid d-block mx-auto image"
-												 th:src="@{${hang.getKey().imgURL}}">
-										</div>
-									</div>
-									<div class="col-md-5 product-info">
-										<a th:href="@{/sanpham/{id}(id=${hang.getKey().maSanPham})}" class="product-name"
-											th:text="${hang.getKey().tenSanPham}"></a>
-
-										<div class="product-specs">
-											<div>
-												<span>Loại : &nbsp;</span><span class="value"
-													th:text="${hang.getKey().nhaSanXuat.tenNhaSanXuat}"></span>
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading">
+					<h1></h1>
+					<h2 class="text-info">Giỏ hàng</h2>
+				</div>
+				<div class="content checkout-custom">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-8">
+							<div class="items">
+								<div class="product">
+									<div class="row justify-content-center align-items-center"
+										style="color: white;" th:each="hang :${giohang}">
+										<div class="col-md-3">
+											<div class="product-image">
+												<img class="img-fluid d-block mx-auto image"
+													th:src="@{${hang.getKey().imgURL}}">
 											</div>
 										</div>
-									</div>
-									<div class="col-6 col-md-2 quantity">
-										<label class="d-none d-md-block" for="quantity">Số lượng
-											</label><input type="number" th:value="${hang.getValue()}"
-											id="number" class="form-control quantity-input" disabled>
-									</div>
-									<div class="col-6 col-md-2">
-										<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
-									</div>
-									<a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn add-button" type="button">Xóa</button></a>
-								</div>
-							</div>
-							<div class="product"></div>
-						</div>
-					</div>
-					<div class="col-md-12 col-lg-4">
-						<div class="summary checkout-info">
-							<h2 style="color: white">Thanh toán</h2>
-							<h4>
-								<span class="text">Tổng tiền: </span><span class="price"
-									th:text="${tongtien+'00VND'}"></span>
-							</h4>
-							<a th:href="@{'/giohang/checkout'}"><button class="btn btn-primary btn-block btn-lg"
-									type="button">Thanh toán</button></a>
+										<div class="col-md-5 product-info">
+											<a th:href="@{/sanpham/{id}(id=${hang.getKey().maSanPham})}"
+												class="product-name" th:text="${hang.getKey().tenSanPham}"></a>
 
+											<div class="product-specs">
+												<div>
+													<span>Loại : &nbsp;</span><span class="value"
+														th:text="${hang.getKey().nhaSanXuat.tenNhaSanXuat}"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-6 col-md-2 quantity">
+											<label class="d-none d-md-block" for="quantity">Số
+												lượng </label><span th:text="${hang.getValue()}"></span>
+										</div>
+										<div class="col-6 col-md-2">
+											<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
+										</div>
+										<a
+											th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button
+												class="btn add-button" type="button">Xóa</button></a>
+									</div>
+								</div>
+								<div class="product"></div>
+							</div>
+						</div>
+						<div class="col-md-12 col-lg-4">
+							<div class="summary checkout-info">
+								<h2 style="color: white">Thanh toán</h2>
+								<h4 class="total-money">
+									<span class="text">Tổng tiền: </span><span class="price"
+										th:text="${tongtien+'00VND'}"></span>
+								</h4>
+								<a th:href="@{'/giohang/checkout'}"><button
+										class="btn btn-primary btn-block btn-lg" type="button">Thanh
+										toán</button></a>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	</main>
 	<div th:replace="/header :: footer"></div>
 </body>
