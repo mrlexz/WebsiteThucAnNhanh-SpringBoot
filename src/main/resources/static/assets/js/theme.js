@@ -30,7 +30,7 @@ $(function dangky(user, password) {
 			console.log(res)
 		},
 		error: function(request, status, error) {
-			alert(request.responseText);	
+		/*	alert(request.responseText);	*/
 			console.log(request.responseJSON)
 		}
 	})
