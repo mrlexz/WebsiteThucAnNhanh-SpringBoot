@@ -10,24 +10,37 @@
 				<p>Thông tin tài khoản</p>
 			</div>
 
-			<div class="container">
-				<form th:action="@{/update-tk}" th:object="${taikhoan}" method="post">
-					<div class="form-group">
-						<p><input class="form-control" type="hidden" th:text="${taikhoan.maTaiKhoan}"  th:value="*{maTaiKhoan}"/></p>
+			<div class="container" style="width: 50%;">
+				<form th:action="@{/update-tk}" th:object="${taikhoan}"
+					method="post">
+					<div class="form-group account-info">
 						<p>
-							Tên tài khoản: <input class="form-control" type="text" th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled/>
+							<input class="form-control" type="hidden"
+								th:text="${taikhoan.maTaiKhoan}" th:value="*{maTaiKhoan}" />
 						</p>
 						<p>
-							Họ và Tên: <input class="form-control" type="text" th:field="*{khachHang.hoTenKhachHang}" th:value="*{khachHang.hoTenKhachHang}" required  />
+							Tên tài khoản: <input class="form-control" type="text"
+								th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled />
 						</p>
 						<p>
-							Địa chỉ: <input class="form-control" type="text" th:field="*{khachHang.diaChi}" th:value="*{khachHang.diaChi}" required />
+							Họ và Tên: <input class="form-control" type="text"
+								th:field="*{khachHang.hoTenKhachHang}"
+								th:value="*{khachHang.hoTenKhachHang}" required />
 						</p>
 						<p>
-							Email: <input class="form-control" type="email" th:field="*{khachHang.email}" th:value="*{khachHang.email}" required />
+							Địa chỉ: <input class="form-control" type="text"
+								th:field="*{khachHang.diaChi}" th:value="*{khachHang.diaChi}"
+								required />
 						</p>
 						<p>
-							Số điện thoại: <input class="form-control" type="number" th:field="*{khachHang.soDienThoai}" th:value="*{khachHang.soDienThoai}" required />
+							Email: <input class="form-control" type="email"
+								th:field="*{khachHang.email}" th:value="*{khachHang.email}"
+								required />
+						</p>
+						<p>
+							Số điện thoại: <input class="form-control" type="number"
+								th:field="*{khachHang.soDienThoai}"
+								th:value="*{khachHang.soDienThoai}" required />
 						</p>
 						<button type="submit" class="btn btn-primary">Lưu</button>
 					</div>

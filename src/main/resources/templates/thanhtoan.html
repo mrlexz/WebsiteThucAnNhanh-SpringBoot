@@ -2,80 +2,91 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Thanh Toán</title>
-    <div th:replace="/header :: header"></div>
+<title>Thanh Toán</title>
+<div th:replace="/header :: header"></div>
 </head>
 
 <body class="body-custom">
-<div th:replace="/header :: navbar"></div>
-<main class="page shopping-cart-page">
-    <section class="clean-block clean-cart dark">
-        <div class="container">
-            <div class="block-heading">
-                <h1></h1>
-                <h2 class="text-info">Thanh toán</h2>
-            </div>
-            <div class="content">
-                <div class="row no-gutters">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="items">
-                            <div class="product">
-                                <div class="row justify-content-center align-items-center" style="color: white;"
-                                     th:each="hang :${giohang}">
-                                    <div class="col-md-3">
-                                        <div class="product-image">
-                                            <img class="img-fluid d-block mx-auto image"
-                                                 th:src="@{${hang.getKey().imgURL}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 product-info">
-                                        <a href="#" class="product-name"
-                                           th:text="${hang.getKey().tenSanPham}"></a>
-                                        <div class="product-specs">
-                                            <div>
-                                                <span>Loại : &nbsp;</span><span class="value"
-                                                                                th:text="${hang.getKey().nhaSanXuat.tenNhaSanXuat}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-2 quantity">
-                                        <span class="d-none d-md-block" for="quantity">Số lượng</span><input type="number" th:value="${hang.getValue()}"
-                                                                id="number" class="form-control quantity-input" disabled>
-                                    </div>
-                                    <div class="col-6 col-md-2">
-                                        <h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
-                                    </div>
-                                    <a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn" type="button">Xóa</button></a>
-                                </div>
-                            </div>
-                            <div class="product"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-4">
-                        <div class="summary">
-                            <h3>Hình thức thanh toán</h3>
-                            <input type="radio" checked>Thanh toán khi nhận hàng</input>
-                            <input type="radio" disabled>Thanh toán online</input>
-                            <h3>Chi tiết thanh toán</h3>
-                            <h4>Thông tin khách hàng</h4>
-                            <span class="text">Họ tên: </span><span class="nameValue" th:text="${khachhang.hoTenKhachHang}"></span><br>
-                            <span class="text">Số điện thoại: </span><span class="nameValue" th:text="${khachhang.soDienThoai}"></span><br>
-                            <span class="text">Địa chỉ khách hàng: </span><span class="nameValue" th:text="${khachhang.diaChi}"></span><br>
-                            <a th:href="@{/taikhoan}">Cập nhập</a>
-                            <h4>
-                                <span class="text">Tổng tiền: </span><span class="price"
-                                                                         th:text="${tongtien+'00VND'}"></span>
-                            </h4>
-                            <a th:href="@{'/giohang/thanhtoan'}"><button class="btn btn-primary btn-block btn-lg"
-                                                                         type="button">Hoàn tất mua hàng</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-<div th:replace="/header :: footer"></div>
+	<div th:replace="/header :: navbar"></div>
+	<main class="page shopping-cart-page">
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading">
+					<h1></h1>
+					<h2 class="text-info">Thanh toán</h2>
+				</div>
+				<div class="content checkout-custom">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-8">
+							<div class="items">
+								<div class="product">
+									<div class="row justify-content-center align-items-center"
+										style="color: white;" th:each="hang :${giohang}">
+										<div class="col-md-3">
+											<div class="product-image">
+												<img class="img-fluid d-block mx-auto image"
+													th:src="@{${hang.getKey().imgURL}}">
+											</div>
+										</div>
+										<div class="col-md-2 product-info">
+											<a href="#" class="product-name"
+												style="color: white; font-size: 25px;"
+												th:text="${hang.getKey().tenSanPham}"></a>
+
+										</div>
+										<div class="col-6 col-md-3 quantity">
+											<label class="d-none d-md-block" style="color: #007bff">Loại</label><span
+												class="value"
+												th:text="${hang.getKey().nhaSanXuat.tenNhaSanXuat}"></span>
+										</div>
+										<div class="col-6 col-md-2 quantity">
+											<label class="d-none d-md-block" style="color: #007bff"
+												for="quantity">Số lượng</label><span
+												th:text="${hang.getValue()}"></span>
+										</div>
+										<div class="col-6 col-md-2">
+											<label class="d-none d-md-block" style="color: #007bff">Giá</label>
+											<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
+										</div>
+										<a
+											th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button
+												class="btn add-button" type="button">Xóa</button></a>
+									</div>
+								</div>
+								<div class="product"></div>
+							</div>
+						</div>
+						<div class="col-md-12 col-lg-4">
+							<div class="summary checkout-info">
+								<h3>Hình thức thanh toán</h3>
+								<input type="radio" checked><span>Thanh toán khi
+									nhận hàng</span></input> <input type="radio" disabled><span>Thanh
+									toán online</span></input>
+								<h3>Chi tiết thanh toán</h3>
+								<h4 class="total-money" style="color: #617ef3">Thông tin
+									khách hàng</h4>
+								<span class="text">Họ tên: </span><span class="nameValue"
+									th:text="${khachhang.hoTenKhachHang}"></span><br> <span
+									class="text">Số điện thoại: </span><span class="nameValue"
+									th:text="${khachhang.soDienThoai}"></span><br> <span
+									class="text">Địa chỉ khách hàng: </span><span class="nameValue"
+									th:text="${khachhang.diaChi}"></span><br> <a
+									th:href="@{/taikhoan}">Cập nhập</a>
+								<h4 class="total-money">
+									<span class="text">Tổng tiền: </span><span class="price"
+										th:text="${tongtien+'00VND'}"></span>
+								</h4>
+								<a th:href="@{'/giohang/thanhtoan'}"><button
+										class="btn btn-primary btn-block btn-lg" type="button">Hoàn
+										tất mua hàng</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<div th:replace="/header :: footer"></div>
 </body>
 
 </html>

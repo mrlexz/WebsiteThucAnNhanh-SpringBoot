@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.DTO.UserRegisterDTO;
 import com.example.demo.model.KhachHang;
@@ -53,10 +54,19 @@ public class TaiKhoanController {
 		return "dangky";
 	}
 
-	@PostMapping(value = "/dangky")
-	public String createNewUser(@RequestBody() UserRegisterDTO taiKhoan) {
-		System.out.println(taiKhoan.getEmail());
-		System.out.println("ASdasda");
+	@PostMapping(value = "ajax/dangky")
+	@ResponseBody
+	public Boolean createNewUser(@RequestBody() String username) {
+		
+		if (username.length() > 0) {
+			TaiKhoan tk = taiKhoanRepository.findByTenTaiKhoan(username);
+			if (tk!=null) {
+				return true;
+			}
+		}
+//		System.out.println(tk.getTenTaiKhoan());
+//		System.out.println(taiKhoan..getHoTen());
+//		System.out.println(taiKhoan.getEmail());
 //		KhachHang kh = taiKhoan.getKhachHang();
 //		kh.setTaiKhoan(taiKhoan);
 //		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
@@ -65,7 +75,7 @@ public class TaiKhoanController {
 //			khachHangRepository.save(kh);
 //			return "redirect:/";
 //		}
-		return "dangky";
+		return false;
 
 	}
 
