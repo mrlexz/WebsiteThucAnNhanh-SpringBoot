@@ -48,7 +48,7 @@ public class AdminController {
 
 		return "quanly-sanpham";
 	}
-
+//Quản lý đơn hàng
 	@RequestMapping(value = "/quanly/donhang")
 	public String listDonHang(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
@@ -95,7 +95,7 @@ public class AdminController {
 		return "quanly-donhang";
 	}
 
-	// Quản lý sản phẩm
+// Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
 	public String listSanPham(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
@@ -119,10 +119,8 @@ public class AdminController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 		SanPham sanphamnew = new SanPham();
-		// TEST
 		Random rd = new Random();
 		int maSp = rd.nextInt();
-		// ----
 //		sanphamnew.setMaSanPham("" + maSp);
 //		sanphamnew.setNhaSanXuat(new NhaSanXuat("nsx" + maSp, "abc", "odaudo"));
 		model.addAttribute("modalsanpham", new SanPham());
@@ -131,17 +129,11 @@ public class AdminController {
 		return "quanly-sanpham";
 	}
 
-	// Thêm sản phẩm
+// Thêm sản phẩm
 	@RequestMapping(value = "/quanly/sanpham", method = RequestMethod.POST)
 	public String addSanPham(@ModelAttribute(name = "modalsanpham") SanPham sanPham) {
 		Random rd = new Random();
 		int maSp = rd.nextInt();
-		// ----
-//		List<SanPham> sp = new ArrayList<SanPham>();
-//		for (int i = 0; i < sp.size(); i++) {
-//			sp.get(i).getMaSanPham();
-//		}
-//		sp.add(sanPham);
 		sanPham.setMaSanPham("" + maSp);
 		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
 				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
@@ -171,17 +163,24 @@ public class AdminController {
 	}
 
 // Sửa sản phẩm
-	@RequestMapping(value = "/quanly/sanpham/edit/{id}", method = RequestMethod.POST)
-	public String editSanPham(@ModelAttribute(name = "modalupdatesanpham") SanPham sanPham,
+	@PostMapping(value = "/quanly/sanpham/edit/{id}")
+	public String editSanPham(@ModelAttribute(name ="edit") SanPham sanPham,
 			@PathVariable(name = "id") String maSanPham) {
-//		if(sanPhamRepository.findById(maSanPham).isPresent()) {
-		System.out.println(sanPham.getTenSanPham());
-		System.out.println(sanPham + "aaaaaaaaaaaaaasssss");
-//		System.out.println(sanPham + "ádfghjk");
+//	if(sanPhamRepository.findById(maSanPham).isPresent()) {
+//		sanPham.setMaSanPham(maSanPham);
+//		
+//	}
+		System.out.println(sanPham);
+		System.out.println(sanPhamRepository.findById(maSanPham) + "aaaaaaaaaaaaaa");
+		SanPham sp = sanPhamRepository.findById(maSanPham).get();
+		System.out.println(sp.getTenSanPham());
+//		System.out.println(sanPham.getTenSanPham());
+//		System.out.println(sanPham + "aaaaaaaaaaaaaasssss");
+////		System.out.println(sanPham + "ádfghjk");
 		return "redirect:/quanly/sanpham";
 	}
 
-	// Quan ly nha san xuat
+// Quan ly nha san xuat
 	@RequestMapping("/quanly/nhasanxuat")
 	public String nhaSanXuatpage(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
