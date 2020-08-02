@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.DTO.UserRegisterDTO;
 import com.example.demo.model.KhachHang;
@@ -53,7 +54,8 @@ public class TaiKhoanController {
 		return "dangky";
 	}
 
-	@PostMapping(value = "/dangky")
+	@PostMapping(value = "ajax/dangky")
+	@ResponseBody
 	public String createNewUser(@RequestBody() UserRegisterDTO taiKhoan) {
 		System.out.println(taiKhoan.getEmail());
 		System.out.println("ASdasda");
