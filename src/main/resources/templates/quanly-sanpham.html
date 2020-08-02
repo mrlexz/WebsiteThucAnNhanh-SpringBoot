@@ -130,23 +130,22 @@
 															</div>
 														</div>
 													</div>
-												</div> 
-												<!-- Modal -->
+												</div> <!-- Modal -->
 												<div class="modal fade" id="deleteItem" tabindex="-1"
 													role="dialog" aria-labelledby="deleteItem"
-													aria-hidden="true">
+													th:attrappend="id=${idx.index}" aria-hidden="true">
 													<div class="modal-dialog" role="document">
 														<div class="modal-content">
 															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">Delete Product
-																	</h5>
+																<h5 class="modal-title" id="exampleModalLabel">Delete
+																	Product</h5>
 																<button type="button" class="close" data-dismiss="modal"
 																	aria-label="Close">
 																	<span aria-hidden="true">&times;</span>
 																</button>
 															</div>
-															<div class="modal-body">Are you want to delete this
-																?</div>
+															<div class="modal-body">Are
+																you want to delete this ?</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-secondary"
 																	data-dismiss="modal">No</button>
@@ -179,7 +178,8 @@
 															th:action="@{'/quanly/sanpham/delete/{id}'(id=${sanpham.maSanPham})}"
 															th:method="delete">
 															<button type="button" class="btn btn-danger"
-																data-toggle="modal" data-target="#deleteItem">
+																data-toggle="modal" data-target="#deleteItem"
+																th:attrappend="data-target=${idx.index}">
 																Delete</button>
 														</form>
 													</div>
@@ -231,8 +231,8 @@
 											class="form-control" id="donGia" th:field="*{donGia}">
 									</div>
 									<div class="dropdown">
-										<label for="nhaSanXuat">Nhà sản xuất</label>
-										<select id="nsx" class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
+										<label for="nhaSanXuat">Nhà sản xuất</label> <select id="nsx"
+											class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
 										</select>
 									</div>
 									<div class="form-group">

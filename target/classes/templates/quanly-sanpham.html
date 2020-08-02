@@ -71,7 +71,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="sanpham : ${listSanPham}">
+										<tr th:each="sanpham,idx : ${listSanPham}">
 											<td><img th:src="@{${sanpham.imgURL}}" alt="" border=3
 												height=100 width=100></img></td>
 											<td th:text="${sanpham.maSanPham}"></td>
@@ -81,8 +81,8 @@
 											<td th:text="${sanpham.namSanXuat}"></td>
 											<td th:text="${sanpham.donGia+'00VND'}"></td>
 											<td><div class="modal fade inputmodal1" tabindex="-1"
-													role="dialog" aria-labelledby="inputmodal1"
-													aria-hidden="true">
+													role="dialog" aria-hidden="true" id="inputmodal1"
+													th:attrappend="id=${idx.index}">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
@@ -94,7 +94,7 @@
 																		<div class="col">
 																			<form
 																				th:action="@{'/quanly/sanpham/edit/{id}'(id=${sanpham.maSanPham})}"
-																				th:object="${modalupdatesanpham}" method="POST"
+																				th:object="${edit}" method="POST"
 																				id="formEditSanPham">
 																				<div class="form-group">
 																					<label for="tenSanPham">Tên sản phẩm</label> <input
@@ -130,19 +130,46 @@
 															</div>
 														</div>
 													</div>
+												</div> <!-- Modal -->
+												<div class="modal fade" id="deleteItem" tabindex="-1"
+													role="dialog" aria-labelledby="deleteItem"
+													th:attrappend="id=${idx.index}" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="exampleModalLabel">Delete
+																	Product</h5>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">Are
+																you want to delete this ?</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary"
+																	data-dismiss="modal">No</button>
+																<form action="#"
+																	th:action="@{'/quanly/sanpham/delete/{id}'(id=${sanpham.maSanPham})}"
+																	th:method="delete">
+																	<button type="submit" class="btn btn-primary">Yes</button>
+																</form>
+															</div>
+														</div>
+													</div>
 												</div>
 
 
 
 												<div style="display: flex;">
 													<div class="btn-edit">
-														<form action="#"
+														<form action="@{/quanly/sanpham}"
 															th:action="@{'/quanly/sanpham/edit/'(id=${sanpham.maSanPham})}"
 															th:method="POST" th:object="${modalupdatesanpham}">
 															<button type="button" id="editButton"
 																class="btn btn-info btn-md" data-toggle="modal"
-																data-target=".inputmodal1
-																">Edit</button>
+																data-target="#inputmodal1"
+																th:attrappend="data-target=${idx.index}">Edit</button>
 
 														</form>
 													</div>
@@ -150,8 +177,10 @@
 														<form action="#"
 															th:action="@{'/quanly/sanpham/delete/{id}'(id=${sanpham.maSanPham})}"
 															th:method="delete">
-															<button type="submit" id="submitButton"
-																class="btn btn-danger">delete</button>
+															<button type="button" class="btn btn-danger"
+																data-toggle="modal" data-target="#deleteItem"
+																th:attrappend="data-target=${idx.index}">
+																Delete</button>
 														</form>
 													</div>
 												</div></td>
@@ -202,8 +231,8 @@
 											class="form-control" id="donGia" th:field="*{donGia}">
 									</div>
 									<div class="dropdown">
-										<label for="nhaSanXuat">Nhà sản xuất</label>
-										<select id="nsx" class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
+										<label for="nhaSanXuat">Nhà sản xuất</label> <select id="nsx"
+											class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
 										</select>
 									</div>
 									<div class="form-group">
