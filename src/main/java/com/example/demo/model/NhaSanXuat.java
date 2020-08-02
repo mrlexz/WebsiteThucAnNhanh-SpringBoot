@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
 public class NhaSanXuat implements Serializable {
 	/**
@@ -14,6 +17,7 @@ public class NhaSanXuat implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String maNhaSanXuat;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenNhaSanXuat;
@@ -21,34 +25,42 @@ public class NhaSanXuat implements Serializable {
 	private String diaChi;
 	@OneToMany(mappedBy = "nhaSanXuat")
 	private List<SanPham> sanPhams;
-	
+
 	public NhaSanXuat() {
 		super();
 	}
+
 	public NhaSanXuat(String maNhaSanXuat, String tenNhaSanXuat, String diaChi) {
 		super();
 		this.maNhaSanXuat = maNhaSanXuat;
 		this.tenNhaSanXuat = tenNhaSanXuat;
 		this.diaChi = diaChi;
 	}
+
 	public String getMaNhaSanXuat() {
 		return maNhaSanXuat;
 	}
+
 	public void setMaNhaSanXuat(String maNhaSanXuat) {
 		this.maNhaSanXuat = maNhaSanXuat;
 	}
+
 	public String getTenNhaSanXuat() {
 		return tenNhaSanXuat;
 	}
+
 	public void setTenNhaSanXuat(String tenNhaSanXuat) {
 		this.tenNhaSanXuat = tenNhaSanXuat;
 	}
+
 	public String getDiaChi() {
 		return diaChi;
 	}
+
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -56,6 +68,7 @@ public class NhaSanXuat implements Serializable {
 		result = prime * result + ((maNhaSanXuat == null) ? 0 : maNhaSanXuat.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -72,7 +85,5 @@ public class NhaSanXuat implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

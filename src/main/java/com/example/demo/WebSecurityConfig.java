@@ -37,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/quanly","/quanly/sanpham","/quanly/donhang").access("hasRole('admin')");
-		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+//		http.authorizeRequests().antMatchers("/quanly","/quanly/sanpham","/quanly/donhang").access("hasRole('admin')");
+//		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 		http.authorizeRequests()
 		.antMatchers("/","/dangnhap","/sanpham","/dangky").permitAll()
-		.and()
+		.and().csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/giohang/thanhtoan","/sanpham_danhgia/{maSanPham}","/giohang/checkout","/hoantat").authenticated()
 		.and()

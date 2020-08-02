@@ -1,27 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+ th:fragment="main-fragment (title, otherStaticResources, header1, nav, mainContent, footer1)"
+>
+
 <head>
-	<title>Quáº£n lÃ½</title>
-	<div th:replace="/header :: header"></div>
+	<title>Quản lý</title>
+	<div th:fragment="header">
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+	<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+	<link rel="stylesheet" href="/assets/css/Navigation-Clean.css">
+	<link rel="stylesheet" href="/assets/css/smoothproducts.css">
+</div>
+
 </head>
-<body class="body-custom">
-<div th:replace="/header :: navbar"></div>
-<main class="page">
+<body>
+<div th:fragment="navbar">
+
+<section class="clean-block slider">
+		<div class="container">
+			<div class="block-heading">
+			</div>
+			<div class="col">
+				<a th:href="@{/quanly/sanpham}" class="btn btn-primary btn-lg">Quản lý Sản Phẩm</a>
+				<a th:href="@{/quanly/donhang}" class="btn btn-primary btn-lg">Quản lý Đơn hàng</a>
+				<a th:href="@{/quanly/nhasanxuat}" class="btn btn-primary btn-lg">Danh sách Nhà cung cấp</a>
+			</div>
+		</div>
+	</section>
+
+		<!-- <nav
+			class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+			<div class="container">
+			<div class="block-heading">
+				<h1></h1>
+				<h2 class="text-info">Trang quản lý</h2>
+				<button class="navbar-toggler" data-toggle="collapse"
+					data-target="#navcol-1">
+					<span class="sr-only">Toggle navigation</span><span
+						class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+				<div class="collapse navbar-collapse" id="navcol-1">
+					<ul class="nav navbar-nav ml-auto">
+						<li class="nav-item" role="presentation"><a class="nav-link"
+							th:href="@{/quanly/sanpham}">Quản lý Sản Phẩm</a>
+							<div></div>
+							</li>
+						<li class="nav-item" role="presentation"><a class="nav-link"
+							th:href="@{/quanly/donhang}">Quản lý Đơn hàng</a></li>
+						<li class="nav-item" role="presentation"><a class="nav-link"
+							th:href="@{/quanly/nhasanxuat}">Danh sách Nhà cung cấp</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav> -->
+	</div>
+<!-- <div th:replace="/header :: navbar"></div> -->
+<!-- <main class="page">
 	<section class="clean-block slider">
 		<div class="container">
 			<div class="block-heading">
 				<h1></h1>
 				<h2 class="text-info">HQStore</h2>
-				<p>Trang quáº£n lÃ½</p>
+				<p>Trang quản lý</p>
 			</div>
-			<div class="col">
-				<a th:href="@{/quanly/sanpham}" class="btn btn-primary btn-lg">Quáº£n lÃ½ Sáº£n Pháº©m</a>
-				<a th:href="@{/quanly/donhang}" class="btn btn-primary btn-lg">Quáº£n lÃ½ Ä�Æ¡n hÃ ng</a>
-				<a class="btn btn-primary btn-lg">Danh sÃ¡ch NhÃ  cung cáº¥p</a>
-			</div>
-		</div>
+							  <ul th:fragment = "nav-default">
+       							 <li><a th:href="@{/quanly/sanpham}">Quản lý Sản Phẩm</a></li>
+        						 <li><a th:href="@{/quanly/donhang}">Quản lý Đơn hàng</a></li>
+       							 <li><a th:href="@{/quanly/nhasanxuat}">Danh sách Nhà cung cấp</a></li>
+   							 </ul>
+			</div>				
 	</section>
-</main>
+</main> -->
 <div th:replace="/header :: footer"></div>
 </body>
 </html>

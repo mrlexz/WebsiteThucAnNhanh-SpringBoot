@@ -1,7 +1,7 @@
 <!DOCTYPE html>html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Giá»� hÃ ng</title>
+	<title>Giỏ Hàng</title>
 <div th:replace="/header :: header"></div>
 </head>
 
@@ -39,14 +39,14 @@
 										</div>
 									</div>
 									<div class="col-6 col-md-2 quantity">
-										<label class="d-none d-md-block" for="quantity">Sá»‘
-											lÆ°á»£ng</label><input type="number" th:value="${hang.getValue()}"
+										<label class="d-none d-md-block" for="quantity">Số lượng
+											</label><input type="number" th:value="${hang.getValue()}"
 											id="number" class="form-control quantity-input" disabled>
 									</div>
 									<div class="col-6 col-md-2">
 										<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
 									</div>
-									<a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn add-button" type="button">XÃ³a</button></a>
+									<a th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button class="btn add-button" type="button">Xóa</button></a>
 								</div>
 							</div>
 							<div class="product"></div>

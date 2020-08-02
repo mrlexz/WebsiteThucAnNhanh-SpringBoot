@@ -49,7 +49,7 @@
 								<p th:text="${#request.userPrincipal.name}"></p>
 						</a></li>
 						<li th:if="${#request.userPrincipal.name} == 'admin'" role="presentation" class="nav-item">
-									<a class="nav-link nav-item-custom" th:href="@{/quanly}">Quản Lý</a>
+									<a class="nav-link nav-item-custom" th:href="@{/quanly/sanpham}">Quản Lý</a>
 								</li>
 						</th:block>
 						<li th:if="${#request.userPrincipal}" class="nav-item"

@@ -13,9 +13,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.demo.DTO.UserRegisterDTO;
 import com.example.demo.model.KhachHang;
 import com.example.demo.model.TaiKhoan;
 import com.example.demo.repository.KhachHangRepository;
@@ -24,7 +27,7 @@ import com.example.demo.repository.TaiKhoanRepository;
 import com.example.demo.service.TaiKhoanService;
 
 @Controller
-public class TaiKhoanController {	
+public class TaiKhoanController {
 	@Autowired
 	private TaiKhoanRepository taiKhoanRepository;
 	@Autowired
@@ -39,29 +42,33 @@ public class TaiKhoanController {
 
 		return "dangnhap";
 	}
+
 	@RequestMapping("/dangky")
 	public String enterRegister(Model model) {
 		TaiKhoan taiKhoan = new TaiKhoan();
 		KhachHang khachHang = new KhachHang();
 		taiKhoan.setKhachHang(khachHang);
 		khachHang.setTaiKhoan(taiKhoan);
-		model.addAttribute("taikhoan",taiKhoan);
+		model.addAttribute("taikhoan", taiKhoan);
 		return "dangky";
 	}
-	@RequestMapping( value = "/dangky", method = RequestMethod.POST)
-	public String createNewUser(@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
-		KhachHang kh = taiKhoan.getKhachHang();
-		kh.setTaiKhoan(taiKhoan);
-		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
-		taiKhoan.setKhachHang(kh);
-		if(TaiKhoanService.save(taiKhoan)) {
-			khachHangRepository.save(kh);
-			return "redirect:/";
-		}
+
+	@PostMapping(value = "/dangky")
+	public String createNewUser(@RequestBody() UserRegisterDTO taiKhoan) {
+		System.out.println(taiKhoan.getEmail());
+		System.out.println("ASdasda");
+//		KhachHang kh = taiKhoan.getKhachHang();
+//		kh.setTaiKhoan(taiKhoan);
+//		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
+//		taiKhoan.setKhachHang(kh);
+//		if (TaiKhoanService.save(taiKhoan)) {
+//			khachHangRepository.save(kh);
+//			return "redirect:/";
+//		}
 		return "dangky";
-		
-		
+
 	}
+
 	@RequestMapping(value = "/dangxuat", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -73,7 +80,7 @@ public class TaiKhoanController {
 
 	@RequestMapping(value = "/taikhoan", method = RequestMethod.GET)
 	public String currentUserName(Model model, Authentication authentication) {
-		if(authentication!=null) {
+		if (authentication != null) {
 			String name = authentication.getName();
 			TaiKhoan taiKhoan = taiKhoanRepository.findByTenTaiKhoan(name);
 			model.addAttribute("taikhoan", taiKhoan);
@@ -82,6 +89,7 @@ public class TaiKhoanController {
 		return "redirect:/";
 
 	}
+
 	@RequestMapping(value = "/update-tk", method = RequestMethod.POST)
 	public String updateUser(@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
 		TaiKhoanService.update(taiKhoan);

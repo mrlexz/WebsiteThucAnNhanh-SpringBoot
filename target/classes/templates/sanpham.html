@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-	<title>Sáº£n pháº©m</title>
+	<title>Sản Phẩm</title>
 <div th:replace="/header :: header"></div>
 </head>
 
@@ -86,7 +86,7 @@
 											</div>
 											<div class="product-name">
 												<div>
-													<a th:href="@{/sanpham/${sanpham.maSanPham}}"
+													<a th:href="@{/sanpham/{id}(id=${sanpham.maSanPham})}"
 												   	th:text="${sanpham.tenSanPham}"></a>
 												 </div>
 												 <div class="price details-item details-item-price">
