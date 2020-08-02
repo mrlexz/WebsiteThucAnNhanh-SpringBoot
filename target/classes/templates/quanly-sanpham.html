@@ -77,7 +77,8 @@
 									</thead>
 									<tbody>
 										<tr th:each="sanpham : ${listSanPham}">
-											<td th:text="@{${sanpham.imgURL}}"></td>
+											<td><img th:src="@{${sanpham.imgURL}}" alt="" border=3
+												height=100 width=100></img></td>
 											<td th:text="${sanpham.maSanPham}"></td>
 											<td th:text="${sanpham.tenSanPham}"></td>
 											<td th:text="${sanpham.moTa}"></td>
@@ -96,7 +97,8 @@
 																<div class="container">
 																	<div class="row">
 																		<div class="col">
-																			<form th:action="@{'/quanly/sanpham/edit/{id}'(id=${sanpham.maSanPham})}"
+																			<form
+																				th:action="@{'/quanly/sanpham/edit/{id}'(id=${sanpham.maSanPham})}"
 																				th:object="${modalupdatesanpham}" method="POST"
 																				id="formEditSanPham">
 																				<div class="form-group">
@@ -126,8 +128,7 @@
 																</div>
 															</div>
 															<div class="modal-footer">
-																<button type="submit"
-																	th:action="@{/quanly/sanpham/}"
+																<button type="submit" th:action="@{/quanly/sanpham/}"
 																	form="formEditSanPham" class="btn btn-primary">Lưu</button>
 																<button type="submit" class="btn btn-danger"
 																	data-dismiss="modal">Cancel</button>
@@ -140,7 +141,8 @@
 
 												<div>
 													<div class="btn-edit">
-														<form action="#" th:action="@{'/quanly/sanpham/edit/'(id=${sanpham.maSanPham})}"
+														<form action="#"
+															th:action="@{'/quanly/sanpham/edit/'(id=${sanpham.maSanPham})}"
 															th:method="POST" th:object="${modalupdatesanpham}">
 															<button type="button" id="editButton"
 																class="btn btn-info btn-md" data-toggle="modal"
@@ -204,10 +206,17 @@
 										<label for="donGia">Đơn giá</label> <input type="text"
 											class="form-control" id="donGia" th:field="*{donGia}">
 									</div>
-									<div class="dropdown" >
-										<label for="nhaSanXuat">Nhà sản xuất</label> <input type="text"
+									<div class="dropdown">
+										<label for="nhaSanXuat">Nhà sản xuất</label>
+										<!-- 			 <input type="text"
 											class="form-control" id="nhaSanXuat"
-											th:field="*{donGia}">
+											th:field="*{donGia}"> -->
+										<select id="nhaSanXuat" class="form-control" th:field="*{nhaSanXuat}">
+											<option value="01" selected>Volvo</option>
+											<option value="02">Saab</option>
+											<option value="1">VW</option>
+											<option value="Nghi" >Audi</option>
+										</select>
 									</div>
 									<div class="form-group">
 										<label for="namSanXuat">Năm sản xuất</label> <input

@@ -64,8 +64,7 @@ public class AdminController {
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDons(pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
-
-		for (int i = 0; i < pageHoaDon.getSize() - 1; i++) {
+		for (int i = 0; i < pageHoaDon.getNumberOfElements(); i++) {
 			ChiTietHoaDonDTO chiTietDTO = new ChiTietHoaDonDTO(pageHoaDon.getContent().get(i).getMaHoaDon(),
 					pageHoaDon.getContent().get(i).getNgayLap(),
 					pageHoaDon.getContent().get(i).getKhachHang().getHoTenKhachHang(),
@@ -135,8 +134,14 @@ public class AdminController {
 		Random rd = new Random();
 		int maSp = rd.nextInt();
 		// ----
+//		List<SanPham> sp = new ArrayList<SanPham>();
+//		for (int i = 0; i < sp.size(); i++) {
+//			sp.get(i).getMaSanPham();
+//		}
+//		sp.add(sanPham);
 		sanPham.setMaSanPham("" + maSp);
-		sanPham.setNhaSanXuat(new NhaSanXuat("1", "abc", "odaudo"));
+		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
+				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
 		if (sanPhamRepository.save(sanPham).equals(sanPham)) {
 			return "redirect:/quanly/sanpham";
 		}
@@ -153,14 +158,16 @@ public class AdminController {
 		}
 		return null;
 	}
+
 // Sửa sản phẩm
 	@RequestMapping(value = "/quanly/sanpham/edit/{id}", method = RequestMethod.POST)
-	public String editSanPham(@ModelAttribute(name = "modalupdatesanpham") SanPham sanPham, @PathVariable(name = "id") String maSanPham) {
+	public String editSanPham(@ModelAttribute(name = "modalupdatesanpham") SanPham sanPham,
+			@PathVariable(name = "id") String maSanPham) {
 //		if(sanPhamRepository.findById(maSanPham).isPresent()) {
 		System.out.println(sanPham.getTenSanPham());
 		System.out.println(sanPham + "aaaaaaaaaaaaaasssss");
 //		System.out.println(sanPham + "ádfghjk");
-			return "redirect:/quanly/sanpham";
+		return "redirect:/quanly/sanpham";
 	}
 
 	// Quan ly nha san xuat
@@ -195,7 +202,7 @@ public class AdminController {
 //Thêm nhà sản xuất
 	@PostMapping("/quanly/nhasanxuat")
 	public String addNhaSanXuat(@ModelAttribute(name = "modelnhasanxuat") NhaSanXuat nsx) {
-		
+
 		nsx.getTenNhaSanXuat();
 		if (nhaSanXuatRepository.save(nsx).equals(nsx)) {
 			return "redirect:/quanly/nhasanxuat";

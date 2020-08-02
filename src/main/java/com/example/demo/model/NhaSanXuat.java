@@ -6,9 +6,10 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class NhaSanXuat implements Serializable {
@@ -17,7 +18,8 @@ public class NhaSanXuat implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String maNhaSanXuat;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenNhaSanXuat;
@@ -36,7 +38,13 @@ public class NhaSanXuat implements Serializable {
 		this.tenNhaSanXuat = tenNhaSanXuat;
 		this.diaChi = diaChi;
 	}
-
+	
+	public NhaSanXuat( String tenNhaSanXuat, String diaChi) {
+		super();
+		this.tenNhaSanXuat = tenNhaSanXuat;
+		this.diaChi = diaChi;
+	}
+	
 	public String getMaNhaSanXuat() {
 		return maNhaSanXuat;
 	}
