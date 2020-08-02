@@ -179,6 +179,10 @@
 	text-decoration: none;
 }
 
+.checkout-info span {
+	color: white;
+}
+
 .checkout-info button {
 	background: inherit !important;
     border: 3px solid #00FFFF !important;
@@ -359,4 +363,44 @@ body {
     text-transform: uppercase;
     color: white;
     letter-spacing: 1px;
+}
+
+
+/* account info */
+.account-info p {
+	color: white;
+}
+
+.account-info .form-control {
+	background-color: inherit;
+    opacity: 1;
+    color: white;
+    border: none;
+    box-shadow: none;
+}
+
+.account-info .form-control:disabled {
+	background-color: inherit;
+    opacity: 1;
+    color: white;
+    border: none;
+    box-shadow: none;
+}
+
+.account-info .form-control:focus {
+	background-color: inherit;
+    opacity: 1;
+    color: white;
+    border: none;
+    box-shadow: none;
+}
+
+.total-money {
+	padding: 20px;
+	 background-color: initial !important;
+}
+
+.total-money span {
+	    color: #617ef3;	
+	    
 }

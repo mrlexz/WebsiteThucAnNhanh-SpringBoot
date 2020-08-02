@@ -2,71 +2,70 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-    <title>Quản lý Đơn hàng</title>
-    <div th:replace="/header :: header"></div>
-    <style type="text/css">
-	.searchCol{
-		margin-bottom: 30px;
-	}
-	
+<title>Quản lý Đơn hàng</title>
+<div th:replace="/header :: header"></div>
+<style type="text/css">
+.searchCol {
+	margin-bottom: 30px;
+}
 </style>
 </head>
 
 <body class="body-custom">
-<div th:replace="/header :: navbar"></div>
-<div th:replace="/quanly :: navbar"></div>
-<main class="page shopping-cart-page">
-    <section class="clean-block clean-cart dark">
-        <div class="container">
-            <div class="block-heading">
-                <h1></h1>
-                <h2 class="text-info">Quản lý Đơn hàng</h2>
-            </div>
-            <div class="content">
-                <div class="row no-gutters">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="items">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div>
-                                        <form class="form-inline mr-auto" target="_self">
-                                            <div class="form-group">
-                                                <label for="search-field">Tìm Đơn hàng&nbsp;</label><input
-                                                    class="form-control search-field" type="search"
-                                                    name="search" id="search-field">
-                                            </div>
-                                            <button class="btn btn-primary" type="button">search</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row col-lg-12 table-responsive">
-										<table id="quanlydonhangTable" class="table">
-											<thead>
-										 <tr>
-													<th>Ten san pham</th>
-													<th>Gia</th>
-													<th>So Luong</th>
-													<th>Ngày đặt hàng</th>
-													<th>Họ Tên</th> 
-													<th>SĐT</th>
-													<th>Địa chỉ</th>
-													<th>Tổng tiền</th>
-												</tr> 
-											</thead>
-											<tbody>
-												<tr th:each="chiTietDTO : ${listDTO}">
-													<td th:text="${chiTietDTO.tenSanPham}"></td>
-													<td th:text="${chiTietDTO.donGia+ '00VND'}"></td>
-													<td th:text="${chiTietDTO.soLuong}"></td>
-													<td th:text="${chiTietDTO.ngayLap}"></td>
-													<td th:text="${chiTietDTO.hoTenKhachHang}"></td>
-													<td th:text="${chiTietDTO.soDienThoai}"></td>
-													<td th:text="${chiTietDTO.diaChi}"></td>
-													 <td th:text="${chiTietDTO.getTongTien()+'00VND'}"></td>
-												</tr> 
-											</tbody>
+	<div th:replace="/header :: navbar"></div>
+	<div th:replace="/quanly :: navbar"></div>
+	<main class="page shopping-cart-page">
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading" style="padding-top: 0px">
+					<h1></h1>
+					<h2 class="text-info">Quản lý Đơn hàng</h2>
+				</div>
+				<div class="content">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-12">
+							<div class="items">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="searchCol">
+											<form class="form-inline mr-auto" target="_self">
+												<div class="form-group">
+													<label for="search-field">Tìm Đơn hàng&nbsp;</label><input
+														class="form-control search-field" type="search"
+														name="search" id="search-field">
+												</div>
+												<button class="btn btn-primary" type="button" style="width: 30%">search</button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								<div class="row col-lg-12 table-responsive">
+									<table id="quanlydonhangTable" class="table">
+										<thead>
+											<tr>
+												<th>Ten san pham</th>
+												<th>Gia</th>
+												<th>So Luong</th>
+												<th>Ngày đặt hàng</th>
+												<th>Họ Tên</th>
+												<th>SĐT</th>
+												<th>Địa chỉ</th>
+												<th>Tổng tiền</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="chiTietDTO : ${listDTO}">
+												<td th:text="${chiTietDTO.tenSanPham}"></td>
+												<td th:text="${chiTietDTO.donGia+ '00VND'}"></td>
+												<td th:text="${chiTietDTO.soLuong}"></td>
+												<td th:text="${chiTietDTO.ngayLap}"></td>
+												<td th:text="${chiTietDTO.hoTenKhachHang}"></td>
+												<td th:text="${chiTietDTO.soDienThoai}"></td>
+												<td th:text="${chiTietDTO.diaChi}"></td>
+												<td th:text="${chiTietDTO.getTongTien()+'00VND'}"></td>
+											</tr>
+										</tbody>
 										<!-- 	<tbody>
 												<tr th:each="chiTietDTO : ${listDTO}">
 													<td th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}" class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></td>
@@ -79,10 +78,18 @@
 													<td th:text="${donhang.getTongTien()+'00VND'}"></td>
 												</tr> 
 											</tbody> -->
-										</table>
-									</div>
-                            
-                           <!--  <div class="product">
+									</table>
+								</div>
+								<nav>
+									<ul class="pagination">
+										<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
+											class="page-link"
+											th:href="@{/quanly/donhang(page=${pageNumber})}"
+											th:text=${pageNumber}></a></li>
+									</ul>
+								</nav>
+
+								<!--  <div class="product">
                                 <div class="row justify-content-center align-items-center mt-3"
                                      th:each="donhang : ${listHoaDon}">
                                     <div class="col-md-6">
@@ -93,34 +100,26 @@
                                         <span class="text">Địa chỉ nhận hàng: </span><span class="nameValue" th:text="${donhang.khachHang.diaChi}"></span><br>
                                         <h4><span class="text">Tổng tiền: </span><span class="price" th:text="${donhang.getTongTien()+'00VND'}"></span></h4><br>
                                     </div> -->
-                                    <!-- <div class="col-md-6 product-info">
+								<!-- <div class="col-md-6 product-info">
                                         <div class="col-" th:each="chitiet : ${donhang.dssp}">
                                              <span class="text">Tên sản phẩm: </span><a th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}"><span class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></span></a><br>
                                             <span class="text">Giá: </span><span class="nameValue" th:text="${chitiet.donGia+ '00VND'}"></span><br>
                                             <span class="text">Số lượng: </span><span class="nameValue" th:text="${chitiet.soLuong}"></span><br>
                                         </div>
                                     </div> -->
-                                    <hr>
-                                </div>
-                            </div>
-                            <nav>
-                                <ul class="pagination">
-                                    <li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
-                                            class="page-link"
-                                            th:href="@{/quanly/donhang(page=${pageNumber})}"
-                                            th:text=${pageNumber}></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-<footer>
-    <div th:replace="/header :: footer"></div>
-</footer>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<div th:replace="/header :: footer"></div>
+	</footer>
 </body>
 
 </html>
