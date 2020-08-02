@@ -17,9 +17,9 @@ $(function() {
 	});
 });
 
-$(function dangky(user, password) {
+(function dangky(user, password) {
 
-	const body = JSON.stringify({ email: "tanluc", pass: "cc" });
+	const body = JSON.stringify( username ="tanluc");
 	$.ajax({
 		url: 'http://localhost:8080/dangky',
 		dataType: "json",
@@ -30,8 +30,24 @@ $(function dangky(user, password) {
 			console.log(res)
 		},
 		error: function(request, status, error) {
-		/*	alert(request.responseText);	*/
-			console.log(request.responseJSON)
+		alert(request.responseText);
+/*console.log("dmmmmmmm")*/
+/*console.log(request.responseJSON)*/
 		}
 	})
 })
+
+$(function ab() {
+	$.ajax({
+		url: 'http://localhost:8080/ajax/nsx',
+		dataType: "text",
+		method: 'GET',
+		success: function(data) {
+			JSON.parse(data).forEach(item => {
+				console.log(item.maNhaSanXuat)
+				$("#nsx").append(`<option value = ${item.maNhaSanXuat}>${item.tenNhaSanXuat}</option>`)
+			})
+		}
+	})
+}
+)
