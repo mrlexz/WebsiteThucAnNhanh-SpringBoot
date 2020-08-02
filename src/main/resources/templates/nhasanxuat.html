@@ -113,7 +113,7 @@
 <!-- Modal -->
 												<div class="modal fade" id="deleteItem" tabindex="-1"
 													role="dialog" aria-labelledby="deleteItem"
-													aria-hidden="true">
+													aria-hidden="true" th:attrappend="id=${idx.index}">
 													<div class="modal-dialog" role="document">
 														<div class="modal-content">
 															<div class="modal-header">
@@ -156,7 +156,7 @@
 																	th:action="@{'/quanly/nhasanxuat/delete/{id}'(id=${nhasanxuat.maNhaSanXuat})}"
 																	th:method="delete">
 																	<button type="button" data-toggle="modal" 
-																		class="btn btn-danger" data-target="#deleteItem">Delete</button>
+																		class="btn btn-danger" data-target="#deleteItem" th:attrappend="data-target=${idx.index}">Delete</button>
 																</form>
 															</div>
 														</div>
