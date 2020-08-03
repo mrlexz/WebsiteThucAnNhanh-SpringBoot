@@ -13,7 +13,7 @@
 			<div class="block-heading">
 				<h2 class="text-info">Đăng kí</h2>
 			</div>
-			<form class="login-custom" th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
+			<form id = "form"class="login-custom" th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
 				<p th:if="${param.error}" class="error" style="color: red">Thông tin không hợp lệ vui lòng kiểm tra lại</p>
 				<div class="register-input-group">
 					<div style="width: 40%">
@@ -25,8 +25,9 @@
 						<span class="status"></span>
 						<div class="form-group">
 							<label for="password" style="margin-bottom: 0px !important;">Mật khẩu</label><input class="form-control"
-								type="password" id="password" placeholder="Mật khẩu" th:field="*{matKhau}" required>
+								type="password" id="password" placeholder="Mật khẩu" th:field="*{matKhau}" size="6" required>
 						</div>
+						<span class="status2" style="font-size: 15px"></span>
 					</div>
 					<div style="width: 40%">
 						<div class="form-group register-input" style="border-bottom: none !important;">
@@ -43,15 +44,18 @@
 									  th:field="*{khachHang.email}" required/>
 							</p>
 							<p>
-								Số điện thoại: <input class="form-control" type="number" placeholder="Nhập số điện thoại"
+								Số điện thoại: <input id ="sdt" class="form-control" type="text" spellcheck="false" placeholder="Nhập số điện thoại" maxlength="10" size ="10"
+												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"								
 											  th:field="*{khachHang.soDienThoai}" required/>
 							</p>
+							<span class="status1" style="font-size: 15px"></span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group-button-group">
+				<button class="btn btn-light" type="reset" style="color: white">Nhập lại</button>
 					<button class="btn btn-primary" type="submit">Đăng kí</button>
-					<button class="btn btn-light" type="reset" style="color: white">Nhập lại</button>
+					
 					</div>
 			</form>
 		</div>

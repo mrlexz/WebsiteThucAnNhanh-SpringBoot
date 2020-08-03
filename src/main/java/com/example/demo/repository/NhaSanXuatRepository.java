@@ -14,4 +14,5 @@ public interface NhaSanXuatRepository extends CrudRepository<NhaSanXuat, String>
 	
 	@Query("SELECT ss FROM NhaSanXuat ss WHERE ss.tenNhaSanXuat LIKE %:tenNhaSanXuat%")
 	Page<NhaSanXuat> findNhaSanXuatss(String tenNhaSanXuat,Pageable pageable);
+	NhaSanXuat findByTenNhaSanXuat(String ten);
 }

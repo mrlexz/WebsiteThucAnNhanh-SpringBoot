@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.example.demo.model.SanPham;
+import com.example.demo.model.TaiKhoan;
 
 public interface SanPhamRepository extends CrudRepository<SanPham, String> {
 	@Query("SELECT s FROM SanPham s")
@@ -18,4 +19,5 @@ public interface SanPhamRepository extends CrudRepository<SanPham, String> {
 	
 	@Query("SELECT sp FROM SanPham sp where sp.donGia between :start and :end and sp.tenSanPham LIKE %:tenSanPham% ")
 	Page<SanPham> findSanPhamsp(String tenSanPham,double start, double end,Pageable pageable);
+	SanPham findByTenSanPham(String ten);
 }

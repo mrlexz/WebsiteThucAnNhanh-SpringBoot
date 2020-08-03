@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -147,8 +148,8 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 	@RequestMapping(value = "/quanly/sanpham", method = RequestMethod.POST)
 	public String addSanPham(@ModelAttribute(name = "modalsanpham") SanPham sanPham) {
 		Random rd = new Random();
-		int maSp = rd.nextInt();
-		sanPham.setMaSanPham("" + maSp);
+		int maSp = rd.nextInt(1000);
+		sanPham.setMaSanPham("SP" + maSp);
 		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
 				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
 		if (sanPhamRepository.save(sanPham).equals(sanPham)) {
@@ -157,12 +158,19 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		return null;
 	}
 
-	@GetMapping(value = "/ajax/nsx")
+	
+//Ajax thêm sản phẩm
+	@PostMapping(value = "/ajax/createsanpham")
 	@ResponseBody
-	public List<NhaSanXuat> ajax() {
-		List<NhaSanXuat> list = new ArrayList<NhaSanXuat>();
-		list = (List<NhaSanXuat>) nhaSanXuatRepository.findAll();
-		return list;
+	public boolean checkNameProduct(@RequestBody String nameProduct) {
+		System.out.println(nameProduct);
+		if (nameProduct.length() > 0) {
+			SanPham sp = sanPhamRepository.findByTenSanPham(nameProduct);
+			if (sp != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 //Xóa sản phẩm
@@ -196,7 +204,7 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		return "redirect:/quanly/sanpham";
 	}
 
-// Quan ly nha san xuat
+//Quan ly nha san xuat
 	@RequestMapping("/quanly/nhasanxuat")
 	public String nhaSanXuatpage(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
@@ -248,4 +256,26 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		return null;
 	}
 
+//Ajax nhà sản xuất popup
+	@GetMapping(value = "/ajax/nsx")
+	@ResponseBody
+	public List<NhaSanXuat> ajax() {
+		List<NhaSanXuat> list = new ArrayList<NhaSanXuat>();
+		list = (List<NhaSanXuat>) nhaSanXuatRepository.findAll();
+		return list;
+	}
+
+//Ajax thêm nhà sản xuất
+	@PostMapping(value = "/ajax/creatensx")
+	@ResponseBody
+	public boolean checkNameProducer(@RequestBody String nameProducer) {
+		System.out.println(nameProducer);
+		if (nameProducer.length() > 0) {
+			NhaSanXuat nsx = nhaSanXuatRepository.findByTenNhaSanXuat(nameProducer);
+			if (nsx != null) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

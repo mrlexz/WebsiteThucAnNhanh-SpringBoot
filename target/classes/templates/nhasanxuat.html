@@ -196,16 +196,18 @@
 							<div class="col">
 								<form th:action=" @{/quanly/nhasanxuat}"
 									th:object="${modelnhasanxuat}" method="post"
-									id="formNhaSanXuat">
+									id="formNhaSanXuata">
 									<div class="form-group">
 										<label for="tenNhaSanXuat">Tên nhà sản xuất</label> <input
-											type="text" class="form-control" id="tenNhaSanXuat"
+											type="text" class="form-control" id="tenNhaSanXuat1"
 											th:field="*{tenNhaSanXuat}">
 									</div>
+										<span class="status"></span>
 									<div class="form-group">
 										<label for="diaChi">Địa chỉ</label> <input type="text"
-											class="form-control" id="diaChi" th:field="*{diaChi}">
+											class="form-control" id="diaChi1" th:field="*{diaChi}">
 									</div>
+									<span class="status1"></span>
 								</form>
 							</div>
 						</div>
@@ -213,7 +215,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" th:action="@{/quanly/nhasanxuat}"
-						form="formNhaSanXuat" class="btn btn-primary">Lưu</button>
+						form="formNhaSanXuata" class="btn btn-primary">Lưu</button>
 					<button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>

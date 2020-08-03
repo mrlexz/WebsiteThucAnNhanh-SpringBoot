@@ -161,7 +161,7 @@
 																<form action="#"
 																	th:action="@{'/quanly/sanpham/delete/{id}'(id=${sanpham.maSanPham})}"
 																	th:method="delete">
-																	<button type="submit" class="btn btn-primary">Yes</button>
+																	<button type="submit" class="btn btn-danger">Yes</button>
 																</form>
 															</div>
 														</div>
@@ -224,21 +224,25 @@
 						<div class="row">
 							<div class="col">
 								<form th:action="@{/quanly/sanpham}" th:object="${modalsanpham}"
-									method="post" id="formSanPham">
+									method="post" id="formSanPhama">
 									<div class="form-group">
 										<label for="tenSanPham">Tên sản phẩm</label> <input
-											type="text" class="form-control" id="tenSanPham"
+											 type="text" class="form-control" id="tsp"
 											th:field="*{tenSanPham}">
 									</div>
+									<span class="status"></span>
 									<div class="form-group">
 										<label for="moTa">Mô tả</label> <input type="text"
-											class="form-control" id="moTa" th:field="*{moTa}">
+											class="form-control" id="moTa1" th:field="*{moTa}">
 
 									</div>
+									<span class="status4"></span>
 									<div class="form-group">
 										<label for="donGia">Đơn giá</label> <input type="text"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 											class="form-control" id="donGia" th:field="*{donGia}">
 									</div>
+									<span class="status5"></span>
 									<div class="dropdown">
 										<label for="nhaSanXuat">Nhà sản xuất</label> <select id="nsx"
 											class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
@@ -246,9 +250,11 @@
 									</div>
 									<div class="form-group">
 										<label for="namSanXuat">Năm sản xuất</label> <input
-											type="number" class="form-control" id="namSanXuat"
+											type="text" class="form-control" id="namSanXuat"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 											th:field="*{namSanXuat}">
 									</div>
+									<span class="status6"></span>
 								</form>
 							</div>
 						</div>
@@ -256,8 +262,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" th:action="@{/quanly/sanpham}"
-						form="formSanPham" class="btn btn-primary">Lưu</button>
-					<button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						form="formSanPhama" class="btn btn-primary">Lưu</button>
+					<button type="reset"  class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
 
