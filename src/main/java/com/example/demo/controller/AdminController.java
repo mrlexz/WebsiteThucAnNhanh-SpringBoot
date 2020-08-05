@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.ChiTietHoaDonDTO;
 import com.example.demo.model.HoaDon;
+import com.example.demo.model.KhachHang;
 import com.example.demo.model.NhaSanXuat;
 import com.example.demo.model.SanPham;
 import com.example.demo.repository.HoaDonRepository;
+import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
 
@@ -42,6 +44,9 @@ public class AdminController {
 
 	@Autowired
 	private NhaSanXuatRepository nhaSanXuatRepository;
+	
+	@Autowired
+	private  KhachHangRepository khRepository ;
 
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
@@ -53,7 +58,9 @@ public class AdminController {
 	public String listDonHang(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
-			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort) {
+			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
+			@ModelAttribute("seachTenKH") String searchTenKH
+			) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("ngayLap").ascending();
@@ -63,7 +70,8 @@ public class AdminController {
 		}
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
-		// cái Pageable
+//		 cái Pageable
+		// KhachHang h = khRepository.findBymaKhachHang("402880e87346075d0173460b5cf40000");
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDons(pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
@@ -83,14 +91,15 @@ public class AdminController {
 		Page<ChiTietHoaDonDTO> cthdDTO = new PageImpl<ChiTietHoaDonDTO>(listDTO, pageable, listDTO.size());
 		cthdDTO.getSort().descending();
 		model.addAttribute("listDTO", cthdDTO);
-		for (int j = 0; j < cthdDTO.getContent().size(); j++) {
+for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 			System.out.println(cthdDTO.getContent().get(j).getHoTenKhachHang());
 		}
-
+		
 		int totalPage = pageHoaDon.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
+			model.addAttribute("searchTenKH",searchTenKH);
 		}
 		return "quanly-donhang";
 	}
@@ -103,6 +112,9 @@ public class AdminController {
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
 			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,@ModelAttribute(name = "name")  String name) {
 		Sort sortable = null;
+		
+//		System.out.println(sanPhamRepository.findBydonGiaBetween(1, 2) + "sssssssssssssssssss");
+		
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("id").ascending();
 		}
@@ -189,7 +201,9 @@ public class AdminController {
 	public String nhaSanXuatpage(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
-			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort) {
+			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
+			@ModelAttribute(name = "searchNsx")  String searchNsx
+			) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("maNhaSanXuat").ascending();
@@ -201,15 +215,15 @@ public class AdminController {
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<NhaSanXuat> pageNhaSanXuat = nhaSanXuatRepository.findNhaSanXuats(pageable);
+		Page<NhaSanXuat> pageNhaSanXuat = nhaSanXuatRepository.findNhaSanXuatss(searchNsx,pageable);
 		int totalPage = pageNhaSanXuat.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 		model.addAttribute("modelnhasanxuat", new NhaSanXuat());
-		model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findNhaSanXuats(pageable));
-//		System.out.println(nhaSanXuatRepository.findAll());
+		model.addAttribute("searchNsx", searchNsx);
+		model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findNhaSanXuatss(searchNsx,pageable));
 		return "nhasanxuat";
 	}
 

@@ -44,14 +44,15 @@
 							<div class="searchCol">
 								<form class="form-inline mr-auto" target="_self">
 									<div class="form-group">
-										<label for="search-field">Tên sản phẩm</label><input
-											class="form-control search-field" type="search" name="name"
+										<input
+											class="form-control search-field" type="text" required="required" name="name"
 											id="search-field">
 									</div>
 									<button type="submit" th:action="@{/quanly/sanpham/{name}'(name=${name})}"
 									class="btn btn-primary">Search</button>
+									<a th:href="@{/quanly/sanpham}" ><button type="button" style= "margin-left: 10px;" class="btn btn-primary btn">All</button></a>
 									<button class="btn btn-primary" type="button"
-										style="margin-left: 170px;" data-toggle="modal"
+										style="margin-left: 560px;" data-toggle="modal"
 										data-target=".inputmodal">Thêm sản phẩm</button>
 								</form>
 
@@ -263,5 +264,10 @@
 		<div th:replace="/header :: footer"></div>
 	</footer>
 </body>
-
+<script type = "text/javascript">
+function clearSearch(){
+	location.reload();
+}
+</script>
 </html>
+
