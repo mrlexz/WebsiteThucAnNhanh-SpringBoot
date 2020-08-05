@@ -1,86 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
-<head><title>Chi tiết sản phẩm<th:block
+<head>
+<title>Chi tiết sản phẩm<th:block
 		th:text="${sanpham.tenSanPham}"></th:block>
 </title>
-	<div th:replace="/header :: header"></div>
+<div th:replace="/header :: header"></div>
 </head>
 <body class="body-custom">
-<nav th:replace="/header :: navbar"></nav>
-<main class="page product-page">
-	<section class="clean-block clean-product dark">
-		<div class="container">
-			<div class="block-heading">
-				<h2 class="text-info">Chi tiết sản phẩm</h2>
-			</div>
-			<div class="block-content cart-details">
-				<div class="product-info">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="gallery curved-border">
-								<div class="sp-wrap">
-									<a th:href="@{${sanpham.imgURL}}" size="300px"><img
+	<nav th:replace="/header :: navbar"></nav>
+	<main class="page product-page">
+		<section class="clean-block clean-product dark">
+			<div class="container">
+				<div class="block-heading">
+					<h2 class="text-info">Chi tiết sản phẩm</h2>
+				</div>
+				<div class="block-content cart-details">
+					<div class="product-info">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="gallery curved-border">
+									<div class="sp-wrap">
+										<a th:href="@{${sanpham.imgURL}}" size="300px"><img
 											class="img-fluid d-block mx-auto"
 											th:src="@{${sanpham.imgURL}}"></a>
 
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="info">
-								<h3 th:text="${sanpham.tenSanPham}"></h3>
-								<div class="price">
-									<h3 th:text="${sanpham.donGia+'00 VND'} "></h3>
-								</div>
-								<a
+							<div class="col-md-6">
+								<div class="info">
+									<h3 th:text="${sanpham.tenSanPham}"></h3>
+									<div class="price">
+										<h3 th:text="${sanpham.donGia+'00 VND'} "></h3>
+									</div>
+									<a
 										th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
-									<button class="btn btn-sm add-button" type="button">Thêm vào giỏ hàng</button>
-								</a>
-								<div class="summary">
-									<p th:text="${sanpham.moTa}"></p>
+										<button class="btn btn-sm add-button" type="button">Thêm
+											vào giỏ hàng</button>
+									</a>
+									<div class="summary">
+										<p th:text="${sanpham.moTa}"></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="clean-related-items comment-details">
-					<h3>Các đánh giá khách hàng</h3>
-					<div class="items">
-						<div class="row justify-content-center">
-							<div class="col-sm-6 col-md-6 col-lg-6">
-								<th:block th:each="danhgia : ${sanpham.danhGias}">
-									<div class="col-12">
-										<div class="clean-product-item">
-											<span th:text="${danhgia.khachHang+' Đã nhận xét'}"></span>
-											<span th:text="${danhgia.noiDung}"></span>
+					<div class="clean-related-items comment-details">
+						<h3>Các đánh giá khách hàng</h3>
+						<div class="items">
+							<div class="row justify-content-center">
+								<div class="col-sm-6 col-md-6 col-lg-6">
+									<th:block th:each="danhgia : ${sanpham.danhGias}">
+										<div class="col-12">
+											<div class="clean-product-item">
+												<i style="font-size: 25px; margin-right: 10px" class="fas">&#xf501;</i> 
+													<span
+													style="font-size: 25px; font-weight: bold; color:royalblue;"
+													th:text="${danhgia.khachHang}"></span><br> <span
+													th:text="${danhgia.noiDung}"></span>
+											</div>
 										</div>
-									</div>
-								</th:block>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6">
-								<form th:action="@{/sanpham_danhgia/{id}(id=${sanpham.maSanPham})}" th:object="${danhgianew}"
-									  method="POST">
-									<div class="form-group input-comment">
+									</th:block>
+								</div>
+								<div class="col-sm-6 col-md-6 col-lg-6">
+									<form
+										th:action="@{/sanpham_danhgia/{id}(id=${sanpham.maSanPham})}"
+										th:object="${danhgianew}" method="POST">
+										<div class="form-group input-comment">
 											<textarea class="form-control" required="required"
-													  placeholder="Để lại đánh giá của bạn"
-													  th:field="*{noiDung}" ></textarea>
-										<input class="form-control" type="hidden" th:field="*{sanPham}" th:value="*{sanPham}"/>
-										<div class="button-wrap">
-											<button class="btn btn-primary add-button" type="submit">Gửi đánh giá</button>
+												placeholder="Để lại đánh giá của bạn" th:field="*{noiDung}"></textarea>
+											<input class="form-control" type="hidden"
+												th:field="*{sanPham}" th:value="*{sanPham}" />
+											<div class="button-wrap">
+												<button class="btn btn-primary add-button" type="submit">Gửi
+													đánh giá</button>
+											</div>
 										</div>
-									</div>
-								</form></div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
 			</div>
-		</div>
-	</section>
-</main>
-	<footer><div th:replace="/header :: footer"></div></footer>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<div th:replace="/header :: footer"></div>
+	</footer>
 </body>
 
 </html>
