@@ -100,7 +100,8 @@ public class AdminController {
 	public String listSanPham(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
-			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort) {
+			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
+			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,@ModelAttribute(name = "name")  String name) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("id").ascending();
@@ -112,7 +113,9 @@ public class AdminController {
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<SanPham> pageSanPham = sanPhamRepository.findSanPhams(pageable);
+		// Page<SanPham> pageSanPham = sanPhamRepository.findSanPhams(pageable);
+		Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamss(name,pageable);
+		
 		int totalPage = pageSanPham.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -121,11 +124,10 @@ public class AdminController {
 		SanPham sanphamnew = new SanPham();
 		Random rd = new Random();
 		int maSp = rd.nextInt();
-//		sanphamnew.setMaSanPham("" + maSp);
-//		sanphamnew.setNhaSanXuat(new NhaSanXuat("nsx" + maSp, "abc", "odaudo"));
 		model.addAttribute("modalsanpham", new SanPham());
+		model.addAttribute("name", name);
 //		sanPhamRepository.save(sanphamnew);
-		model.addAttribute("listSanPham", sanPhamRepository.findSanPhams(pageable));
+		model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name,pageable));
 		return "quanly-sanpham";
 	}
 
@@ -142,10 +144,10 @@ public class AdminController {
 		}
 		return null;
 	}
-	
+
 	@GetMapping(value = "/ajax/nsx")
 	@ResponseBody
-	public List<NhaSanXuat>  ajax() {
+	public List<NhaSanXuat> ajax() {
 		List<NhaSanXuat> list = new ArrayList<NhaSanXuat>();
 		list = (List<NhaSanXuat>) nhaSanXuatRepository.findAll();
 		return list;
@@ -164,16 +166,18 @@ public class AdminController {
 
 // Sửa sản phẩm
 	@PostMapping(value = "/quanly/sanpham/edit/{id}")
-	public String editSanPham(@ModelAttribute(name ="edit") SanPham sanPham,
+	public String editSanPham(@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,
 			@PathVariable(name = "id") String maSanPham) {
+
 //	if(sanPhamRepository.findById(maSanPham).isPresent()) {
 //		sanPham.setMaSanPham(maSanPham);
 //		
 //	}
-		System.out.println(sanPham);
-		System.out.println(sanPhamRepository.findById(maSanPham) + "aaaaaaaaaaaaaa");
-		SanPham sp = sanPhamRepository.findById(maSanPham).get();
-		System.out.println(sp.getTenSanPham());
+		
+		System.out.println(sanPham.getTenSanPham());
+//		System.out.println(sanPhamRepository.findById(maSanPham) + "aaaaaaaaaaaaaa");
+//		SanPham sp = sanPhamRepository.findById(maSanPham).get();
+//		System.out.println(sp.getTenSanPham());
 //		System.out.println(sanPham.getTenSanPham());
 //		System.out.println(sanPham + "aaaaaaaaaaaaaasssss");
 ////		System.out.println(sanPham + "ádfghjk");
