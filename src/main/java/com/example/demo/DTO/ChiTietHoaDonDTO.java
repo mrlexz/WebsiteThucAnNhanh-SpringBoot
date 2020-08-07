@@ -28,6 +28,20 @@ public class ChiTietHoaDonDTO {
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 	}
+	
+
+	public ChiTietHoaDonDTO(String maHoaDon, LocalDate ngayLap, String hoTenKhachHang, String soDienThoai, String diaChi,
+			double tongTien, int soLuong) {
+		
+		this.maHoaDon = maHoaDon;
+		this.ngayLap = ngayLap;
+		this.hoTenKhachHang = hoTenKhachHang;
+		this.soDienThoai = soDienThoai;
+		this.diaChi = diaChi;
+		this.tongTien = tongTien;
+		this.soLuong = soLuong;
+	}
+
 
 	public LocalDate getNgayLap() {
 		return ngayLap;

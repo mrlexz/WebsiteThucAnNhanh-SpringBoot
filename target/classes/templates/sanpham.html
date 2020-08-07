@@ -2,125 +2,144 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-	<title>Sản Phẩm</title>
+<title>Sản Phẩm</title>
 <div th:replace="/header :: header"></div>
 </head>
 
 <body class="body-custom">
 	<div th:replace="/header :: navbar"></div>
 	<main class="page catalog-page">
-	<section class="clean-block clean-catalog dark">
-		<div class="container">
-			<div class="block-heading">
-				<h2 class="text-info">Fresh Sandwich</h2>
-			</div>
-			<div class="content cart-custom">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="d-none d-md-block">
-							<div class="filters search-box-details">
-								<div class="filter-item">
-									<h3>Loại thức ăn thức uống</h3>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											   id="formCheck-5" /><label class="form-check-label"
-																		 for="formCheck-5">Pizza</label>
+		<section class="clean-block clean-catalog dark">
+			<div class="container">
+				<div class="block-heading">
+					<h2 class="text-info">Fresh Sandwich</h2>
+				</div>
+				<div class="content cart-custom">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="d-none d-md-block">
+								<div class="filters search-box-details">
+									<div class="search-container">
+										<form>
+											<input type="text" placeholder="Search..." name="name"
+												style="width: 132px;">
+											<button type="submit"
+												th:action="@{/sanpham/{name}'(name=${name})}">
+												<i class="fa fa-search" style="color: white"></i>
+											</button>
+											<a th:href="@{/sanpham}"><button type="button"
+													style="margin-left: 5px; color: white;">All</button></a>
+										</form>
 									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											   id="formCheck-6" /><label class="form-check-label"
-																		 for="formCheck-6">Sandwich</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											   id="formCheck-7" /><label class="form-check-label"
-																		 for="formCheck-7">Cookie</label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input"
-											   id="formCheck-7" /><label class="form-check-label"
-																		 for="formCheck-7">Khác</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="d-md-none">
-							<a class="btn btn-link d-md-none filter-collapse"
-								data-toggle="collapse" aria-expanded="false"
-								aria-controls="filters" role="button" href="#filters">Filters<i
-								class="icon-arrow-down filter-caret"></i></a>
-							<div class="collapse" id="filters">
-								<div class="filters">
 									<div class="filter-item">
-										<h3>Loại</h3>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox"
-												id="formCheck-5" /><label class="form-check-label"
-												for="formCheck-5">Sandwich</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox"
-												id="formCheck-6" /><label class="form-check-label"
-												for="formCheck-6">Pizza</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox"
-												id="formCheck-7" /><label class="form-check-label"
-												for="formCheck-7">Thức uống</label>
+										<h3>Lọc theo giá</h3>
+										<form>
+											<input type="hidden" value="loai1" name="price">
+											<button type="submit"
+												th:action="@{/sanpham/{price}'(price=${price})}">
+												Giá < 50k</button>
+										</form>
+										<form>
+											<input type="hidden" value="loai2" name="price">
+											<button type="submit"
+												th:action="@{/sanpham/{price}'(price=${price})}">
+												50k - 100k</button>
+										</form>
+										<form>
+											<input type="hidden" value="loai3" name="price">
+											<button type="submit"
+												th:action="@{/sanpham/{price}'(price=${price})}">
+												Giá > 100k</button>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="d-md-none">
+								<a class="btn btn-link d-md-none filter-collapse"
+									data-toggle="collapse" aria-expanded="false"
+									aria-controls="filters" role="button" href="#filters">Filters<i
+									class="icon-arrow-down filter-caret"></i></a>
+								<div class="collapse" id="filters">
+									<div class="filters">
+										<div class="filter-item">
+											<h3>Loại</h3>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox"
+													id="formCheck-5" /><label class="form-check-label"
+													for="formCheck-5">Sandwich</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox"
+													id="formCheck-6" /><label class="form-check-label"
+													for="formCheck-6">Pizza</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox"
+													id="formCheck-7" /><label class="form-check-label"
+													for="formCheck-7">Thức uống</label>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-9">
-						<div class="products">
-							<div class="row no-gutters">
-								<th:block th:each="sanpham : ${listSanPham}">
-									<div class="col-12 col-md-6 col-lg-4">
-										<div class="clean-product-item details-item">
-											<div class="image">
-												<a th:href="@{/sanpham/{id}(id=${sanpham.maSanPham})}"><img
+						<div class="col-md-9">
+							<div class="products">
+								<div class="row no-gutters">
+									<th:block th:each="sanpham : ${listSanPham}">
+										<div class="col-12 col-md-6 col-lg-4">
+											<div class="clean-product-item details-item">
+												<div class="image">
+													<a th:href="@{/sanpham/{id}(id=${sanpham.maSanPham})}"><img
 														class="img-fluid d-block mx-auto image"
 														th:src="@{${sanpham.imgURL}}"></a>
-											</div>
-											<div class="product-name">
-												<div>
-													<a th:href="@{/sanpham/{id}(id=${sanpham.maSanPham})}"
-												   	th:text="${sanpham.tenSanPham}"></a>
-												 </div>
-												 <div class="price details-item details-item-price">
-													<h3 th:text="${sanpham.donGia+'00 VND'}"></h3>
 												</div>
-											</div>
-											<div class="about add-cart-button">
-												<div class="rating details-item">
-													<a
+												<div class="product-name">
+													<div>
+														<a th:href="@{/sanpham/{id}(id=${sanpham.maSanPham})}"
+															th:text="${sanpham.tenSanPham}"></a>
+													</div>
+													<div class="price details-item details-item-price">
+														<h3 th:text="${sanpham.donGia+'00 VND'}"></h3>
+													</div>
+												</div>
+												<div class="about add-cart-button">
+													<div class="rating details-item">
+														<a
 															th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
-														<button class="btn btn-sm" type="button">Thêm vào giỏ hàng</button>
-													</a>
+															<button class="btn btn-sm" type="button">Thêm
+																vào giỏ hàng</button>
+														</a>
+													</div>
+
 												</div>
-												
 											</div>
 										</div>
+									</th:block>
+								</div>
+								<nav>
+									<ul class="pagination">
+
+										<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
+											class="page-link" th:href="@{/sanpham(page=${pageNumber},name=${name},price=${price})}"
+											th:text=${pageNumber}></a></li>
+									</ul>
+									<div style="display: flex; justify-content: flex-end;">
+										<p style="color: white">
+											Total: <a th:text=${total}></a>
+										</p>
 									</div>
-								</th:block>
+								</nav>
 							</div>
-							<nav>
-								<ul class="pagination">
-									<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
-										class="page-link" th:href="@{/sanpham(page=${pageNumber})}"
-										th:text=${pageNumber}></a></li>
-								</ul>
-							</nav>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	</main>
-	<footer><div th:replace="/header :: footer"></div></footer>
+	<footer>
+		<div th:replace="/header :: footer"></div>
+	</footer>
 </body>
 
 </html>

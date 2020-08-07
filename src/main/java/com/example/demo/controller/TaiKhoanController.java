@@ -53,28 +53,27 @@ public class TaiKhoanController {
 		model.addAttribute("taikhoan", taiKhoan);
 		return "dangky";
 	}
-
+	@RequestMapping( value = "/dangky", method = RequestMethod.POST)
+	public String createNewUser(@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
+		KhachHang kh = taiKhoan.getKhachHang();
+		kh.setTaiKhoan(taiKhoan);
+		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
+		taiKhoan.setKhachHang(kh);
+		if(TaiKhoanService.save(taiKhoan)) {
+			khachHangRepository.save(kh);
+			return "redirect:/dangnhap";
+		}
+		return "dangky";
+	}
 	@PostMapping(value = "ajax/dangky")
 	@ResponseBody
 	public Boolean createNewUser(@RequestBody() String username) {
-		
 		if (username.length() > 0) {
 			TaiKhoan tk = taiKhoanRepository.findByTenTaiKhoan(username);
 			if (tk!=null) {
 				return true;
 			}
 		}
-//		System.out.println(tk.getTenTaiKhoan());
-//		System.out.println(taiKhoan..getHoTen());
-//		System.out.println(taiKhoan.getEmail());
-//		KhachHang kh = taiKhoan.getKhachHang();
-//		kh.setTaiKhoan(taiKhoan);
-//		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
-//		taiKhoan.setKhachHang(kh);
-//		if (TaiKhoanService.save(taiKhoan)) {
-//			khachHangRepository.save(kh);
-//			return "redirect:/";
-//		}
 		return false;
 
 	}
