@@ -121,7 +121,7 @@
 									<ul class="pagination">
 
 										<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
-											class="page-link" th:href="@{/sanpham(page=${pageNumber})}"
+											class="page-link" th:href="@{/sanpham(page=${pageNumber},name=${name},price=${price})}"
 											th:text=${pageNumber}></a></li>
 									</ul>
 									<div style="display: flex; justify-content: flex-end;">

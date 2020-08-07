@@ -38,16 +38,18 @@
 											<div class="searchCol">
 												<form class="form-inline mr-auto" target="_self">
 													<div class="form-group">
-														<label for="search-field">Tên nhà sản xuất &nbsp;</label><input
-															class="form-control search-field" type="search"
+														<input class="form-control search-field" type="search"
 															name="searchNsx" id="search-field">
 													</div>
 													<button type="submit"
 														th:action="@{/quanly/nhasanxuat/{name}'(name=${searchNsx})}"
 														class="btn btn-primary">Search</button>
+													<a th:href="@{/quanly/nhasanxuat}"><button
+															type="button" style="margin-left: 10px;"
+															class="btn btn-primary btn">All</button></a>
 													<button class="btn btn-primary" type="button"
 														data-toggle="modal" data-target=".inputmodal"
-														style="margin-left: 170px;">Thêm nhà sản xuất</button>
+														style="margin-left: 550px;">Thêm nhà sản xuất</button>
 
 
 												</form>
@@ -170,9 +172,14 @@
 										<ul class="pagination">
 											<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
 												class="page-link"
-												th:href="@{/quanly/nhasanxuat(page=${pageNumber})}"
+												th:href="@{/quanly/nhasanxuat(page=${pageNumber},name=${searchNsx})}"
 												th:text=${pageNumber}></a></li>
 										</ul>
+										<div style="display: flex; justify-content: flex-end;">
+										<p style="color: blue">
+											Total: <a th:text=${total}></a>
+										</p>
+									</div>
 									</nav>
 								</div>
 							</div>
@@ -202,7 +209,7 @@
 											type="text" class="form-control" id="tenNhaSanXuat1"
 											th:field="*{tenNhaSanXuat}">
 									</div>
-										<span class="status"></span>
+									<span class="status"></span>
 									<div class="form-group">
 										<label for="diaChi">Địa chỉ</label> <input type="text"
 											class="form-control" id="diaChi1" th:field="*{diaChi}">
@@ -214,7 +221,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" th:action="@{/quanly/nhasanxuat}"
+					<button id="submitAddProducer" type="submit" th:action="@{/quanly/nhasanxuat}"
 						form="formNhaSanXuata" class="btn btn-primary">Lưu</button>
 					<button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</div>

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,7 +10,7 @@ import com.example.demo.model.KhachHang;
 import com.example.demo.model.TaiKhoan;
 import com.example.demo.repository.DanhGiaRepository;
 import com.example.demo.repository.TaiKhoanRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +41,10 @@ public class SanPhamController {
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "6") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
-			@ModelAttribute(name = "name") String name, @ModelAttribute(name = "price") String price
+			@RequestParam(name = "name", required = false, defaultValue = "") String name,
+			@RequestParam(name = "price", required = false, defaultValue ="") String price
 //			
-	) {	
+	) {
 		if (!price.equals("")) {
 			double start = 0;
 			double end = 50;
@@ -61,7 +61,6 @@ public class SanPhamController {
 				end = 1000;
 				System.out.println("loai3");
 			}
-			System.out.println(start + end  +"dm");
 			Sort sortable = null;
 			if (sort.equals("ASC")) {
 				sortable = Sort.by("id").ascending();
@@ -73,41 +72,43 @@ public class SanPhamController {
 			Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 			Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamsp(name, start, end, pageable);
 			int totalPage = pageSanPham.getTotalPages();
-			System.out.println(pageSanPham.getTotalElements()+"dmdmdm");
 			if (totalPage > 0) {
 				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 				model.addAttribute("pageNumbers", pageNumbers);
-				model.addAttribute("total",pageSanPham.getTotalElements());
-				
+				model.addAttribute("total", pageSanPham.getTotalElements());
+
 			}
 			model.addAttribute("listSanPham", sanPhamRepository.findSanPhamsp(name, start, end, pageable));
 			model.addAttribute("name", name);
+			model.addAttribute("price", price);
 			return "sanpham";
+
+		} else {
+			Sort sortable = null;
+			if (sort.equals("ASC")) {
+				sortable = Sort.by("id").ascending();
+			}
+			if (sort.equals("DESC")) {
+				sortable = Sort.by("id").descending();
+			}
+			int currentPage = page.orElse(1);
+			Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
+			Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamss(name, pageable);
+			int totalPage = pageSanPham.getTotalPages();
+			if (totalPage > 0) {
+				List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+				model.addAttribute("pageNumbers", pageNumbers);
+			}
+			model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name, pageable));
+			model.addAttribute("name", name);
+			model.addAttribute("price", price);
 			
+			model.addAttribute("total", pageSanPham.getTotalElements());
+			model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findAll());
+			return "sanpham";
 		}
-		else {
-		Sort sortable = null;
-		if (sort.equals("ASC")) {
-			sortable = Sort.by("id").ascending();
-		}
-		if (sort.equals("DESC")) {
-			sortable = Sort.by("id").descending();
-		}
-		int currentPage = page.orElse(1);
-		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamss(name, pageable);
-		int totalPage = pageSanPham.getTotalPages();
-		if (totalPage > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-		model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name, pageable));
-		model.addAttribute("name", name);
-		model.addAttribute("total",pageSanPham.getTotalElements());
-		model.addAttribute("listNhaSanXuat",nhaSanXuatRepository.findAll());
-		return "sanpham";
 	}
-	}
+
 	@RequestMapping(value = "/sanpham/{maSanPham}")
 	public String getChitietSanPham(Model model, Model model2, @PathVariable(name = "maSanPham") String maSanPham) {
 		Optional<SanPham> sp = sanPhamRepository.findById(maSanPham);

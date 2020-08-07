@@ -71,7 +71,31 @@
 											<th>Description</th>
 											<th>Type</th>
 											<th>Year</th>
-											<th>Price</th>
+											<th><div style="display: flex; align-items: center;">
+														Price
+														<form class="form-inline" target="_self">
+															<div class="form-group">
+																<input value="ASC" type="hidden" name="sort"
+																	id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+																class="btn btn-primary sort">
+																<i class="fa fa-arrow-up" aria-hidden="true"></i>
+															</button>
+														</form>
+														<form class="form-inline" target="_self">
+															<div class="form-group">
+																<input value="DESC" type="hidden" name="sort"
+																	id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+																class="btn btn-primary sort">
+																<i class="fa fa-arrow-down" aria-hidden="true"></i>
+															</button>
+														</form>
+													</div></th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -126,17 +150,17 @@
 																						name="namSanXuat" th:value="${sanpham.namSanXuat}">
 
 																				</div>
+																				<div class="form-group">
+																					<button type="submit" class="btn btn-primary">Lưu</button>
+																					<button type="button" class="btn btn-danger"
+																						data-dismiss="modal">Cancel</button>
+																				</div>
 																			</form>
 																		</div>
 																	</div>
 																</div>
 															</div>
-															<div class="modal-footer">
-																<button type="submit" th:action="@{/quanly/sanpham/}"
-																	form="formEditSanPham" class="btn btn-primary">Lưu</button>
-																<button type="submit" class="btn btn-danger"
-																	data-dismiss="modal">Cancel</button>
-															</div>
+															<div class="modal-footer"></div>
 														</div>
 													</div>
 												</div> <!-- Modal -->
@@ -201,9 +225,14 @@
 								<ul class="pagination">
 									<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
 										class="page-link"
-										th:href="@{/quanly/sanpham(page=${pageNumber})}"
+										th:href="@{/quanly/sanpham(page=${pageNumber},name=${name})}"
 										th:text=${pageNumber}></a></li>
 								</ul>
+								<div style="display: flex; justify-content: flex-end;">
+									<p style="color: blue">
+										Total: <a th:text=${total}></a>
+									</p>
+								</div>
 							</nav>
 						</div>
 					</div>
@@ -227,7 +256,7 @@
 									method="post" id="formSanPhama">
 									<div class="form-group">
 										<label for="tenSanPham">Tên sản phẩm</label> <input
-											 type="text" class="form-control" id="tsp"
+											type="text" class="form-control" id="tsp"
 											th:field="*{tenSanPham}">
 									</div>
 									<span class="status"></span>
@@ -261,9 +290,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" th:action="@{/quanly/sanpham}"
+					<button id="submitAddProduct" type="submit" th:action="@{/quanly/sanpham}"
 						form="formSanPhama" class="btn btn-primary">Lưu</button>
-					<button type="reset"  class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button type="reset" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
 

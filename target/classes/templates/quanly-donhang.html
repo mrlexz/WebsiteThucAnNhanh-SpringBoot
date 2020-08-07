@@ -30,13 +30,14 @@
 										<div class="searchCol">
 											<form class="form-inline mr-auto" target="_self">
 												<div class="form-group">
-													<label for="search-field">Tìm Đơn hàng&nbsp;</label><input
-														class="form-control search-field" type="search"
+													<input class="form-control search-field" type="search"
 														name="seachTenKH" id="search-field">
 												</div>
 												<button type="submit"
-														th:action="@{/quanly/donhang/{name}'(name=${seachTenKH})}"
-														class="btn btn-primary">Search</button>
+													th:action="@{/quanly/donhang/{name}'(name=${seachTenKH})}"
+													class="btn btn-primary">Search</button>
+												<a th:href="@{/quanly/nhasanxuat}"><button type="button"
+														style="margin-left: 10px;" class="btn btn-primary btn">All</button></a>
 											</form>
 										</div>
 									</div>
@@ -46,76 +47,68 @@
 									<table id="quanlydonhangTable" class="table">
 										<thead>
 											<tr>
-												<th>Ten san pham</th>
-												<th>Gia</th>
-												<th>So Luong</th>
-												<th>Ngày đặt hàng</th>
 												<th>Họ Tên</th>
 												<th>SĐT</th>
 												<th>Địa chỉ</th>
+												<th>So Luong</th>
+												<th><div style="display: flex; align-items: center;">
+														Ngày đặt hàng
+														<form class="form-inline" target="_self">
+															<div class="form-group">
+																<input value="ASC" type="hidden" name="sort"
+																	id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/donhang/{sort}'(sort=${sort})}"
+																class="btn btn-primary sort">
+																<i class="fa fa-arrow-up" aria-hidden="true"></i>
+															</button>
+														</form>
+														<form class="form-inline" target="_self">
+															<div class="form-group">
+																<input value="DESC" type="hidden" name="sort"
+																	id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/donhang/{sort}'(sort=${sort})}"
+																class="btn btn-primary sort">
+																<i class="fa fa-arrow-down" aria-hidden="true"></i>
+															</button>
+														</form>
+													</div></th>
 												<th>Tổng tiền</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="chiTietDTO : ${listDTO}">
-												<td th:text="${chiTietDTO.tenSanPham}"></td>
-												<td th:text="${chiTietDTO.donGia+ '00VND'}"></td>
-												<td th:text="${chiTietDTO.soLuong}"></td>
-												<td th:text="${chiTietDTO.ngayLap}"></td>
 												<td th:text="${chiTietDTO.hoTenKhachHang}"></td>
 												<td th:text="${chiTietDTO.soDienThoai}"></td>
 												<td th:text="${chiTietDTO.diaChi}"></td>
+												<td th:text="${chiTietDTO.soLuong}"></td>
+												<td th:text="${chiTietDTO.ngayLap}"></td>
 												<td th:text="${chiTietDTO.getTongTien()+'00VND'}"></td>
 											</tr>
 										</tbody>
-										<!-- 	<tbody>
-												<tr th:each="chiTietDTO : ${listDTO}">
-													<td th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}" class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></td>
-													<td th:text="${chitiet.donGia+ '00VND'}"></td>
-													<td th:text="${chitiet.soLuong}"></td>
-													<td th:text="${donhang.ngayLap}"></td>
-													<td th:text="${donhang.khachHang.hoTenKhachHang}"></td>
-													<td th:text="${donhang.khachHang.soDienThoai}"></td>
-													<td th:text="${donhang.khachHang.diaChi}"></td>
-													<td th:text="${donhang.getTongTien()+'00VND'}"></td>
-												</tr> 
-											</tbody> -->
 									</table>
 								</div>
 								<nav>
 									<ul class="pagination">
 										<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
 											class="page-link"
-											th:href="@{/quanly/donhang(page=${pageNumber})}"
+											th:href="@{/quanly/donhang(page=${pageNumber},name=${seachTenKH})}"
 											th:text=${pageNumber}></a></li>
 									</ul>
+									<div style="display: flex; justify-content: flex-end;">
+										<p style="color: blue">
+											Total: <a th:text=${total}></a>
+										</p>
+									</div>
 								</nav>
-
-								<!--  <div class="product">
-                                <div class="row justify-content-center align-items-center mt-3"
-                                     th:each="donhang : ${listHoaDon}">
-                                    <div class="col-md-6">
-                                        <h5>Thông tin khách hàng</h5>
-                                        <span class="text">Ngày Đặt hàng: </span><span class="nameValue" th:text="${donhang.ngayLap}"></span><br>
-                                        <span class="text">Họ Tên: </span><span class="nameValue" th:text="${donhang.khachHang.hoTenKhachHang}"></span><br>
-                                        <span class="text">Số điện thoại: </span><span class="nameValue" th:text="${donhang.khachHang.soDienThoai}"></span><br>
-                                        <span class="text">Địa chỉ nhận hàng: </span><span class="nameValue" th:text="${donhang.khachHang.diaChi}"></span><br>
-                                        <h4><span class="text">Tổng tiền: </span><span class="price" th:text="${donhang.getTongTien()+'00VND'}"></span></h4><br>
-                                    </div> -->
-								<!-- <div class="col-md-6 product-info">
-                                        <div class="col-" th:each="chitiet : ${donhang.dssp}">
-                                             <span class="text">Tên sản phẩm: </span><a th:href="@{/sanpham/{id}(id=${chitiet.sanPham.maSanPham})}"><span class="nameValue" th:text="${chitiet.sanPham.tenSanPham}"></span></a><br>
-                                            <span class="text">Giá: </span><span class="nameValue" th:text="${chitiet.donGia+ '00VND'}"></span><br>
-                                            <span class="text">Số lượng: </span><span class="nameValue" th:text="${chitiet.soLuong}"></span><br>
-                                        </div>
-                                    </div> -->
 								<hr>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			</div>
 			</div>
 		</section>
 	</main>

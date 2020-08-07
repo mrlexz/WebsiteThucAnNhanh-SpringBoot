@@ -45,23 +45,23 @@ public class AdminController {
 
 	@Autowired
 	private NhaSanXuatRepository nhaSanXuatRepository;
-	
+
 	@Autowired
-	private  KhachHangRepository khRepository ;
+	private KhachHangRepository khRepository;
 
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
 
 		return "quanly-sanpham";
 	}
+
 //Quản lý đơn hàng
 	@RequestMapping(value = "/quanly/donhang")
 	public String listDonHang(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
-			@ModelAttribute("seachTenKH") String searchTenKH
-			) {
+			@RequestParam(name = "seachTenKH", required = false, defaultValue = "") String searchTenKH) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("ngayLap").ascending();
@@ -72,7 +72,6 @@ public class AdminController {
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 //		 cái Pageable
-		// KhachHang h = khRepository.findBymaKhachHang("402880e87346075d0173460b5cf40000");
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDons(pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
@@ -82,25 +81,22 @@ public class AdminController {
 					pageHoaDon.getContent().get(i).getKhachHang().getHoTenKhachHang(),
 					pageHoaDon.getContent().get(i).getKhachHang().getSoDienThoai(),
 					pageHoaDon.getContent().get(i).getKhachHang().getDiaChi(),
-					pageHoaDon.getContent().get(i).getTongTien(),
-					pageHoaDon.getContent().get(i).getDssp().get(0).getSanPham().getTenSanPham(),
-					pageHoaDon.getContent().get(i).getDssp().get(0).getSoLuong(),
-					pageHoaDon.getContent().get(i).getDssp().get(0).getDonGia());
-
+					pageHoaDon.getContent().get(i).getTongTien(), pageHoaDon.getContent().get(i).getDssp().size());
 			listDTO.add(chiTietDTO);
 		}
 		Page<ChiTietHoaDonDTO> cthdDTO = new PageImpl<ChiTietHoaDonDTO>(listDTO, pageable, listDTO.size());
 		cthdDTO.getSort().descending();
 		model.addAttribute("listDTO", cthdDTO);
-for (int j = 0; j < cthdDTO.getContent().size(); j++) {
+		for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 			System.out.println(cthdDTO.getContent().get(j).getHoTenKhachHang());
 		}
-		
+
 		int totalPage = pageHoaDon.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
-			model.addAttribute("searchTenKH",searchTenKH);
+			model.addAttribute("searchTenKH", searchTenKH);
+			model.addAttribute("total", pageHoaDon.getNumberOfElements());
 		}
 		return "quanly-donhang";
 	}
@@ -111,24 +107,21 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
-			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,@ModelAttribute(name = "name")  String name) {
+			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,
+			@RequestParam(name = "name", defaultValue = "", required = false) String name) {
 		Sort sortable = null;
-		
-//		System.out.println(sanPhamRepository.findBydonGiaBetween(1, 2) + "sssssssssssssssssss");
-		
 		if (sort.equals("ASC")) {
-			sortable = Sort.by("id").ascending();
+			sortable = Sort.by("donGia").ascending();
 		}
 		if (sort.equals("DESC")) {
-			sortable = Sort.by("id").descending();
+			sortable = Sort.by("donGia").descending();
 		}
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		// Page<SanPham> pageSanPham = sanPhamRepository.findSanPhams(pageable);
-		Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamss(name,pageable);
-		
+		Page<SanPham> pageSanPham = sanPhamRepository.findSanPhamss(name, pageable);
+
 		int totalPage = pageSanPham.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -139,8 +132,8 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		int maSp = rd.nextInt();
 		model.addAttribute("modalsanpham", new SanPham());
 		model.addAttribute("name", name);
-//		sanPhamRepository.save(sanphamnew);
-		model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name,pageable));
+		model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name, pageable));
+		model.addAttribute("total", pageSanPham.getNumberOfElements());
 		return "quanly-sanpham";
 	}
 
@@ -158,7 +151,6 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		return null;
 	}
 
-	
 //Ajax thêm sản phẩm
 	@PostMapping(value = "/ajax/createsanpham")
 	@ResponseBody
@@ -193,7 +185,7 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 //		sanPham.setMaSanPham(maSanPham);
 //		
 //	}
-		
+
 		System.out.println(sanPham.getTenSanPham());
 //		System.out.println(sanPhamRepository.findById(maSanPham) + "aaaaaaaaaaaaaa");
 //		SanPham sp = sanPhamRepository.findById(maSanPham).get();
@@ -210,8 +202,7 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
-			@ModelAttribute(name = "searchNsx")  String searchNsx
-			) {
+			@RequestParam(name = "searchNsx", required = false, defaultValue="") String searchNsx) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("maNhaSanXuat").ascending();
@@ -223,7 +214,7 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<NhaSanXuat> pageNhaSanXuat = nhaSanXuatRepository.findNhaSanXuatss(searchNsx,pageable);
+		Page<NhaSanXuat> pageNhaSanXuat = nhaSanXuatRepository.findNhaSanXuatss(searchNsx, pageable);
 		int totalPage = pageNhaSanXuat.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -231,7 +222,8 @@ for (int j = 0; j < cthdDTO.getContent().size(); j++) {
 		}
 		model.addAttribute("modelnhasanxuat", new NhaSanXuat());
 		model.addAttribute("searchNsx", searchNsx);
-		model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findNhaSanXuatss(searchNsx,pageable));
+		model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findNhaSanXuatss(searchNsx, pageable));
+		model.addAttribute("total", pageNhaSanXuat.getNumberOfElements());
 		return "nhasanxuat";
 	}
 

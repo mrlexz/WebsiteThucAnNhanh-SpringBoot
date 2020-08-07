@@ -451,9 +451,11 @@ body {
 .search-checkbox label {
 	font-size: 15px;
 }
+
 .filter-item form {
 	margin: 5px 0px;
 }
+
 .filter-item button {
 	width: 100px;
 	background-color: DodgerBlue;
@@ -462,4 +464,22 @@ body {
 	font-size: 16px;
 	cursor: pointer;
 	border-radius: 5px;
+}
+
+.sort {
+	padding: 0px;
+	background: none;
+	color: black;
+	border: none;
+	cursor: pointer;
+	margin-left: 5px;
+}
+
+.sort i {
+	margin-right: 5px;
+}
+
+.sort:hover {
+	background: none;
+	color: black;
 }

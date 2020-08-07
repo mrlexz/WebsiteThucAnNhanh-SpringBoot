@@ -13,7 +13,7 @@
 			<div class="block-heading">
 				<h2 class="text-info">Đăng kí</h2>
 			</div>
-			<form id = "form"class="login-custom" th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
+			<form id = "registation"class="login-custom" th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
 				<p th:if="${param.error}" class="error" style="color: red">Thông tin không hợp lệ vui lòng kiểm tra lại</p>
 				<div class="register-input-group">
 					<div style="width: 40%">
@@ -54,7 +54,7 @@
 				</div>
 				<div class="form-group-button-group">
 				<button class="btn btn-light" type="reset" style="color: white">Nhập lại</button>
-					<button class="btn btn-primary" type="submit">Đăng kí</button>
+					<button id="registaionSubmit" class="btn btn-primary" type="submit">Đăng kí</button>
 					
 					</div>
 			</form>

@@ -16,6 +16,12 @@ $(function() {
 		$nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
 	});
 });
+
+var flag = true;
+var flagSDT = true;
+var flagAddProduct = true;
+var flagAddProducer = true;
+
 function delay(callback, ms) {
 	var timer = 0;
 	return function() {
@@ -37,7 +43,7 @@ function delay(callback, ms) {
 		data: body,
 		success: function(res) {
 
-			if (res){
+			if (res) {
 				alert("loi");
 			}
 		},
@@ -74,13 +80,16 @@ $('#usernameDK').keyup(delay(function(e) {
 		success: function(res) {
 			if (res) {
 				$(".status").html("<font color=red>Tài khoản đã tồn tại</font>");
+				flag = true;
 			} else {
 				$(".status").html("<font color=#00ff00>Tài khoản hợp lệ</font>");
+				flag = false;
 			}
 		},
 		error: function(request, status, error) {
 			if (request.responseJSON.status === 400) {
 				$(".status").html(null);
+				flag = true;
 			}
 		}
 	})
@@ -90,64 +99,50 @@ $('#sdt').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a != 10) {
 		$(".status1").html("<font color=red>Số điện thoại phải đủ 10 kí tự</font>");
+		flag = true;
 	} else {
 		$(".status1").html("<font color=#00ff00>Số điện thoại hợp lệ</font>");
-
+		flag = false;
 	}
 
 }, 500));
+
+
 
 $('#password').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a < 6) {
 		$(".status2").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
+		flag = true;
 	} else {
 		$(".status2").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
-
+		flag = false;
 	}
 
 }, 500));
-/*Ajax form đăng ký*/
-$('#form').submit(function() {
-	
-	var pass = $('#password').val();
-	var username = $('#usernameDK').val();
-	var phone = $('#sdt').val();
-
-
-	if (pass.length < 6) {
-		e.preventDefault();
-		$(".status2").html("<font color=red >Mật khẩu tối thiểu 6 kí tự</font>");
-		return false;
-	}
-	if (phone.length != 10) {
-		e.preventDefault();
-		return false;
-	}
-	$.ajax({
-		url: 'http://localhost:8080/ajax/dangky',
-		dataType: "json",
-		method: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data: username,
-		success: function(res) {
-			if (res) {
-				$(".status").html("<font color=red>Tài khoản đã tồn tại</font>");
-				return false;
-			}
-			
-		},
-		error: function(request, status, error) {
-			if (request.responseJSON.status === 400) {
-				return false;
-			}
+// validate before submit
+$(document).ready(function() {
+	$('#registaionSubmit').prop('disabled', true);
+	$('#registation input').on('keyup blur', function() {
+		if ((flag & flagPASS & flagSDT)) {
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
 		}
-	})
-	
-	
+	});
+	$('#registation input').mouseleave(function() {
+		if ((flag & flagPASS & flagSDT)) {
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
+		}
+	});
+});
 
 
-})
+
+
+
 //Ajax check tên sản phẩm trong thêm sản phẩm
 $('#tsp').keyup(delay(function(e) {
 
@@ -160,17 +155,31 @@ $('#tsp').keyup(delay(function(e) {
 		success: function(res) {
 			if (res) {
 				$(".status").html("<font color=red>Tên sản phẩm đã tồn tại</font>");
+				flagAddProduct=true;
 			} else {
 				$(".status").html("<font color=#00ff00>Tên sản phẩm hợp lệ</font>");
+				flagAddProduct=false;
 			}
 		},
 		error: function(request, status, error) {
 			if (request.responseJSON.status === 400) {
 				$(".status").html(null);
+				flagAddProduct=true;
 			}
 		}
 	})
 }, 500));
+
+$(document).ready(function() {
+	$('#submitAddProduct').prop('disabled', true);
+	$('#formSanPhama input').on('keyup blur', function() {
+		if ((flagAddProduct)) {
+			$('#submitAddProduct').prop('disabled', true);
+		} else {
+			$('#submitAddProduct').prop('disabled', false);
+		}
+	});
+});
 
 
 /*Form thêm sản phẩm*/
@@ -190,31 +199,6 @@ $('#formSanPhama').submit(function(e) {
 		e.preventDefault();
 		return false;
 	}
-	/*$.ajax({
-		url: 'http://localhost:8080/ajax/dangky',
-		dataType: "json",
-		method: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data: username,
-		success: function(res) {
-			if (res) {
-				e.preventDefault();
-				$(".status").html("<font color=red>Tài khoản đã tồn tại</font>");
-				return false;
-			}
-			else {
-				return  true;
-			}
-		},
-		error: function(request, status, error) {
-			if (request.responseJSON.status === 400) {
-				e.preventDefault();
-				return false;
-			}
-		}
-	})
-	return false;*/
-
 
 })
 
@@ -233,17 +217,31 @@ $('#tenNhaSanXuat1').keyup(delay(function(e) {
 		success: function(res) {
 			if (res) {
 				$(".status").html("<font color=red>Tên nhà sản xuất đã tồn tại</font>");
+				flagAddProducer= true;
 			} else {
 				$(".status").html("<font color=#00ff00>Tên nhà sản xuất hợp lệ</font>");
+				flagAddProducer = false;
 			}
 		},
 		error: function(request, status, error) {
 			if (request.responseJSON.status === 400) {
 				$(".status").html(null);
+				flagAddProducer = true;
 			}
 		}
 	})
 }, 500));
+$(document).ready(function() {
+	$('#submitAddProducer').prop('disabled', true);
+	$('#formNhaSanXuata input').on('keyup blur', function() {
+		if ((flagAddProducer)) {
+			$('#submitAddProducer').prop('disabled', true);
+		} else {
+			$('#submitAddProducer').prop('disabled', false);
+		}
+	});
+});
+
 
 //Ajax form nhà sản xuất
 $('#formNhaSanXuata').submit(function(e) {
@@ -265,3 +263,5 @@ $('#formNhaSanXuata').submit(function(e) {
 		return false;
 	}
 })
+
+
