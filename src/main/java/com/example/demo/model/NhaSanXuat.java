@@ -28,6 +28,12 @@ public class NhaSanXuat implements Serializable {
 	@OneToMany(mappedBy = "nhaSanXuat")
 	private List<SanPham> sanPhams;
 
+	@Override
+	public String toString() {
+		return "NhaSanXuat [maNhaSanXuat=" + maNhaSanXuat + ", tenNhaSanXuat=" + tenNhaSanXuat + ", diaChi=" + diaChi
+				;
+	}
+
 	public NhaSanXuat() {
 		super();
 	}

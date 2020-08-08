@@ -17,10 +17,11 @@ $(function() {
 	});
 });
 
-var flag = true;
-var flagSDT = true;
-var flagAddProduct = true;
-var flagAddProducer = true;
+var flag = false;
+var flagSDT = false;
+var flagPASS = false;
+var flagAddProduct = false;
+var flagAddProducer = false;
 
 function delay(callback, ms) {
 	var timer = 0;
@@ -99,10 +100,10 @@ $('#sdt').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a != 10) {
 		$(".status1").html("<font color=red>Số điện thoại phải đủ 10 kí tự</font>");
-		flag = true;
+		flagSDT = true;
 	} else {
 		$(".status1").html("<font color=#00ff00>Số điện thoại hợp lệ</font>");
-		flag = false;
+		flagSDT = false;
 	}
 
 }, 500));
@@ -113,29 +114,56 @@ $('#password').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a < 6) {
 		$(".status2").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
-		flag = true;
+		flagPASS = true;
 	} else {
 		$(".status2").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
-		flag = false;
+		flagPASS = false;
 	}
 
 }, 500));
 // validate before submit
 $(document).ready(function() {
-	$('#registaionSubmit').prop('disabled', true);
+	$('#registaionSubmit').prop('disabled', false);
 	$('#registation input').on('keyup blur', function() {
-		if ((flag & flagPASS & flagSDT)) {
+		
+		if(flag){
 			$('#registaionSubmit').prop('disabled', true);
 		} else {
 			$('#registaionSubmit').prop('disabled', false);
+			if(flagPASS) {
+				$('#registaionSubmit').prop('disabled', true);
+			} else {
+				$('#registaionSubmit').prop('disabled', false);
+				if(flagSDT) {
+					$('#registaionSubmit').prop('disabled', true);
+				} else {
+					$('#registaionSubmit').prop('disabled', false);
+				}
+			}
 		}
 	});
 	$('#registation input').mouseleave(function() {
-		if ((flag & flagPASS & flagSDT)) {
+		/*if ((flag & flagPASS & flagSDT)) {
 			$('#registaionSubmit').prop('disabled', true);
 		} else {
 			$('#registaionSubmit').prop('disabled', false);
-		}
+		}*/
+		
+		if(flag){
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
+			if(flagPASS) {
+				$('#registaionSubmit').prop('disabled', true);
+			} else {
+				$('#registaionSubmit').prop('disabled', false);
+				if(flagSDT) {
+					$('#registaionSubmit').prop('disabled', true);
+				} else {
+					$('#registaionSubmit').prop('disabled', false);
+				}
+			}
+		} 
 	});
 });
 
@@ -171,7 +199,7 @@ $('#tsp').keyup(delay(function(e) {
 }, 500));
 
 $(document).ready(function() {
-	$('#submitAddProduct').prop('disabled', true);
+	$('#submitAddProduct').prop('disabled', false);
 	$('#formSanPhama input').on('keyup blur', function() {
 		if ((flagAddProduct)) {
 			$('#submitAddProduct').prop('disabled', true);
@@ -232,7 +260,7 @@ $('#tenNhaSanXuat1').keyup(delay(function(e) {
 	})
 }, 500));
 $(document).ready(function() {
-	$('#submitAddProducer').prop('disabled', true);
+	$('#submitAddProducer').prop('disabled', false);
 	$('#formNhaSanXuata input').on('keyup blur', function() {
 		if ((flagAddProducer)) {
 			$('#submitAddProducer').prop('disabled', true);

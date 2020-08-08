@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class SanPham implements Serializable {
 
@@ -13,6 +15,8 @@ public class SanPham implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+//	@GeneratedValue(generator="system-uuid")
+//	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String maSanPham;
 	private double donGia;
 	@Column(columnDefinition = "NVARCHAR(255)")
@@ -127,6 +131,7 @@ public class SanPham implements Serializable {
 		return "SanPham [maSanPham=" + maSanPham + ", donGia=" + donGia + ", tenSanPham=" + tenSanPham + ", moTa="
 				+ moTa + ", namSanXuat=" + namSanXuat + "]";
 	}
+	
 	
 }
  

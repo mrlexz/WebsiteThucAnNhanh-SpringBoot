@@ -123,7 +123,7 @@
 																		<div class="col">
 																			<form
 																				th:action="@{'/quanly/sanpham/edit/{id}'(id=${sanpham.maSanPham})}"
-																				th:object="${sanPhamEdit}" method="post"
+																				th:object="${sanPhamEdit}" method="GET"
 																				id="formEditSanPham">
 																				<div class="form-group">
 																					<label for="tenSanPham">Tên sản phẩm</label> <input
@@ -154,13 +154,12 @@
 																					<button type="submit" class="btn btn-primary">Lưu</button>
 																					<button type="button" class="btn btn-danger"
 																						data-dismiss="modal">Cancel</button>
-																				</div>
+																				</div> 
 																			</form>
 																		</div>
 																	</div>
 																</div>
 															</div>
-															<div class="modal-footer"></div>
 														</div>
 													</div>
 												</div> <!-- Modal -->

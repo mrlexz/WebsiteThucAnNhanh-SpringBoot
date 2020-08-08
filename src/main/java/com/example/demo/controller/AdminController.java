@@ -35,6 +35,7 @@ import com.example.demo.repository.HoaDonRepository;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
+import com.example.demo.service.SanPhamService;
 
 @Controller
 public class AdminController {
@@ -46,8 +47,6 @@ public class AdminController {
 	@Autowired
 	private NhaSanXuatRepository nhaSanXuatRepository;
 
-	@Autowired
-	private KhachHangRepository khRepository;
 
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
@@ -143,8 +142,9 @@ public class AdminController {
 		Random rd = new Random();
 		int maSp = rd.nextInt(1000);
 		sanPham.setMaSanPham("SP" + maSp);
-		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
-				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
+		sanPham.setNhaSanXuat(sanPham.getNhaSanXuat());
+//		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
+//				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
 		if (sanPhamRepository.save(sanPham).equals(sanPham)) {
 			return "redirect:/quanly/sanpham";
 		}
@@ -155,7 +155,6 @@ public class AdminController {
 	@PostMapping(value = "/ajax/createsanpham")
 	@ResponseBody
 	public boolean checkNameProduct(@RequestBody String nameProduct) {
-		System.out.println(nameProduct);
 		if (nameProduct.length() > 0) {
 			SanPham sp = sanPhamRepository.findByTenSanPham(nameProduct);
 			if (sp != null) {
@@ -168,7 +167,6 @@ public class AdminController {
 //Xóa sản phẩm
 	@RequestMapping(value = "/quanly/sanpham/delete/{id}", method = RequestMethod.DELETE)
 	public String deleteSanPham(Model model, @PathVariable(name = "id") String maSanPham) {
-		System.out.println(maSanPham);
 		if (sanPhamRepository.findById(maSanPham).isPresent()) {
 			sanPhamRepository.delete(sanPhamRepository.findById(maSanPham).get());
 			return "redirect:/quanly/sanpham";
@@ -177,22 +175,14 @@ public class AdminController {
 	}
 
 // Sửa sản phẩm
-	@PostMapping(value = "/quanly/sanpham/edit/{id}")
-	public String editSanPham(@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,
-			@PathVariable(name = "id") String maSanPham) {
-
-//	if(sanPhamRepository.findById(maSanPham).isPresent()) {
-//		sanPham.setMaSanPham(maSanPham);
-//		
-//	}
-
-		System.out.println(sanPham.getTenSanPham());
-//		System.out.println(sanPhamRepository.findById(maSanPham) + "aaaaaaaaaaaaaa");
-//		SanPham sp = sanPhamRepository.findById(maSanPham).get();
-//		System.out.println(sp.getTenSanPham());
-//		System.out.println(sanPham.getTenSanPham());
-//		System.out.println(sanPham + "aaaaaaaaaaaaaasssss");
-////		System.out.println(sanPham + "ádfghjk");
+	@RequestMapping(value = "/quanly/sanpham/edit/{id}", method = RequestMethod.GET)
+	public String editSanPham(SanPham sp, @PathVariable(name = "id") String maSanPham) {
+		SanPham sanpham = sanPhamRepository.findBymaSanPham(maSanPham);
+		sanpham.setTenSanPham(sp.getTenSanPham());
+		sanpham.setMoTa(sp.getMoTa());
+		sanpham.setDonGia(sp.getDonGia());
+		sanpham.setNamSanXuat(sp.getNamSanXuat());
+		sanPhamRepository.save(sanpham);
 		return "redirect:/quanly/sanpham";
 	}
 
@@ -202,7 +192,7 @@ public class AdminController {
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
-			@RequestParam(name = "searchNsx", required = false, defaultValue="") String searchNsx) {
+			@RequestParam(name = "searchNsx", required = false, defaultValue = "") String searchNsx) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("maNhaSanXuat").ascending();
@@ -270,4 +260,14 @@ public class AdminController {
 		}
 		return false;
 	}
+
+//Sửa nhà sản xuất
+@RequestMapping(value = "/quanly/nhasanxuat/edit/{id}", method = RequestMethod.GET)
+public String editNhaSanXuat(NhaSanXuat nsx, @PathVariable(name = "id") String maNhaSanXuat) {
+	NhaSanXuat nhaSanXuat = nhaSanXuatRepository.findBymaNhaSanXuat(maNhaSanXuat);
+	nhaSanXuat.setTenNhaSanXuat(nsx.getTenNhaSanXuat());
+	nhaSanXuat.setDiaChi(nsx.getDiaChi());
+	nhaSanXuatRepository.save(nhaSanXuat);
+	return "redirect:/quanly/nhasanxuat";
+}
 }
