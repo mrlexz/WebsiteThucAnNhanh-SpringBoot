@@ -72,30 +72,30 @@
 											<th>Type</th>
 											<th>Year</th>
 											<th><div style="display: flex; align-items: center;">
-														Price
-														<form class="form-inline" target="_self">
-															<div class="form-group">
-																<input value="ASC" type="hidden" name="sort"
-																	id="search-field">
-															</div>
-															<button type="submit"
-																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
-																class="btn btn-primary sort">
-																<i class="fa fa-arrow-up" aria-hidden="true"></i>
-															</button>
-														</form>
-														<form class="form-inline" target="_self">
-															<div class="form-group">
-																<input value="DESC" type="hidden" name="sort"
-																	id="search-field">
-															</div>
-															<button type="submit"
-																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
-																class="btn btn-primary sort">
-																<i class="fa fa-arrow-down" aria-hidden="true"></i>
-															</button>
-														</form>
-													</div></th>
+													Price
+													<form class="form-inline" target="_self">
+														<div class="form-group">
+															<input value="ASC" type="hidden" name="sort"
+																id="search-field">
+														</div>
+														<button type="submit"
+															th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+															class="btn btn-primary sort">
+															<i class="fa fa-arrow-up" aria-hidden="true"></i>
+														</button>
+													</form>
+													<form class="form-inline" target="_self">
+														<div class="form-group">
+															<input value="DESC" type="hidden" name="sort"
+																id="search-field">
+														</div>
+														<button type="submit"
+															th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+															class="btn btn-primary sort">
+															<i class="fa fa-arrow-down" aria-hidden="true"></i>
+														</button>
+													</form>
+												</div></th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -151,11 +151,14 @@
 																						name="namSanXuat" th:value="${sanpham.namSanXuat}">
 
 																				</div>
-																				<div class="form-group">
-																					<button type="submit" class="btn btn-primary">Lưu</button>
-																					<button type="button" class="btn btn-danger"
-																						data-dismiss="modal">Cancel</button>
-																				</div> 
+																				<div
+																					style="display: flex; justify-content: flex-end;">
+																					<div class="form-group">
+																						<button type="submit" class="btn btn-primary">Lưu</button>
+																						<button type="button" class="btn btn-danger"
+																							data-dismiss="modal">Cancel</button>
+																					</div>
+																				</div>
 																			</form>
 																		</div>
 																	</div>
@@ -295,8 +298,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="submitAddProduct" type="submit" th:action="@{/quanly/sanpham}"
-						form="formSanPhama" class="btn btn-primary">Lưu</button>
+					<button id="submitAddProduct" type="submit"
+						th:action="@{/quanly/sanpham}" form="formSanPhama"
+						class="btn btn-primary">Lưu</button>
 					<button type="reset" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
