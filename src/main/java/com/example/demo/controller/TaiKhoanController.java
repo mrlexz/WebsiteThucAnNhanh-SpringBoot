@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.DTO.UserRegisterDTO;
+import com.example.demo.DTO.RegisterDTO;
 import com.example.demo.model.KhachHang;
 import com.example.demo.model.TaiKhoan;
 import com.example.demo.repository.KhachHangRepository;
@@ -37,7 +39,9 @@ public class TaiKhoanController {
 	private KhachHangRepository khachHangRepository;
 	@Autowired
 	private RoleRepository roleRepository;
-
+	
+	
+	
 	@RequestMapping("/dangnhap")
 	public String enterLoginPage() {
 
@@ -47,30 +51,45 @@ public class TaiKhoanController {
 	@RequestMapping("/dangky")
 	public String enterRegister(Model model) {
 		TaiKhoan taiKhoan = new TaiKhoan();
+		RegisterDTO tkDTO = new RegisterDTO();
+		
 		KhachHang khachHang = new KhachHang();
 		taiKhoan.setKhachHang(khachHang);
 		khachHang.setTaiKhoan(taiKhoan);
+		model.addAttribute("tkDTO", tkDTO);
 		model.addAttribute("taikhoan", taiKhoan);
+		model.addAttribute("khachHang", khachHang);
 		return "dangky";
 	}
-	@RequestMapping( value = "/dangky", method = RequestMethod.POST)
-	public String createNewUser(@ModelAttribute("taikhoan") TaiKhoan taiKhoan) {
-		KhachHang kh = taiKhoan.getKhachHang();
-		kh.setTaiKhoan(taiKhoan);
-		taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
-		taiKhoan.setKhachHang(kh);
-		if(TaiKhoanService.save(taiKhoan)) {
-			khachHangRepository.save(kh);
-			return "redirect:/dangnhap";
+
+	@RequestMapping(value = "/dangky", method = RequestMethod.POST)
+	public String createNewUser(@Valid @ModelAttribute("tkDTO") RegisterDTO tkDTO,BindingResult bindingResult1,@Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()|| bindingResult1.hasErrors()) {
+			System.out.println(bindingResult + "aaaaaaaaaa");
+			return "dangky";
+		} else {
+
+//			KhachHang kh = taiKhoan.getKhachHang()
+			KhachHang kh = new KhachHang(tkDTO.getHoTenKhachHang(),tkDTO.getEmail(), tkDTO.getSoDienThoai(), tkDTO.getDiaChi());
+			TaiKhoan taiKhoan = new TaiKhoan(tkDTO.getTenTaiKhoan(), tkDTO.getMatKhau());
+			kh.setTaiKhoan(taiKhoan);
+			taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
+			taiKhoan.setKhachHang(kh);
+			if (TaiKhoanService.save(taiKhoan)) {
+				khachHangRepository.save(kh);
+				return "redirect:/dangnhap";
+			}
 		}
 		return "dangky";
 	}
+
 	@PostMapping(value = "ajax/dangky")
 	@ResponseBody
 	public Boolean createNewUser(@RequestBody() String username) {
 		if (username.length() > 0) {
 			TaiKhoan tk = taiKhoanRepository.findByTenTaiKhoan(username);
-			if (tk!=null) {
+			if (tk != null) {
 				return true;
 			}
 		}
