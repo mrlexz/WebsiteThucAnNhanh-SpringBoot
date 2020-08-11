@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Thống Kê</title>
+<div th:replace="/header :: header"></div>
+<style type="text/css">
+.searchCol {
+	margin-bottom: 30px;
+}
+
+.summary {
+	background-color: #fff !important;
+}
+
+.add {
+	margin-left: 800px;
+}
+</style>
+<script>
+	window.onload = function() {
+
+		 var chart = new CanvasJS.Chart("chartContainer",
+				    {
+
+				      title:{
+				      text: "Bán sản phẩm"
+				      },
+				       data: [
+				      {
+				        type: "line",
+
+				        dataPoints: [
+				        { x: new Date(2020, 00, 1), y: 450 },
+				        { x: new Date(2020, 01, 1), y: 414 },
+				        { x: new Date(2020, 02, 1), y: 520 },
+				        { x: new Date(2020, 03, 1), y: 460 },
+				        { x: new Date(2020, 04, 1), y: 450 },
+				        { x: new Date(2020, 05, 1), y: 500 },
+				        { x: new Date(2020, 06, 1), y: 480 },
+				        { x: new Date(2020, 07, 1), y: 480 },
+				        { x: new Date(2020, 08, 1), y: 410 },
+				        { x: new Date(2020, 09, 1), y: 500 },
+				        { x: new Date(2020, 10, 1), y: 480 },
+				        { x: new Date(2020, 11, 1), y: 510 }
+				        ]
+				      }
+				      ]
+				    });
+
+				    chart.render();
+	}
+</script>
+</head>
+<body class="body-custom">
+	<div th:replace="/header :: navbar"></div>
+	<div th:replace="/quanly :: navbar"></div>
+	<main class="page shopping-cart-page">
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading" style="padding-top: 0px">
+					<h1></h1>
+					<h2 class="text-info">Thống Kê Bán Hàng</h2>
+				</div>
+				<div class="content">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-12">
+							<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<div th:replace="/header :: footer"></div>
+</body>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</html>

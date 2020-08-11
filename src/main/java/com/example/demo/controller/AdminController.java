@@ -98,7 +98,12 @@ public class AdminController {
 		}
 		return "quanly-donhang";
 	}
-
+	
+// Thống kê
+	@RequestMapping(value = "/quanly/thongke")
+	public String chartThongKe() {
+		return "thongke";
+	}
 // Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
 	public String listSanPham(Model model,
