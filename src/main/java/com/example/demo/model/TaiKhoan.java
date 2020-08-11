@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -25,12 +28,18 @@ public class TaiKhoan implements Serializable {
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String maTaiKhoan;
+	@NotNull
+	@Size(min=2, max= 20)
 	private String tenTaiKhoan;
+	@NotNull
+	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}",
+			    message = "Mật khẩu ít nhất 6 kí tự, 1 chữ số, 1 chữ thường và một chữ hoa")
 	private String matKhau;
 	@OneToOne
 	@MapsId
 	@JoinColumn(name="maTaiKhoan", referencedColumnName = "maKhachHang")
 	@Cascade(CascadeType.ALL)
+	@NotNull
 	private KhachHang khachHang;
 
 	@ManyToMany

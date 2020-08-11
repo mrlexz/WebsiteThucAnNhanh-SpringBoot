@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,18 +27,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.DTO.ChiTietHoaDonDTO;
 import com.example.demo.model.HoaDon;
-import com.example.demo.model.KhachHang;
 import com.example.demo.model.NhaSanXuat;
 import com.example.demo.model.SanPham;
 import com.example.demo.repository.HoaDonRepository;
-import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
-import com.example.demo.service.SanPhamService;
 
 @Controller
 public class AdminController {
@@ -46,7 +46,6 @@ public class AdminController {
 
 	@Autowired
 	private NhaSanXuatRepository nhaSanXuatRepository;
-
 
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
@@ -72,7 +71,7 @@ public class AdminController {
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 //		 cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDons(pageable);
+		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDonhd(searchTenKH, pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
 		for (int i = 0; i < pageHoaDon.getNumberOfElements(); i++) {
 			ChiTietHoaDonDTO chiTietDTO = new ChiTietHoaDonDTO(pageHoaDon.getContent().get(i).getMaHoaDon(),
@@ -95,7 +94,7 @@ public class AdminController {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
 			model.addAttribute("searchTenKH", searchTenKH);
-			model.addAttribute("total", pageHoaDon.getNumberOfElements());
+			model.addAttribute("total", pageHoaDon.getTotalElements());
 		}
 		return "quanly-donhang";
 	}
@@ -107,7 +106,8 @@ public class AdminController {
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
 			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,
-			@RequestParam(name = "name", defaultValue = "", required = false) String name) {
+			@RequestParam(name = "name", defaultValue = "", required = false) String name
+			) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("donGia").ascending();
@@ -132,19 +132,44 @@ public class AdminController {
 		model.addAttribute("modalsanpham", new SanPham());
 		model.addAttribute("name", name);
 		model.addAttribute("listSanPham", sanPhamRepository.findSanPhamss(name, pageable));
-		model.addAttribute("total", pageSanPham.getNumberOfElements());
+		model.addAttribute("total", pageSanPham.getTotalElements());
 		return "quanly-sanpham";
 	}
 
 // Thêm sản phẩm
 	@RequestMapping(value = "/quanly/sanpham", method = RequestMethod.POST)
 	public String addSanPham(@ModelAttribute(name = "modalsanpham") SanPham sanPham) {
+		MultipartFile fileData = sanPham.getFileImage();
+		File uploadFiles;
+		String failedFile;
+		String images;
+		
+		String name = fileData.getOriginalFilename();
+		
+		if(name != null && name.length()> 0) {
+			try {
+			File serverFile = new File("G:\\cdw\\WebsiteThucAnNhanh-SpringBoot\\src\\main\\resources\\static\\assets\\img\\scenery"+ File.separator   + name);
+			images = "/assets/img/scenery/"  +name;
+			System.out.println(images + "ddddddddđ");
+			sanPham.setImgURL(images);
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(fileData.getBytes());
+			stream.close();
+			
+			uploadFiles = serverFile;
+			} catch (Exception e) {
+				failedFile = name;
+				System.out.println("Failes");
+			}
+		}	
+		
+		
 		Random rd = new Random();
 		int maSp = rd.nextInt(1000);
 		sanPham.setMaSanPham("SP" + maSp);
 		sanPham.setNhaSanXuat(sanPham.getNhaSanXuat());
-//		sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
-//				sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
+//			sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
+//					sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
 		if (sanPhamRepository.save(sanPham).equals(sanPham)) {
 			return "redirect:/quanly/sanpham";
 		}
@@ -213,7 +238,7 @@ public class AdminController {
 		model.addAttribute("modelnhasanxuat", new NhaSanXuat());
 		model.addAttribute("searchNsx", searchNsx);
 		model.addAttribute("listNhaSanXuat", nhaSanXuatRepository.findNhaSanXuatss(searchNsx, pageable));
-		model.addAttribute("total", pageNhaSanXuat.getNumberOfElements());
+		model.addAttribute("total", pageNhaSanXuat.getTotalElements());
 		return "nhasanxuat";
 	}
 
@@ -262,12 +287,13 @@ public class AdminController {
 	}
 
 //Sửa nhà sản xuất
-@RequestMapping(value = "/quanly/nhasanxuat/edit/{id}", method = RequestMethod.GET)
-public String editNhaSanXuat(NhaSanXuat nsx, @PathVariable(name = "id") String maNhaSanXuat) {
-	NhaSanXuat nhaSanXuat = nhaSanXuatRepository.findBymaNhaSanXuat(maNhaSanXuat);
-	nhaSanXuat.setTenNhaSanXuat(nsx.getTenNhaSanXuat());
-	nhaSanXuat.setDiaChi(nsx.getDiaChi());
-	nhaSanXuatRepository.save(nhaSanXuat);
-	return "redirect:/quanly/nhasanxuat";
-}
+	@RequestMapping(value = "/quanly/nhasanxuat/edit/{id}", method = RequestMethod.GET)
+	public String editNhaSanXuat(NhaSanXuat nsx, @PathVariable(name = "id") String maNhaSanXuat) {
+		NhaSanXuat nhaSanXuat = nhaSanXuatRepository.findBymaNhaSanXuat(maNhaSanXuat);
+		nhaSanXuat.setTenNhaSanXuat(nsx.getTenNhaSanXuat());
+		nhaSanXuat.setDiaChi(nsx.getDiaChi());
+		nhaSanXuatRepository.save(nhaSanXuat);
+		return "redirect:/quanly/nhasanxuat";
+	}
+
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <form action="#" th:action="@{/formProduct}" th:object="${addProductForm}" method="post">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{tenSanPham}"  required="required" /></td>
+                    <td th:if="${#fields.hasErrors('tenSanPham')}" th:errors="*{tenSanPham}">Ten san pham Error</td>
+                </tr>
+                <tr>
+                    <td>Mo ta:</td>
+                    <td><input type="text" th:field="*{moTa}" required="required" /></td>
+                    <td th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}">Mo ta Error</td>
+                </tr>
+                  <tr>
+                    <td>Name:</td>
+                    <td><input type="number" th:field="*{donGia}" required="required"/></td>
+                    <td th:if="${#fields.hasErrors('donGia')}" th:errors="*{donGia}">Don gia Error</td>
+                </tr>
+                <tr>
+                    <td>Age:</td>
+                    <td><input type="number" th:field="*{namSanXuat}" required="required"/></td>
+                    <td th:if="${#fields.hasErrors('namSanXuat')}" th:errors="*{namSanXuat}">Nam Error</td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

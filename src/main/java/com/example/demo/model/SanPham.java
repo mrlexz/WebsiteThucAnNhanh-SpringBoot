@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class SanPham implements Serializable {
@@ -18,11 +21,15 @@ public class SanPham implements Serializable {
 //	@GeneratedValue(generator="system-uuid")
 //	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String maSanPham;
+	@NotNull
 	private double donGia;
 	@Column(columnDefinition = "NVARCHAR(255)")
+	@NotNull
 	private String tenSanPham;
 	@Column(columnDefinition = "NVARCHAR(255)")
+	@NotNull
 	private String moTa;
+	@NotNull
 	private int namSanXuat;
 	private String imgURL;
 	@OneToMany(mappedBy ="sanPham" )
@@ -32,6 +39,9 @@ public class SanPham implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="maNhaSanXuat", referencedColumnName = "maNhaSanXuat")
 	private NhaSanXuat nhaSanXuat;
+	
+	@Transient
+	private MultipartFile  fileImage;
 	
 	
 	public SanPham() {
@@ -103,6 +113,14 @@ public class SanPham implements Serializable {
 	public void setImgURL(String imgURL) {
 		this.imgURL = imgURL;
 	}
+	
+	public MultipartFile getFileImage() {
+		return fileImage;
+	}
+	public void setFileImage(MultipartFile fileImage) {
+		this.fileImage = fileImage;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
