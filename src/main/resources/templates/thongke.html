@@ -19,45 +19,45 @@
 </style>
 <script>
 	window.onload = function() {
-		/*<![CDATA[*/
-		var chart1 = /*[[${hoaDon}]]*/ "Test";
-		/*]]>*/
-		
-		// var allpermissionList = "${hoaDon}"
-		console.log(chart1);
-		// for(i = 0; i< chart1.length; i++){
-		// 	console.log(chart1[i] + "\t" + "aaaaaaaaaaaaaaaaaa");
-		// }
-		
-		 var chart = new CanvasJS.Chart("chartContainer",
+		var dataPoints = [];
+		$.ajax({
+			url: 'http://localhost:8080/thongke',
+			dataType: "text",
+			method: 'GET',
+			success: function(data) {
+				const newData = JSON.parse(data);
+				dataPoints = newData.map(item => {
+					return {x: new Date(item.ngayBan), y: item.soLuong}
+				});
+				var chart = new CanvasJS.Chart("chartContainer",
 				    {
 
-				      title:{
-				      text: "Bán sản phẩm"
-				      },
-				       data: [
+				    title:{
+						fontWeight: "bolder",
+        				fontColor: "#008B8B",
+        				fontFamily: "tahoma",  
+				      	text: "Biểu đồ thống kê số lượng sản phẩm bán ra trong vòng 7 ngày"
+				    },
+					axisX:{
+       					title: "Ngày bán",
+						titleFontColor: "red"
+     				 },
+      				axisY:{
+       					title: "Số lượng",
+						titleFontColor: "red"
+      				},
+				    data: [
 				      {
 				        type: "line",
-
-				        dataPoints: [
-				        { x: new Date(2020, 00, 1), y: 450 },
-				        { x: new Date(2020, 01, 1), y: 414 },
-				        { x: new Date(2020, 02, 1), y: 520 },
-				        { x: new Date(2020, 03, 1), y: 460 },
-				        { x: new Date(2020, 04, 1), y: 450 },
-				        { x: new Date(2020, 05, 1), y: 500 },
-				        { x: new Date(2020, 06, 1), y: 480 },
-				        { x: new Date(2020, 07, 1), y: 480 },
-				        { x: new Date(2020, 08, 1), y: 410 },
-				        { x: new Date(2020, 09, 1), y: 500 },
-				        { x: new Date(2020, 10, 1), y: 480 },
-				        { x: new Date(2020, 11, 1), y: 510 }
-				        ]
+				        dataPoints: dataPoints,
 				      }
 				      ]
-				    });
-
+					});
+		
 				    chart.render();
+				}
+			});
+
 	}
 </script>
 </head>

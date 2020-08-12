@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ThongKeReposity  extends JpaRepository<HoaDon, Integer> {
 
 
-@Query(value = "SELECT  hd.ngay_lap as ngayBan , count(cthd.so_luong) as soLuong FROM hoa_don  hd join chi_tiet_hoa_don cthd on  hd.ma_hoa_don = cthd.mahoadon where hd.ngay_lap BETWEEN :startDate AND :endDate GROUP BY hd.ngay_lap",nativeQuery = true)
+@Query(value = "SELECT  hd.ngay_lap as ngayBan , sum(cthd.so_luong) as soLuong FROM hoa_don  hd join chi_tiet_hoa_don cthd on  hd.ma_hoa_don = cthd.mahoadon where hd.ngay_lap BETWEEN :startDate AND :endDate GROUP BY hd.ngay_lap order by hd.ngay_lap ",nativeQuery = true)
 public List<ThongKeDTO> transactions(LocalDate startDate, LocalDate endDate);
 
 

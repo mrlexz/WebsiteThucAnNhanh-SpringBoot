@@ -36,10 +36,6 @@ public class UserDetailsServiceImp  implements UserDetailsService {
 			strs.add(role.getTen());
 		}
 		String[] roles = strs.toArray(new String[0]);
-		
-		System.out.println( User.withUsername(taikhoan.getTenTaiKhoan())
-				.password(taikhoan.getMatKhau())
-				.roles(roles).build());
 		return User.withUsername(taikhoan.getTenTaiKhoan())
 				.password(taikhoan.getMatKhau())
 				.roles(roles).build();

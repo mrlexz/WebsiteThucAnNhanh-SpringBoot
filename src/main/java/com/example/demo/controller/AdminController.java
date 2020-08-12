@@ -110,9 +110,28 @@ public class AdminController {
 		public String chartThongKe(Model model) {
 			LocalDate endDate = LocalDate.now();
 			LocalDate startDate = endDate.minusDays(7);
-			System.out.println("DTO" + tkRe.transactions(startDate, endDate).get(0).getNgayBan().getYear());
+			List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
+			list = tkRe.transactions(startDate, endDate);
+			model.addAttribute("list", list);
 			return "thongke";
 	}
+
+// ajax
+@RequestMapping(value = "/thongke")
+@ResponseBody
+		public List<ThongKeDTO> thongKe() {
+			LocalDate endDate = LocalDate.now();
+			LocalDate startDate = endDate.minusDays(7);
+			List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
+			list = tkRe.transactions(startDate, endDate);
+			return list;
+	}
+	
+
+
+
+
+
 // Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
 	public String listSanPham(Model model,
@@ -164,7 +183,6 @@ public class AdminController {
 			try {
 			File serverFile = new File("G:\\cdw\\WebsiteThucAnNhanh-SpringBoot\\src\\main\\resources\\static\\assets\\img\\scenery"+ File.separator   + name);
 			images = "/assets/img/scenery/"  +name;
-			System.out.println(images + "ddddddddđ");
 			sanPham.setImgURL(images);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(fileData.getBytes());

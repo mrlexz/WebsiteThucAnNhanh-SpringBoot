@@ -45,7 +45,6 @@ public class SanPhamController {
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
 			@RequestParam(name = "name", required = false, defaultValue = "") String name,
 			@RequestParam(name = "price", required = false, defaultValue ="") String price
-//			
 	) {
 		if (!price.equals("")) {
 			double start = 0;
