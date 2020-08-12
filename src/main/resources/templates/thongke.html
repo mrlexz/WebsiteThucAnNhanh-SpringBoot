@@ -19,7 +19,16 @@
 </style>
 <script>
 	window.onload = function() {
-
+		/*<![CDATA[*/
+		var chart1 = /*[[${hoaDon}]]*/ "Test";
+		/*]]>*/
+		
+		// var allpermissionList = "${hoaDon}"
+		console.log(chart1);
+		// for(i = 0; i< chart1.length; i++){
+		// 	console.log(chart1[i] + "\t" + "aaaaaaaaaaaaaaaaaa");
+		// }
+		
 		 var chart = new CanvasJS.Chart("chartContainer",
 				    {
 
@@ -59,7 +68,6 @@
 		<section class="clean-block clean-cart dark">
 			<div class="container">
 				<div class="block-heading" style="padding-top: 0px">
-					<h1></h1>
 					<h2 class="text-info">Thống Kê Bán Hàng</h2>
 				</div>
 				<div class="content">

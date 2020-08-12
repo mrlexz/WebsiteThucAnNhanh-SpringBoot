@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +31,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.DTO.ChiTietHoaDonDTO;
+import com.example.demo.DTO.ThongKeDTO;
 import com.example.demo.model.HoaDon;
 import com.example.demo.model.NhaSanXuat;
 import com.example.demo.model.SanPham;
 import com.example.demo.repository.HoaDonRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
+import com.example.demo.repository.ThongKeReposity;
 
 @Controller
 public class AdminController {
@@ -46,6 +49,9 @@ public class AdminController {
 
 	@Autowired
 	private NhaSanXuatRepository nhaSanXuatRepository;
+
+	@Autowired
+	private ThongKeReposity tkRe;
 
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
@@ -101,8 +107,11 @@ public class AdminController {
 	
 // Thống kê
 	@RequestMapping(value = "/quanly/thongke")
-	public String chartThongKe() {
-		return "thongke";
+		public String chartThongKe(Model model) {
+			LocalDate endDate = LocalDate.now();
+			LocalDate startDate = endDate.minusDays(7);
+			System.out.println("DTO" + tkRe.transactions(startDate, endDate).get(0).getNgayBan().getYear());
+			return "thongke";
 	}
 // Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
