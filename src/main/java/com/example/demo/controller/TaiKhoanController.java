@@ -66,7 +66,6 @@ public class TaiKhoanController {
 	public String createNewUser(@Valid @ModelAttribute("tkDTO") RegisterDTO tkDTO,BindingResult bindingResult1,@Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()|| bindingResult1.hasErrors()) {
-			System.out.println(bindingResult + "aaaaaaaaaa");
 			return "dangky";
 		} else {
 
