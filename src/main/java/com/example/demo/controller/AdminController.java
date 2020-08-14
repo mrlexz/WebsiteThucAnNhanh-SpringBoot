@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +32,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import com.example.demo.DTO.ChiTietHoaDonDTO;
 import com.example.demo.DTO.ThongKeDTO;
@@ -59,7 +65,7 @@ public class AdminController {
 		return "quanly-sanpham";
 	}
 
-//Quản lý đơn hàng
+	// Quản lý đơn hàng
 	@RequestMapping(value = "/quanly/donhang")
 	public String listDonHang(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
@@ -75,7 +81,7 @@ public class AdminController {
 		}
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
-//		 cái Pageable
+		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDonhd(searchTenKH, pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
@@ -100,7 +106,29 @@ public class AdminController {
 		}
 		return "quanly-donhang";
 	}
-	
+
+	// export data vi du dat ten lai  roi export cho dung
+	@GetMapping(value = "nsx/export")
+	public void exportNSX(HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
+		String fileName = "nsx.csv";
+		String headerKey ="Content-Disposition";
+		String headerValue ="attachment; filename="+fileName;
+		response.setHeader(headerKey, headerValue);
+		Iterable<NhaSanXuat> list =  new ArrayList<NhaSanXuat>();
+		list = nhaSanXuatRepository.findAll();
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		String[] csvHeader = {"maNhaSanXuat", "tenNhaSanXuat","diaChi"};
+		String[] nameMapping = {"maNhaSanXuat", "tenNhaSanXuat","diaChi"};
+		csvWriter.writeHeader(csvHeader);
+		for (NhaSanXuat nsx : list) {
+			csvWriter.write(nsx,nameMapping);
+		}
+		csvWriter.close();
+		
+	}	
+
+
 // Thống kê
 	@RequestMapping(value = "/quanly/thongke")
 		public String chartThongKe(Model model) {
