@@ -37,21 +37,25 @@
 										<div class="col">
 											<div class="searchCol">
 												<form class="form-inline mr-auto" target="_self">
-													<div class="form-group">
-														<input class="form-control search-field" type="search"
-															name="searchNsx" id="search-field">
+													<div style="width: 100%;display: flex;">
+														<div style="width: 50%;display: flex;">
+															<div class="form-group">
+																<input class="form-control search-field" type="search"
+																	name="searchNsx" id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/nhasanxuat/{name}'(name=${searchNsx})}"
+																class="btn btn-primary">[[#{app.search}]]</button>
+															<a th:href="@{/quanly/nhasanxuat}"><button
+																	type="button" style="margin-left: 10px;"
+																	class="btn btn-primary btn">[[#{app.all}]]</button></a>
+														</div>
+														<div style="width: 50%;display: flex;justify-content: flex-end;">
+															<button class="btn btn-primary" type="button"
+															data-toggle="modal" data-target=".inputmodal"
+															>[[#{manage.producer}]]</button>
+														</div>
 													</div>
-													<button type="submit"
-														th:action="@{/quanly/nhasanxuat/{name}'(name=${searchNsx})}"
-														class="btn btn-primary">[[#{app.search}]]</button>
-													<a th:href="@{/quanly/nhasanxuat}"><button
-															type="button" style="margin-left: 10px;"
-															class="btn btn-primary btn">[[#{app.all}]]</button></a>
-													<button class="btn btn-primary" type="button"
-														data-toggle="modal" data-target=".inputmodal"
-														style="margin-left: 550px;">[[#{manage.producer}]]</button>
-
-
 												</form>
 											</div>
 										</div>
@@ -222,8 +226,8 @@
 				<div class="modal-footer">
 					<button id="submitAddProducer" type="submit"
 						th:action="@{/quanly/nhasanxuat}" form="formNhaSanXuata"
-						class="btn btn-primary">[[#{modal.save}]]</button>
-					<button type="submit" class="btn btn-danger" data-dismiss="modal">[[#{modal.cancel}]]</button>
+						class="btn btn-primary">[[#{model.save}]]</button>
+					<button type="submit" class="btn btn-danger" data-dismiss="modal">[[#{model.cancel}]]</button>
 				</div>
 			</div>
 		</div>

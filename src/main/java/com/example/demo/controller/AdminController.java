@@ -91,10 +91,6 @@ public class AdminController {
 		Page<ChiTietHoaDonDTO> cthdDTO = new PageImpl<ChiTietHoaDonDTO>(listDTO, pageable, listDTO.size());
 		cthdDTO.getSort().descending();
 		model.addAttribute("listDTO", cthdDTO);
-		for (int j = 0; j < cthdDTO.getContent().size(); j++) {
-			System.out.println(cthdDTO.getContent().get(j).getHoTenKhachHang());
-		}
-
 		int totalPage = pageHoaDon.getTotalPages();
 		if (totalPage > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
@@ -308,7 +304,6 @@ public class AdminController {
 	@PostMapping(value = "/ajax/creatensx")
 	@ResponseBody
 	public boolean checkNameProducer(@RequestBody String nameProducer) {
-		System.out.println(nameProducer);
 		if (nameProducer.length() > 0) {
 			NhaSanXuat nsx = nhaSanXuatRepository.findByTenNhaSanXuat(nameProducer);
 			if (nsx != null) {
