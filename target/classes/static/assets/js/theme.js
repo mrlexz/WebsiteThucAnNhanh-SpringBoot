@@ -33,7 +33,7 @@ function delay(callback, ms) {
 			callback.apply(context, args);
 		}, ms || 0);
 	};
-	}
+}
 (function dangky(hoTen, diaChi, phoneNumber, tenDangNhap, pass, email) {
 
 	const body = JSON.stringify(hoTen = hoTen, diaChi = diaChi, phoneNumber = phoneNumber, tenDangNhap = tenDangNhap, pass = pass, email = email);

@@ -18,7 +18,22 @@ $(function() {
 		$nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
 	});
 });
+var flag = false;
+var flagSDT = false;
+var flagPASS = false;
+var flagAddProduct = false;
+var flagAddProducer = false;
 
+function delay(callback, ms) {
+	var timer = 0;
+	return function() {
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function() {
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
 (function dangky(hoTen, diaChi, phoneNumber, tenDangNhap, pass, email) {
 
 	const body = JSON.stringify(hoTen = hoTen, diaChi = diaChi, phoneNumber = phoneNumber, tenDangNhap = tenDangNhap, pass = pass, email = email);
