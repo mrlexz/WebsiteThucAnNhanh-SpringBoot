@@ -1,9 +1,11 @@
 package com.example.demo.DTO;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 
 public class RegisterDTO {
 	
@@ -20,11 +22,11 @@ public class RegisterDTO {
 	@Pattern(regexp = "(\\+61|0)[0-9]{9}", message= "Số điện thoại không đúng định dạng")
 	private String soDienThoai;
 	@NotNull
+	@Column(unique = true)
 	@Size(min= 2, max =20)
 	private String tenTaiKhoan;
 	@NotNull
-	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}",
-		    message = "Mật khẩu ít nhất 6 kí tự, 1 chữ số, 1 chữ thường và một chữ hoa")
+	@Size(min =6, max= 20, message = "Mật khẩu tối thiểu 6 kí tự")
 	private String matKhau;
 	
 	RegisterDTO(String hoTenKhachHang, String diaChi, String email, String soDienThoai, String tenTaiKhoan,

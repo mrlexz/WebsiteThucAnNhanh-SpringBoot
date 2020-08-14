@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-<title>Đăng Ký</title>
+<title>Register</title>
 <div th:replace="/header :: header"></div>
 
 </head>
@@ -13,18 +13,16 @@
 		<section class="clean-block clean-form dark">
 			<div class="container">
 				<div class="block-heading">
-					<h2 class="text-info">Đăng kí</h2>
+					<h2 class="text-info">Register</h2>
 				</div>
 				<form id="registation" class="login-custom" th:action="@{/dangky}"
 					th:object="${tkDTO}" method="POST">
-					<p th:if="${param.error}" class="error" style="color: red">Thông
-						tin không hợp lệ vui lòng kiểm tra lại</p>
+					<p th:if="${param.error}" class="error" style="color: red">Invalid information, please check</p>
 					<div class="register-input-group">
 						<div style="width: 40%">
 							<div class="form-group">
-								<label for="username" style="margin-bottom: 0px !important;">Tên
-									đăng nhập</label><input class="form-control item" type="text"
-									id="usernameDK" placeholder="Tên đăng nhập"
+								<label for="username" style="margin-bottom: 0px !important;">Username</label><input class="form-control item" type="text"
+									id="usernameDK" placeholder="Enter your username"
 									th:field="*{tenTaiKhoan}" required>
 
 
@@ -35,9 +33,8 @@
 								th:errors="*{tenTaiKhoan}"></span>
 							</span>
 							<div class="form-group">
-								<label for="password" style="margin-bottom: 0px !important;">Mật
-									khẩu</label><input class="form-control" type="password" id="password"
-									placeholder="Mật khẩu" th:field="*{matKhau}" size="6" required>
+								<label for="password" style="margin-bottom: 0px !important;">Password</label><input class="form-control" type="password" id="password"
+									placeholder="Enter your password" th:field="*{matKhau}" size="6" required>
 
 							</div>
 							<span id="errorpassDK" style="font-size: 15px"><span
@@ -49,8 +46,8 @@
 							<div class="form-group register-input"
 								style="border-bottom: none !important;">
 								<p>
-									Họ và tên: <input class="form-control" id="inputHVT"  type="text"
-										th:field="*{hoTenKhachHang}" placeholder="Nhập họ và tên "
+									Full name: <input class="form-control" id="inputHVT"  type="text"
+										th:field="*{hoTenKhachHang}" placeholder="Enter your full name "
 										required />
 
 								</p>
@@ -58,8 +55,8 @@
 									th:if="${#fields.hasErrors('hoTenKhachHang')}"
 									th:errors="*{hoTenKhachHang}"></span>
 								<p>
-									Địa chỉ: <input class="form-control" id="inputDC" type="text"
-										th:field="*{diaChi}" placeholder="Nhập địa chỉ" required />
+									Address: <input class="form-control" id="inputDC" type="text"
+										th:field="*{diaChi}" placeholder="Enter your address" required />
 
 								</p>
 								<span class="text text-danger" id="errorDC" style="font-size: 15px"
@@ -67,13 +64,13 @@
 								</span>
 								<p>
 									Email: <input class="form-control" type="email"
-										placeholder="Nhập email" th:field="*{email}" required />
+										placeholder="Enter your Email" th:field="*{email}" required />
 								</p>
 								<span class="text text-danger" style="font-size: 15px"
 									th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 								<p>
-									Số điện thoại: <input id="sdt" class="form-control" type="text"
-										spellcheck="false" placeholder="Nhập số điện thoại"
+									Phone number: <input id="sdt" class="form-control" type="text"
+										spellcheck="false" placeholder="Enter your phone number"
 										maxlength="10" size="10" th:field="*{soDienThoai}" required />
 								</p>
 								<span id="errorSDT" style="font-size: 15px"> <span
@@ -86,10 +83,9 @@
 					</div>
 					<div class="form-group-button-group">
 						<a th:href="@{/dangky}"><button class="btn btn-light"
-								type="button" onclick="customReset();" style="color: white">Nhập
-								lại</button></a>
+								type="button" onclick="customReset();" style="color: white">Re-enter</button></a>
 						<button id="registaionSubmit" class="btn btn-primary"
-							type="submit">Đăng kí</button>
+							type="submit">Register</button>
 
 					</div>
 				</form>

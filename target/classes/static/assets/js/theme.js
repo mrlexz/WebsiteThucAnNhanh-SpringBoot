@@ -55,22 +55,6 @@ function delay(callback, ms) {
 		}
 	})
 })
-// Popup nhà sản xuất select option
-$(function ab() {
-	$.ajax({
-		url: 'http://localhost:8080/ajax/nsx',
-		dataType: "text",
-		method: 'GET',
-		success: function(data) {
-			JSON.parse(data).forEach(item => {
-				console.log(item.maNhaSanXuat)
-				$("#nsx").append(`<option value = ${item.maNhaSanXuat}>${item.tenNhaSanXuat}</option>`)
-			})
-		}
-	})
-}
-)
-
 
 //Ajax check username trong đăng ký tài khoản
 $('#usernameDK').keyup(delay(function(e) {
@@ -97,6 +81,7 @@ $('#usernameDK').keyup(delay(function(e) {
 		}
 	})
 }, 500));
+
 // Ajax check số điện thoại trong đăng ký tài khoản
 $('#sdt').keyup(delay(function(e) {
 	var a = this.value.length;
@@ -104,15 +89,14 @@ $('#sdt').keyup(delay(function(e) {
 		$("#errorSDT").html("<font color=red>Số điện thoại phải đủ 10 kí tự</font>");
 		flagSDT = true;
 	} else {
-		$("#errorSDT").html("<font color=#00ff00>Số điện thoại hợp lệ</font>");
+		$("#errorSDT").html(null);
 		flagSDT = false;
 	}
 
 }, 500));
 
-
-
-$('#password').keyup(delay(function(e) {
+//Check password trong form đăng ký
+/*$('#password').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a < 6) {
 		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
@@ -122,22 +106,33 @@ $('#password').keyup(delay(function(e) {
 		flagPASS = false;
 	}
 
-}, 500));
-
+}, 500));*/
+// Check Họ tên
 $('#inputHVT').keyup(delay(function(e) {
 
 	$("#errorHVT").html(null);
 
 }, 500));
-
+//Check địa chỉ
 $('#inputDC').keyup(delay(function(e) {
 
 	$("#errorDC").html(null);
 
 }, 500));
 
+//Check sdt
+$('#sdt').keyup(delay(function(e) {
 
+	$("#errorSDT").html(null);
+
+}, 500));
+// Check Pass
 $('#password').keyup(delay(function(e) {
+
+	$("#errorpassDK").html(null);
+
+}, 500));
+/*$('#password').keyup(delay(function(e) {
 	var a = this.value.length;
 	if (a < 6) {
 		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
@@ -148,8 +143,10 @@ $('#password').keyup(delay(function(e) {
 	}
 
 }, 500));
+*/
+
 // validate before submit
-/*$(document).ready(function() {
+$(document).ready(function() {
 	$('#registaionSubmit').prop('disabled', false);
 	$('#registation input').on('keyup blur', function() {
 
@@ -157,7 +154,7 @@ $('#password').keyup(delay(function(e) {
 			$('#registaionSubmit').prop('disabled', true);
 		} else {
 			$('#registaionSubmit').prop('disabled', false);
-			if (flagPASS) {
+			/*if (flagPASS) {
 				$('#registaionSubmit').prop('disabled', true);
 			} else {
 				$('#registaionSubmit').prop('disabled', false);
@@ -166,21 +163,21 @@ $('#password').keyup(delay(function(e) {
 				} else {
 					$('#registaionSubmit').prop('disabled', false);
 				}
-			}
-		}
-	});*/
-/*	$('#registation input').mouseleave(function() {
+			}*/
+		}/**/
+	}) });
+	$('#registation input').mouseleave(function() {
 		/*if ((flag & flagPASS & flagSDT)) {
 			$('#registaionSubmit').prop('disabled', true);
 		} else {
 			$('#registaionSubmit').prop('disabled', false);
 		}*/
-/*
+
 		if (flag) {
 			$('#registaionSubmit').prop('disabled', true);
 		} else {
 			$('#registaionSubmit').prop('disabled', false);
-			if (flagPASS) {
+			/*if (flagPASS) {
 				$('#registaionSubmit').prop('disabled', true);
 			} else {
 				$('#registaionSubmit').prop('disabled', false);
@@ -189,13 +186,10 @@ $('#password').keyup(delay(function(e) {
 				} else {
 					$('#registaionSubmit').prop('disabled', false);
 				}
-			}
+			}*/
 		}
-	});
+/*	});*/
 });
-*/
-
-
 
 
 //Ajax check tên sản phẩm trong thêm sản phẩm
@@ -224,7 +218,7 @@ $('#tsp').keyup(delay(function(e) {
 		}
 	})
 }, 500));
-
+// Check submit form Thêm sản phẩm
 $(document).ready(function() {
 	$('#submitAddProduct').prop('disabled', false);
 	$('#formSanPhama input').on('keyup blur', function() {
@@ -236,7 +230,6 @@ $(document).ready(function() {
 	});
 
 });
-
 
 /*Form thêm sản phẩm*/
 $('#formSanPhama').submit(function(e) {
@@ -258,8 +251,21 @@ $('#formSanPhama').submit(function(e) {
 
 })
 
-
-
+// Popup nhà sản xuất select option
+$(function ab() {
+	$.ajax({
+		url: 'http://localhost:8080/ajax/nsx',
+		dataType: "text",
+		method: 'GET',
+		success: function(data) {
+			JSON.parse(data).forEach(item => {
+				console.log(item.maNhaSanXuat)
+				$("#nsx").append(`<option value = ${item.maNhaSanXuat}>${item.tenNhaSanXuat}</option>`)
+			})
+		}
+	})
+}
+)
 
 //Ajax check tên nhà sản xuất trong thêm nhà sản xuất
 $('#tenNhaSanXuat1').keyup(delay(function(e) {
@@ -287,6 +293,7 @@ $('#tenNhaSanXuat1').keyup(delay(function(e) {
 		}
 	})
 }, 500));
+//Check submit Thêm nhà sản xuất
 $(document).ready(function() {
 	$('#submitAddProducer').prop('disabled', false);
 	$('#formNhaSanXuata input').on('keyup blur', function() {
@@ -318,5 +325,16 @@ $('#formNhaSanXuata').submit(function(e) {
 		e.preventDefault();
 		return false;
 	}
-})
+});
+
+//Check button thanh toán 
+$(document).ready(function() {
+	$('#btnCheckout').prop('disabled', true);
+	var count = $('#countOfProduct').val();
+	if(count && count > 0) {
+		$('#btnCheckout').prop('disabled', false);
+	} else {
+		$('#btnCheckout').prop('disabled', true);
+	}
+});
 

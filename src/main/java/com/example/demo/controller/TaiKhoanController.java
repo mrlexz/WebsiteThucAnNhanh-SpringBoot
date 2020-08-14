@@ -82,7 +82,7 @@ public class TaiKhoanController {
 		}
 		return "dangky";
 	}
-
+// Ajax
 	@PostMapping(value = "ajax/dangky")
 	@ResponseBody
 	public Boolean createNewUser(@RequestBody() String username) {

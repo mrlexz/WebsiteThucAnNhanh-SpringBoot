@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-<title>Quản lý Đơn hàng</title>
+<title>Order management</title>
 <div th:replace="/header :: header"></div>
 <style type="text/css">
 .searchCol {
@@ -19,7 +19,7 @@
 			<div class="container">
 				<div class="block-heading" style="padding-top: 0px">
 					<h1></h1>
-					<h2 class="text-info">Quản lý Đơn hàng</h2>
+					<h2 class="text-info">Order management</h2>
 				</div>
 				<div class="content">
 					<div class="row no-gutters">
@@ -47,12 +47,12 @@
 									<table id="quanlydonhangTable" class="table">
 										<thead>
 											<tr>
-												<th>Họ Tên</th>
-												<th>SĐT</th>
-												<th>Địa chỉ</th>
-												<th>So Luong</th>
+												<th>Full name</th>
+												<th>Phone number</th>
+												<th>Address</th>
+												<th>Amount</th>
 												<th><div style="display: flex; align-items: center;">
-														Ngày đặt hàng
+														Order date
 														<form class="form-inline" target="_self">
 															<div class="form-group">
 																<input value="ASC" type="hidden" name="sort"
@@ -76,7 +76,7 @@
 															</button>
 														</form>
 													</div></th>
-												<th>Tổng tiền</th>
+												<th>Total Money</th>
 											</tr>
 										</thead>
 										<tbody>

@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-<title>Sản Phẩm</title>
+<title>Products</title>
 <div th:replace="/header :: header"></div>
 </head>
 
@@ -12,7 +12,7 @@
 		<section class="clean-block clean-catalog dark">
 			<div class="container">
 				<div class="block-heading">
-					<h2 class="text-info">Fresh Sandwich</h2>
+					<h2 class="text-info">Fast food</h2>
 				</div>
 				<div class="content cart-custom">
 					<div class="row">
@@ -32,12 +32,12 @@
 										</form>
 									</div>
 									<div class="filter-item">
-										<h3>Lọc theo giá</h3>
+										<h3>Filter by price</h3>
 										<form>
 											<input type="hidden" value="loai1" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												Giá < 50k</button>
+												Price < 50k</button>
 										</form>
 										<form>
 											<input type="hidden" value="loai2" name="price">
@@ -49,7 +49,7 @@
 											<input type="hidden" value="loai3" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												Giá > 100k</button>
+												Price > 100k</button>
 										</form>
 									</div>
 								</div>
@@ -107,8 +107,7 @@
 													<div class="rating details-item">
 														<a
 															th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
-															<button class="btn btn-sm" type="button">Thêm
-																vào giỏ hàng</button>
+															<button class="btn btn-sm" type="button">Add to cart</button>
 														</a>
 													</div>
 
