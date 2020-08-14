@@ -19,7 +19,7 @@
 			<div class="container">
 				<div class="block-heading" style="padding-top: 0px">
 					<h1></h1>
-					<h2 class="text-info">Quản lý Đơn hàng</h2>
+					<h2 class="text-info">[[#{manage.orderManagement}]]</h2>
 				</div>
 				<div class="content">
 					<div class="row no-gutters">
@@ -35,9 +35,9 @@
 												</div>
 												<button type="submit"
 													th:action="@{/quanly/donhang/{name}'(name=${seachTenKH})}"
-													class="btn btn-primary">Search</button>
+													class="btn btn-primary">[[#{app.search}]]</button>
 												<a th:href="@{/quanly/donhang}"><button type="button"
-														style="margin-left: 10px;" class="btn btn-primary btn">All</button></a>
+														style="margin-left: 10px;" class="btn btn-primary btn">[[#{app.all}]]</button></a>
 											</form>
 										</div>
 									</div>
@@ -47,12 +47,12 @@
 									<table id="quanlydonhangTable" class="table">
 										<thead>
 											<tr>
-												<th>Họ Tên</th>
-												<th>SĐT</th>
-												<th>Địa chỉ</th>
-												<th>So Luong</th>
+												<th>[[#{register.fullName}]]</th>
+												<th>[[#{register.phoneNumber}]]</th>
+												<th>[[#{register.address}]]</th>
+												<th>[[#{shop.amount}]]</th>
 												<th><div style="display: flex; align-items: center;">
-														Ngày đặt hàng
+														[[#{manage.date}]]
 														<form class="form-inline" target="_self">
 															<div class="form-group">
 																<input value="ASC" type="hidden" name="sort"
@@ -76,7 +76,7 @@
 															</button>
 														</form>
 													</div></th>
-												<th>Tổng tiền</th>
+												<th>[[#{shop.total}]]</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -100,7 +100,7 @@
 									</ul>
 									<div style="display: flex; justify-content: flex-end;">
 										<p style="color: blue">
-											Total: <a th:text=${total}></a>
+											[[#{app.total}]]: <a th:text=${total}></a>
 										</p>
 									</div>
 								</nav>

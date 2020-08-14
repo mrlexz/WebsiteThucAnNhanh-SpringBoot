@@ -17,14 +17,14 @@ public class RegisterDTO {
 	@Email
 	private String email;
 	@NotNull
-	@Pattern(regexp = "(\\+61|0)[0-9]{9}", message= "Số điện thoại không đúng định dạng")
+	@Pattern(regexp = "(\\+61|0)[0-9]{9}", message= "Phone number incorrect format")
 	private String soDienThoai;
 	@NotNull
 	@Size(min= 2, max =20)
 	private String tenTaiKhoan;
 	@NotNull
 	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}",
-		    message = "Mật khẩu ít nhất 6 kí tự, 1 chữ số, 1 chữ thường và một chữ hoa")
+		    message = "Password at least 6 characters, 1 digit, 1 lowercase and one uppercase")
 	private String matKhau;
 	
 	RegisterDTO(String hoTenKhachHang, String diaChi, String email, String soDienThoai, String tenTaiKhoan,

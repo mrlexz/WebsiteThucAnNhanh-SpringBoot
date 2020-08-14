@@ -18,7 +18,6 @@ $(function() {
 		$nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
 	});
 });
-
 var flag = false;
 var flagSDT = false;
 var flagPASS = false;
@@ -55,6 +54,200 @@ function delay(callback, ms) {
 		}
 	})
 })
+
+//Ajax check username trong đăng ký tài khoản
+$('#usernameDK').keyup(delay(function(e) {
+	$.ajax({
+		url: 'http://localhost:8080/ajax/dangky',
+		dataType: "json",
+		method: 'POST',
+		contentType: "application/json; charset=utf-8",
+		data: this.value,
+		success: function(res) {
+			if (res) {
+				$("#errorUserDk").html("<font color=red>Account already exists</font>");
+				flag = true;
+			} else {
+				$("#errorUserDk").html("<font color=#00ff00>Valid account</font>");
+				flag = false;
+			}
+		},
+		error: function(request, status, error) {
+			if (request.responseJSON.status === 400) {
+				$("#errorUserDk").html(null);
+				flag = true;
+			}
+		}
+	})
+}, 500));
+
+// Ajax check số điện thoại trong đăng ký tài khoản
+$('#sdt').keyup(delay(function(e) {
+	var a = this.value.length;
+	if (a != 10) {
+		$("#errorSDT").html("<font color=red>Phone number must be 10 characters</font>");
+		flagSDT = true;
+	} else {
+		$("#errorSDT").html(null);
+		flagSDT = false;
+	}
+
+}, 500));
+
+//Check password trong form đăng ký
+/*$('#password').keyup(delay(function(e) {
+	var a = this.value.length;
+	if (a < 6) {
+		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
+		flagPASS = true;
+	} else {
+		$("#errorpassDK").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
+		flagPASS = false;
+	}
+}, 500));*/
+// Check Họ tên
+$('#inputHVT').keyup(delay(function(e) {
+
+	$("#errorHVT").html(null);
+
+}, 500));
+//Check địa chỉ
+$('#inputDC').keyup(delay(function(e) {
+
+	$("#errorDC").html(null);
+
+}, 500));
+
+//Check sdt
+$('#sdt').keyup(delay(function(e) {
+
+	$("#errorSDT").html(null);
+
+}, 500));
+// Check Pass
+$('#password').keyup(delay(function(e) {
+
+	$("#errorpassDK").html(null);
+
+}, 500));
+/*$('#password').keyup(delay(function(e) {
+	var a = this.value.length;
+	if (a < 6) {
+		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
+		flagPASS = true;
+	} else {
+		$("#errorpassDK").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
+		flagPASS = false;
+	}
+}, 500));
+*/
+
+// validate before submit
+$(document).ready(function() {
+	$('#registaionSubmit').prop('disabled', false);
+	$('#registation input').on('keyup blur', function() {
+
+		if (flag) {
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
+			/*if (flagPASS) {
+				$('#registaionSubmit').prop('disabled', true);
+			} else {
+				$('#registaionSubmit').prop('disabled', false);
+				if (flagSDT) {
+					$('#registaionSubmit').prop('disabled', true);
+				} else {
+					$('#registaionSubmit').prop('disabled', false);
+				}
+			}*/
+		}/**/
+	}) });
+	$('#registation input').mouseleave(function() {
+		/*if ((flag & flagPASS & flagSDT)) {
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
+		}*/
+
+		if (flag) {
+			$('#registaionSubmit').prop('disabled', true);
+		} else {
+			$('#registaionSubmit').prop('disabled', false);
+			/*if (flagPASS) {
+				$('#registaionSubmit').prop('disabled', true);
+			} else {
+				$('#registaionSubmit').prop('disabled', false);
+				if (flagSDT) {
+					$('#registaionSubmit').prop('disabled', true);
+				} else {
+					$('#registaionSubmit').prop('disabled', false);
+				}
+			}*/
+		}
+/*	});*/
+});
+
+
+//Ajax check tên sản phẩm trong thêm sản phẩm
+$('#tsp').keyup(delay(function(e) {
+
+	$.ajax({
+		url: 'http://localhost:8080/ajax/createsanpham',
+		dataType: "json",
+		method: 'POST',
+		contentType: "application/json; charset=utf-8",
+		data: this.value,
+		success: function(res) {
+			if (res) {
+				$(".status").html("<font color=red>The product name already exists</font>");
+				flagAddProduct = true;
+			} else {
+				$(".status").html("<font color=#00ff00>Valid product name</font>");
+				flagAddProduct = false;
+			}
+		},
+		error: function(request, status, error) {
+			if (request.responseJSON.status === 400) {
+				$(".status").html(null);
+				flagAddProduct = true;
+			}
+		}
+	})
+}, 500));
+// Check submit form Thêm sản phẩm
+$(document).ready(function() {
+	$('#submitAddProduct').prop('disabled', false);
+	$('#formSanPhama input').on('keyup blur', function() {
+		if ((flagAddProduct)) {
+			$('#submitAddProduct').prop('disabled', true);
+		} else {
+			$('#submitAddProduct').prop('disabled', false);
+		}
+	});
+
+});
+
+/*Form thêm sản phẩm*/
+$('#formSanPhama').submit(function(e) {
+	// Xóa trắng thẻ div show lỗi
+	$('#showerror').html('');
+	var motasp = $('#moTa1').val();
+	var tensp = $('#tsp').val();
+	if (tensp.length == 0) {
+		$(".status").html("<font color=red>Product name cannot be left blank</font>");
+		e.preventDefault();
+		return false;
+	}
+
+	if (motasp.length == 0) {
+		$(".status4").html("<font color=red>Product description must not be left blank</font>");
+		e.preventDefault();
+		return false;
+	}
+
+})
+
 // Popup nhà sản xuất select option
 $(function ab() {
 	$.ajax({
@@ -71,196 +264,6 @@ $(function ab() {
 }
 )
 
-
-//Ajax check username trong đăng ký tài khoản
-$('#usernameDK').keyup(delay(function(e) {
-	$.ajax({
-		url: 'http://localhost:8080/ajax/dangky',
-		dataType: "json",
-		method: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data: this.value,
-		success: function(res) {
-			if (res) {
-				$("#errorUserDk").html("<font color=red>Tài khoản đã tồn tại</font>");
-				flag = true;
-			} else {
-				$("#errorUserDk").html("<font color=#00ff00>Tài khoản hợp lệ</font>");
-				flag = false;
-			}
-		},
-		error: function(request, status, error) {
-			if (request.responseJSON.status === 400) {
-				$("#errorUserDk").html(null);
-				flag = true;
-			}
-		}
-	})
-}, 500));
-// Ajax check số điện thoại trong đăng ký tài khoản
-$('#sdt').keyup(delay(function(e) {
-	var a = this.value.length;
-	if (a != 10) {
-		$("#errorSDT").html("<font color=red>Số điện thoại phải đủ 10 kí tự</font>");
-		flagSDT = true;
-	} else {
-		$("#errorSDT").html("<font color=#00ff00>Số điện thoại hợp lệ</font>");
-		flagSDT = false;
-	}
-
-}, 500));
-
-
-
-$('#password').keyup(delay(function(e) {
-	var a = this.value.length;
-	if (a < 6) {
-		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
-		flagPASS = true;
-	} else {
-		$("#errorpassDK").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
-		flagPASS = false;
-	}
-
-}, 500));
-
-$('#inputHVT').keyup(delay(function(e) {
-
-	$("#errorHVT").html(null);
-
-}, 500));
-
-$('#inputDC').keyup(delay(function(e) {
-
-	$("#errorDC").html(null);
-
-}, 500));
-
-
-$('#password').keyup(delay(function(e) {
-	var a = this.value.length;
-	if (a < 6) {
-		$("#errorpassDK").html("<font color=red>Mật khẩu tối thiểu 6 kí tự</font>");
-		flagPASS = true;
-	} else {
-		$("#errorpassDK").html("<font color=#00ff00>Mật khẩu hợp lệ</font>");
-		flagPASS = false;
-	}
-
-}, 500));
-// validate before submit
-/*$(document).ready(function() {
-	$('#registaionSubmit').prop('disabled', false);
-	$('#registation input').on('keyup blur', function() {
-
-		if (flag) {
-			$('#registaionSubmit').prop('disabled', true);
-		} else {
-			$('#registaionSubmit').prop('disabled', false);
-			if (flagPASS) {
-				$('#registaionSubmit').prop('disabled', true);
-			} else {
-				$('#registaionSubmit').prop('disabled', false);
-				if (flagSDT) {
-					$('#registaionSubmit').prop('disabled', true);
-				} else {
-					$('#registaionSubmit').prop('disabled', false);
-				}
-			}
-		}
-	});*/
-/*	$('#registation input').mouseleave(function() {
-		/*if ((flag & flagPASS & flagSDT)) {
-			$('#registaionSubmit').prop('disabled', true);
-		} else {
-			$('#registaionSubmit').prop('disabled', false);
-		}*/
-/*
-		if (flag) {
-			$('#registaionSubmit').prop('disabled', true);
-		} else {
-			$('#registaionSubmit').prop('disabled', false);
-			if (flagPASS) {
-				$('#registaionSubmit').prop('disabled', true);
-			} else {
-				$('#registaionSubmit').prop('disabled', false);
-				if (flagSDT) {
-					$('#registaionSubmit').prop('disabled', true);
-				} else {
-					$('#registaionSubmit').prop('disabled', false);
-				}
-			}
-		}
-	});
-});
-*/
-
-
-
-
-//Ajax check tên sản phẩm trong thêm sản phẩm
-$('#tsp').keyup(delay(function(e) {
-
-	$.ajax({
-		url: 'http://localhost:8080/ajax/createsanpham',
-		dataType: "json",
-		method: 'POST',
-		contentType: "application/json; charset=utf-8",
-		data: this.value,
-		success: function(res) {
-			if (res) {
-				$(".status").html("<font color=red>Tên sản phẩm đã tồn tại</font>");
-				flagAddProduct = true;
-			} else {
-				$(".status").html("<font color=#00ff00>Tên sản phẩm hợp lệ</font>");
-				flagAddProduct = false;
-			}
-		},
-		error: function(request, status, error) {
-			if (request.responseJSON.status === 400) {
-				$(".status").html(null);
-				flagAddProduct = true;
-			}
-		}
-	})
-}, 500));
-
-$(document).ready(function() {
-	$('#submitAddProduct').prop('disabled', false);
-	$('#formSanPhama input').on('keyup blur', function() {
-		if ((flagAddProduct)) {
-			$('#submitAddProduct').prop('disabled', true);
-		} else {
-			$('#submitAddProduct').prop('disabled', false);
-		}
-	});
-
-});
-
-
-/*Form thêm sản phẩm*/
-$('#formSanPhama').submit(function(e) {
-	// Xóa trắng thẻ div show lỗi
-	$('#showerror').html('');
-	var motasp = $('#moTa1').val();
-	var tensp = $('#tsp').val();
-	if (tensp.length == 0) {
-		$(".status").html("<font color=red>Tên sản phẩm không được bỏ trống</font>");
-		e.preventDefault();
-		return false;
-	}
-
-	if (motasp.length == 0) {
-		$(".status4").html("<font color=red>Mô tả sản phẩm không được bỏ trống</font>");
-		e.preventDefault();
-		return false;
-	}
-
-})
-
-
-
-
 //Ajax check tên nhà sản xuất trong thêm nhà sản xuất
 $('#tenNhaSanXuat1').keyup(delay(function(e) {
 	$.ajax({
@@ -272,10 +275,10 @@ $('#tenNhaSanXuat1').keyup(delay(function(e) {
 
 		success: function(res) {
 			if (res) {
-				$(".status").html("<font color=red>Tên nhà sản xuất đã tồn tại</font>");
+				$(".status").html("<font color=red>Producer name already exists</font>");
 				flagAddProducer = true;
 			} else {
-				$(".status").html("<font color=#00ff00>Tên nhà sản xuất hợp lệ</font>");
+				$(".status").html("<font color=#00ff00>Valid manufacturer name</font>");
 				flagAddProducer = false;
 			}
 		},
@@ -287,6 +290,7 @@ $('#tenNhaSanXuat1').keyup(delay(function(e) {
 		}
 	})
 }, 500));
+//Check submit Thêm nhà sản xuất
 $(document).ready(function() {
 	$('#submitAddProducer').prop('disabled', false);
 	$('#formNhaSanXuata input').on('keyup blur', function() {
@@ -308,15 +312,25 @@ $('#formNhaSanXuata').submit(function(e) {
 
 
 	if (tennsx.length == 0) {
-		$(".status").html("<font color=red>Tên nhà sản xuất  không được bỏ trống</font>");
+		$(".status").html("<font color=red>The manufacturer's name cannot be left blank</font>");
 		e.preventDefault();
 		return false;
 	}
 
 	if (diachi.length == 0) {
-		$(".status1").html("<font color=red>Địa chỉ không được bỏ trống</font>");
+		$(".status1").html("<font color=red>Address must not be blank</font>");
 		e.preventDefault();
 		return false;
 	}
-})
+});
 
+//Check button thanh toán 
+$(document).ready(function() {
+	$('#btnCheckout').prop('disabled', true);
+	var count = $('#countOfProduct').val();
+	if(count && count > 0) {
+		$('#btnCheckout').prop('disabled', false);
+	} else {
+		$('#btnCheckout').prop('disabled', true);
+	}
+});

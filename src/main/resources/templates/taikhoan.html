@@ -7,7 +7,7 @@
 		<div class="container">
 			<div class="block-heading">
 				<h2 class="text-info">HQStore</h2>
-				<p>Thông tin tài khoản</p>
+				<p>[[#{account.information}]]</p>
 			</div>
 
 			<div class="container" style="width: 50%;">
@@ -19,16 +19,16 @@
 								th:text="${taikhoan.maTaiKhoan}" th:value="*{maTaiKhoan}" />
 						</p>
 						<p>
-							Tên tài khoản: <input class="form-control" type="text"
+							[[#{account.accountName}]]: <input class="form-control" type="text"
 								th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled />
 						</p>
 						<p>
-							Họ và Tên: <input class="form-control" type="text"
+							[[#{register.fullName}]]: <input class="form-control" type="text"
 								th:field="*{khachHang.hoTenKhachHang}"
 								th:value="*{khachHang.hoTenKhachHang}" required />
 						</p>
 						<p>
-							Địa chỉ: <input class="form-control" type="text"
+							[[#{register.address}]]: <input class="form-control" type="text"
 								th:field="*{khachHang.diaChi}" th:value="*{khachHang.diaChi}"
 								required />
 						</p>
@@ -38,11 +38,11 @@
 								required />
 						</p>
 						<p>
-							Số điện thoại: <input class="form-control" type="number"
+							[[#{register.phoneNumber}]]: <input class="form-control" type="number"
 								th:field="*{khachHang.soDienThoai}"
 								th:value="*{khachHang.soDienThoai}" required />
 						</p>
-						<button type="submit" class="btn btn-primary">Lưu</button>
+						<button type="submit" class="btn btn-primary">[[#{model.save}]]</button>
 					</div>
 				</form>
 			</div>

@@ -457,7 +457,7 @@ body {
 }
 
 .filter-item button {
-	width: 100px;
+	width: 105px;
 	background-color: DodgerBlue;
 	border: none;
 	color: white;
@@ -482,4 +482,8 @@ body {
 .sort:hover {
 	background: none;
 	color: black;
+}
+
+.filters {
+	padding-left: 21px !important;
 }

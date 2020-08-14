@@ -60,7 +60,6 @@ public class SanPhamController {
 			if (price.equals("loai3")) {
 				start = 100;
 				end = 1000;
-				System.out.println("loai3");
 			}
 			Sort sortable = null;
 			if (sort.equals("ASC")) {
