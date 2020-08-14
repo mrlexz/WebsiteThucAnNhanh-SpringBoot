@@ -66,7 +66,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
                 .addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
-    
+ //Đa ngôn ngữ   
     @Bean
     public org.springframework.web.servlet.LocaleResolver localeResolver() {
     	return new CookieLocaleResolver();

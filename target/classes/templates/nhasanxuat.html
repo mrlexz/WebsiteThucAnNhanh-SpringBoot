@@ -26,7 +26,7 @@
 			<div class="container">
 				<div class="block-heading" style="padding-top: 0px">
 					<h1></h1>
-					<h2 class="text-info">Quản lý nhà sản xuất</h2>
+					<h2 class="text-info">[[#{manage.manufacturerManagement}]]</h2>
 				</div>
 				<div class="content">
 					<div class="row no-gutters">
@@ -43,13 +43,13 @@
 													</div>
 													<button type="submit"
 														th:action="@{/quanly/nhasanxuat/{name}'(name=${searchNsx})}"
-														class="btn btn-primary">Search</button>
+														class="btn btn-primary">[[#{app.search}]]</button>
 													<a th:href="@{/quanly/nhasanxuat}"><button
 															type="button" style="margin-left: 10px;"
-															class="btn btn-primary btn">All</button></a>
+															class="btn btn-primary btn">[[#{app.all}]]</button></a>
 													<button class="btn btn-primary" type="button"
 														data-toggle="modal" data-target=".inputmodal"
-														style="margin-left: 550px;">Thêm nhà sản xuất</button>
+														style="margin-left: 550px;">[[#{manage.producer}]]</button>
 
 
 												</form>
@@ -60,10 +60,10 @@
 										<table id="quanlynhasanxuatTable" class="table">
 											<thead>
 												<tr>
-													<th>Ma nha san xuat</th>
-													<th>Ten nha san xuat</th>
-													<th>Dia chi</th>
-													<th>Action</th>
+													<th>[[#{manage.idProducer}]]</th>
+													<th>[[#{manage.nameProduder}]]</th>
+													<th>[[#{register.address}]]</th>
+													<th>[[#{manage.action}]]</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -78,7 +78,7 @@
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title">Nhà Sản Xuất</h5>
+																		<h5 class="modal-title">[[#{model.producer}]]</h5>
 																	</div>
 																	<div class="modal-body">
 																		<div class="container">
@@ -89,22 +89,21 @@
 																						th:object="${modalupdatenhasanxuat}" method="GET"
 																						id="formEditNhaSanXuat">
 																						<div class="form-group">
-																							<label for="tenNhaSanXuat">Tên nhà sản
-																								xuất</label> <input type="text" class="form-control"
+																							<label for="tenNhaSanXuat">[[#{manage.nameProduder}]]</label> <input type="text" class="form-control"
 																								id="tenNhaSanXuat" name="tenNhaSanXuat"
 																								th:value="${nhasanxuat.tenNhaSanXuat}">
 																						</div>
 																						<div class="form-group">
-																							<label for="diaChi">Địa chỉ</label> <input
+																							<label for="diaChi">[[#{register.address}]]</label> <input
 																								type="text" class="form-control" id="diaChi"
 																								name="diaChi" th:value="${nhasanxuat.diaChi}">
 																						</div>
 																						<div
 																							style="display: flex; justify-content: flex-end;">
 																							<div class="form-group">
-																								<button type="submit" class="btn btn-primary">Lưu</button>
+																								<button type="submit" class="btn btn-primary">[[#{model.save}]]</button>
 																								<button type="submit" class="btn btn-danger"
-																									data-dismiss="modal">Cancel</button>
+																									data-dismiss="modal">[[#{model.cancel}]]</button>
 																							</div>
 																						</div>
 																					</form>
@@ -121,23 +120,21 @@
 															<div class="modal-dialog" role="document">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title" id="exampleModalLabel">Delete
-																			Producer</h5>
+																		<h5 class="modal-title" id="exampleModalLabel">[[#{delete.deleteProducer}]]</h5>
 																		<button type="button" class="close"
 																			data-dismiss="modal" aria-label="Close">
 																			<span aria-hidden="true">&times;</span>
 																		</button>
 																	</div>
-																	<div class="modal-body">Are you want to delete
-																		this ?</div>
+																	<div class="modal-body">[[#{delete.accept}]] ?</div>
 																	<div class="modal-footer">
 																	<form action="#"
 																			th:action="@{'/quanly/nhasanxuat/delete/{id}'(id=${nhasanxuat.maNhaSanXuat})}"
 																			th:method="delete">
-																			<button type="submit" class="btn btn-danger">Yes</button>
+																			<button type="submit" class="btn btn-danger">[[#{delete.yes}]]</button>
 																		</form>
 																		<button type="button" class="btn btn-secondary"
-																			data-dismiss="modal">No</button>
+																			data-dismiss="modal">[[#{delete.no}]]</button>
 																	</div>
 																</div>
 															</div>
@@ -152,7 +149,7 @@
 																	<button type="button" id="editButton"
 																		class="btn btn-info btn-md" data-toggle="modal"
 																		data-target="#inputmodal1"
-																		th:attrappend="data-target=${idx.index}">Edit</button>
+																		th:attrappend="data-target=${idx.index}">[[#{manage.edit}]]</button>
 																</form>
 															</div>
 															<div class="btn-delete">
@@ -161,7 +158,7 @@
 																	th:method="delete">
 																	<button type="button" data-toggle="modal"
 																		class="btn btn-danger" data-target="#deleteItem"
-																		th:attrappend="data-target=${idx.index}">Delete</button>
+																		th:attrappend="data-target=${idx.index}">[[#{manage.delete}]]</button>
 																</form>
 															</div>
 														</div>
@@ -179,7 +176,7 @@
 										</ul>
 										<div style="display: flex; justify-content: flex-end;">
 											<p style="color: blue">
-												Total: <a th:text=${total}></a>
+												[[#{app.total}]]: <a th:text=${total}></a>
 											</p>
 										</div>
 									</nav>
@@ -197,7 +194,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Nhập nhà sản xuất</h5>
+					<h5 class="modal-title">[[#{model.producer}]]</h5>
 				</div>
 				<div class="modal-body">
 					<div class="container">
@@ -207,13 +204,13 @@
 									th:object="${modelnhasanxuat}" method="post"
 									id="formNhaSanXuata">
 									<div class="form-group">
-										<label for="tenNhaSanXuat">Tên nhà sản xuất</label> <input
+										<label for="tenNhaSanXuat">[[#{manage.nameProduder}]]</label> <input
 											type="text" class="form-control" id="tenNhaSanXuat1"
 											th:field="*{tenNhaSanXuat}">
 									</div>
 									<span class="status"></span>
 									<div class="form-group">
-										<label for="diaChi">Địa chỉ</label> <input type="text"
+										<label for="diaChi">[[#{register.address}]]</label> <input type="text"
 											class="form-control" id="diaChi1" th:field="*{diaChi}">
 									</div>
 									<span class="status1"></span>
@@ -225,8 +222,8 @@
 				<div class="modal-footer">
 					<button id="submitAddProducer" type="submit"
 						th:action="@{/quanly/nhasanxuat}" form="formNhaSanXuata"
-						class="btn btn-primary">Lưu</button>
-					<button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						class="btn btn-primary">[[#{modal.save}]]</button>
+					<button type="submit" class="btn btn-danger" data-dismiss="modal">[[#{modal.cancel}]]</button>
 				</div>
 			</div>
 		</div>

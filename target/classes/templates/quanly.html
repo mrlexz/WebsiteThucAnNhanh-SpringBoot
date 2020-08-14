@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml"
  th:fragment="main-fragment (title, otherStaticResources, header1, nav, mainContent, footer1)"
@@ -28,10 +29,10 @@
 			<div class="block-heading">
 			</div>
 			<div class="col">
-				<a th:href="@{/quanly/sanpham}" class="btn btn-primary btn-sm">Quản lý Sản Phẩm</a>
-				<a th:href="@{/quanly/donhang}" class="btn btn-primary btn-sm">Quản lý Đơn hàng</a>
-				<a th:href="@{/quanly/nhasanxuat}" class="btn btn-primary btn-sm">Danh sách Nhà cung cấp</a>
-				<a th:href="@{/quanly/thongke}" class="btn btn-primary btn-sm">Thống kê bán hàng</a>
+				<a th:href="@{/quanly/sanpham}" class="btn btn-primary btn-sm">[[#{manage.productManagement}]]</a>
+				<a th:href="@{/quanly/donhang}" class="btn btn-primary btn-sm">[[#{manage.orderManagement}]]</a>
+				<a th:href="@{/quanly/nhasanxuat}" class="btn btn-primary btn-sm">[[#{manage.manufacturerManagement}]]</a>
+				<a th:href="@{/quanly/thongke}" class="btn btn-primary btn-sm">[[#{manage.statisticalManagement}]]</a>
 			</div>
 		</div>
 	</section>
