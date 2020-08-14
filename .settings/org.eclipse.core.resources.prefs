@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/messages_vi.properties=UTF-8
 encoding//src/main/resources/templates/chinhsach.html=UTF-8
 encoding//src/main/resources/templates/chitiet-sanpham.html=UTF-8
 encoding//src/main/resources/templates/dangnhap.html=UTF-8
