@@ -43,7 +43,7 @@
 											<input type="hidden" value="loai2" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												50k - 100k</button>
+												50$ - 100$</button>
 										</form>
 										<form>
 											<input type="hidden" value="loai3" name="price">
@@ -100,7 +100,7 @@
 															th:text="${sanpham.tenSanPham}"></a>
 													</div>
 													<div class="price details-item details-item-price">
-														<h3 th:text="${sanpham.donGia+'00 VND'}"></h3>
+														<h3 th:text="${'$'+sanpham.donGia}"></h3>
 													</div>
 												</div>
 												<div class="about add-cart-button">
