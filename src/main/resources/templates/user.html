@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Quản lý User</title>
+<div th:replace="/header :: header"></div>
+<style type="text/css">
+.searchCol {
+	margin-bottom: 30px;
+}
+
+.summary {
+	background-color: #fff !important;
+}
+
+.add {
+	margin-left: 800px;
+}
+</style>
+</head>
+<body class="body-custom">
+	<div th:replace="/header :: navbar"></div>
+	<div th:replace="/quanly :: navbar"></div>
+	<main class="page shopping-cart-page">
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading" style="padding-top: 0px">
+					<h1></h1>
+					<h2 class="text-info">[[#{manage.userManagement}]]</h2>
+				</div>
+				<div class="content">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-12">
+							<div class="items">
+								<div>
+									<div class="row">
+										<div class="col">
+											<div class="searchCol">
+												<form class="form-inline mr-auto" target="_self">
+													<div style="width: 100%; display: flex;">
+														<div style="width: 50%; display: flex;">
+															<div class="form-group">
+																<input class="form-control search-field" type="search"
+																	name="searchUser" id="search-field">
+															</div>
+															<button type="submit"
+																th:action="@{/quanly/user/{name}'(name=${searchUser})}"
+																class="btn btn-primary">[[#{app.search}]]</button>
+															<a th:href="@{/quanly/user}"><button type="button"
+																	style="margin-left: 10px;" class="btn btn-primary btn">[[#{app.all}]]</button></a>
+
+														</div>
+														<div
+															style="width: 50%; display: flex; justify-content: flex-end;">
+															<a th:href="@{/quanly/user/export}"><button
+																	type="button" style="margin-left: 10px;"
+																	class="btn btn-primary btn">Export to CSV</button></a>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="row col-lg-12 table-responsive">
+										<table id="quanlyUserTable" class="table">
+											<thead>
+												<tr>
+													<th>[[#{id.customer}]]</th>
+													<th>[[#{id.nameCustomer}]]</th>
+													<th>[[#{register.address}]]</th>
+													<th>Email</th>
+													<th>[[#{register.phoneNumber}]]</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="khachhang, idx : ${listKhachHang}">
+													<td th:text="${khachhang.maKhachHang}"></td>
+													<td th:text="${khachhang.hoTenKhachHang}"></td>
+													<td th:text="${khachhang.diaChi}"></td>
+													<td th:text="${khachhang.email}"></td>
+													<td th:text="${khachhang.soDienThoai}"></td>
+													</tr>
+											</tbody>
+										</table>
+									</div>
+									<nav>
+										<ul class="pagination">
+											<li class="page-item" th:each="pageNumber : ${pageNumbers}"><a
+												class="page-link"
+												th:href="@{/quanly/nhasanxuat(page=${pageNumber},name=${searchUser})}"
+												th:text=${pageNumber}></a></li>
+										</ul>
+										<div style="display: flex; justify-content: flex-end;">
+											<p style="color: blue">
+												[[#{app.total}]]: <a th:text=${total}></a>
+											</p>
+										</div>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<div th:replace="/header :: footer"></div>
+</body>
+</html>
