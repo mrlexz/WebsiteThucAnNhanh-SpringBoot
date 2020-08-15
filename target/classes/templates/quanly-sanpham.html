@@ -109,7 +109,7 @@
 											<td th:text="${sanpham.moTa}"></td>
 											<td th:text="${sanpham.nhaSanXuat.tenNhaSanXuat}"></td>
 											<td th:text="${sanpham.namSanXuat}"></td>
-											<td th:text="${sanpham.donGia+'00VND'}"></td>
+											<td th:text="${'$'+sanpham.donGia}"></td>
 											<td><div class="modal fade inputmodal1" tabindex="-1"
 													role="dialog" aria-hidden="true" id="inputmodal1"
 													th:attrappend="id=${idx.index}">

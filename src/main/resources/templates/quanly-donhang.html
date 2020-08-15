@@ -86,7 +86,7 @@
 												<td th:text="${chiTietDTO.diaChi}"></td>
 												<td th:text="${chiTietDTO.soLuong}"></td>
 												<td th:text="${chiTietDTO.ngayLap}"></td>
-												<td th:text="${chiTietDTO.getTongTien()+'00VND'}"></td>
+												<td th:text="${'$'+chiTietDTO.getTongTien()}"></td>
 											</tr>
 										</tbody>
 									</table>
