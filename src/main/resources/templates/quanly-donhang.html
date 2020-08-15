@@ -38,7 +38,12 @@
 													class="btn btn-primary">[[#{app.search}]]</button>
 												<a th:href="@{/quanly/donhang}"><button type="button"
 														style="margin-left: 10px;" class="btn btn-primary btn">[[#{app.all}]]</button></a>
-											</form>
+														<div
+														style="width: 65%; display: flex; justify-content: flex-end;">
+															<a th:href="@{/quanly/donhang/export}"><button type="button" style="margin-left: 10px;"
+																class="btn btn-primary btn">Export to CSV</button></a>
+													</div>
+													</form>
 										</div>
 									</div>
 								</div>

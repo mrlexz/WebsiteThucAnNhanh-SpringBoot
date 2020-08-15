@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,15 +32,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import com.example.demo.DTO.ChiTietHoaDonDTO;
 import com.example.demo.DTO.ThongKeDTO;
 import com.example.demo.model.HoaDon;
+import com.example.demo.model.KhachHang;
 import com.example.demo.model.NhaSanXuat;
 import com.example.demo.model.SanPham;
+import com.example.demo.model.TaiKhoan;
 import com.example.demo.repository.HoaDonRepository;
+import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
+import com.example.demo.repository.TaiKhoanRepository;
 import com.example.demo.repository.ThongKeReposity;
 
 @Controller
@@ -52,14 +62,17 @@ public class AdminController {
 
 	@Autowired
 	private ThongKeReposity tkRe;
-
+	@Autowired
+	private TaiKhoanRepository taiKhoanReponsitory;
+	@Autowired KhachHangRepository khachHangRepository;
+	
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
 
 		return "quanly-sanpham";
 	}
 
-//Quản lý đơn hàng
+	// Quản lý đơn hàng
 	@RequestMapping(value = "/quanly/donhang")
 	public String listDonHang(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
@@ -75,7 +88,7 @@ public class AdminController {
 		}
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
-//		 cái Pageable
+		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDonhd(searchTenKH, pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
@@ -100,7 +113,49 @@ public class AdminController {
 		}
 		return "quanly-donhang";
 	}
-	
+	// export Đơn Hàng
+	@GetMapping(value = "/quanly/donhang/export")
+	public void exportDonHang(HttpServletResponse response,@RequestParam Optional<Integer> page) throws IOException {
+		response.setContentType("text/csv");
+		String fileName = "fileDonhang.csv";
+		String headerKey ="Content-Disposition";
+		String headerValue ="attachment; filename="+fileName;
+		response.setHeader(headerKey, headerValue);
+		Iterable<ChiTietHoaDonDTO> list =  new ArrayList<ChiTietHoaDonDTO>();
+		
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		String[] csvHeader = {"Full Name", "Name Product","Address", "Amount", "Order Date", "Total"};
+		String[] nameMapping = {"hoTenKhachHang", "tenSanPham","diaChi","soLuong","ngayLap","tongTien"};
+		csvWriter.writeHeader(csvHeader);
+		for (ChiTietHoaDonDTO chiTietDTO : list) {
+			csvWriter.write(chiTietDTO,nameMapping);
+		}
+		csvWriter.close();
+		
+	}
+
+	// export NhaSanXuat
+	@GetMapping(value = "/quanly/nhasanxuat/export")
+	public void exportNSX(HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
+		String fileName = "fileNsx.csv";
+		String headerKey ="Content-Disposition";
+		String headerValue ="attachment; filename="+fileName;
+		response.setHeader(headerKey, headerValue);
+		Iterable<NhaSanXuat> list =  new ArrayList<NhaSanXuat>();
+		list = nhaSanXuatRepository.findAll();
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		String[] csvHeader = {"ID_NSX", "NAME_NSX","ADDRESS"};
+		String[] nameMapping = {"maNhaSanXuat", "tenNhaSanXuat","diaChi"};
+		csvWriter.writeHeader(csvHeader);
+		for (NhaSanXuat nsx : list) {
+			csvWriter.write(nsx,nameMapping);
+		}
+		csvWriter.close();
+		
+	}	
+
+
 // Thống kê
 	@RequestMapping(value = "/quanly/thongke")
 		public String chartThongKe(Model model) {
@@ -123,11 +178,6 @@ public class AdminController {
 			return list;
 	}
 	
-
-
-
-
-
 // Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
 	public String listSanPham(Model model,
@@ -203,7 +253,26 @@ public class AdminController {
 		}
 		return null;
 	}
-
+// export Sản Phẩm
+	@GetMapping(value = "/quanly/sanpham/export")
+	public void exportSanPham(HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
+		String fileName = "fileSanpham.csv";
+		String headerKey ="Content-Disposition";
+		String headerValue ="attachment; filename="+fileName;
+		response.setHeader(headerKey, headerValue);
+		Iterable<SanPham> list =  new ArrayList<SanPham>();
+		list = sanPhamRepository.findAll();
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		String[] csvHeader = {"Mã Sản Phẩm", "Tên Sản Phẩm","Mô Tả", "Loại", "Năm Sản Xuất", "Giá"};
+		String[] nameMapping = {"maSanPham", "tenSanPham","moTa","nhaSanXuat","namSanXuat","donGia"};
+		csvWriter.writeHeader(csvHeader);
+		for (SanPham sp : list) {
+			csvWriter.write(sp,nameMapping);
+		}
+		csvWriter.close();
+		
+	}
 //Ajax thêm sản phẩm
 	@PostMapping(value = "/ajax/createsanpham")
 	@ResponseBody
@@ -322,5 +391,55 @@ public class AdminController {
 		nhaSanXuatRepository.save(nhaSanXuat);
 		return "redirect:/quanly/nhasanxuat";
 	}
+//Quản lý User
+	@RequestMapping(value = "/quanly/user")
+	public String listUser(Model model,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
+			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
+			@RequestParam(name = "searchUser", defaultValue = "", required = false) String searchUser
+			) {
+		Sort sortable = null;
+		if (sort.equals("ASC")) {
+			sortable = Sort.by("maKhachHang").ascending();
+		}
+		if (sort.equals("DESC")) {
+			sortable = Sort.by("maKhachHang").descending();
+		}
+		int currentPage = page.orElse(1);
+		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
+		// cái Pageable
+		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
+		Page<KhachHang> pageKhachHang = khachHangRepository.findKhachHangss(searchUser,pageable);
 
+		int totalPage = pageKhachHang.getTotalPages();
+		if (totalPage > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		model.addAttribute("searchUser", searchUser);
+		model.addAttribute("listKhachHang", khachHangRepository.findKhachHangss(searchUser,pageable));
+		model.addAttribute("total", pageKhachHang.getTotalElements());
+		return "user";
+	}
+	//Export User
+	@GetMapping(value = "/quanly/user/export")
+	public void exportUser(HttpServletResponse response) throws IOException {
+		response.setContentType("text/csv");
+		String fileName = "fileUser.csv";
+		String headerKey ="Content-Disposition";
+		String headerValue ="attachment; filename="+fileName;
+		response.setHeader(headerKey, headerValue);
+		Iterable<KhachHang> list =  new ArrayList<KhachHang>();
+		list = khachHangRepository.findAll();
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		String[] csvHeader = {"ID_KH", "CUSTOMER","ADDRESS","EMAIL","PHONE NUMBER"};
+		String[] nameMapping = {"maKhachHang", "hoTenKhachHang","diaChi","email","soDienThoai"};
+		csvWriter.writeHeader(csvHeader);
+		for (KhachHang kh : list) {
+			csvWriter.write(kh,nameMapping);
+		}
+		csvWriter.close();
+		
+	}	
 }

@@ -49,11 +49,14 @@
 															<a th:href="@{/quanly/nhasanxuat}"><button
 																	type="button" style="margin-left: 10px;"
 																	class="btn btn-primary btn">[[#{app.all}]]</button></a>
+																
 														</div>
 														<div style="width: 50%;display: flex;justify-content: flex-end;">
 															<button class="btn btn-primary" type="button"
 															data-toggle="modal" data-target=".inputmodal"
 															>[[#{manage.producer}]]</button>
+															<a th:href="@{/quanly/nhasanxuat/export}"><button type="button" style="margin-left: 10px;"
+																	class="btn btn-primary btn">Export to CSV</button></a>
 														</div>
 													</div>
 												</form>
