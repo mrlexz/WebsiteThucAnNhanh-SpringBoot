@@ -117,6 +117,7 @@ public class AdminController {
 	@GetMapping(value = "/quanly/donhang/export")
 	public void exportDonHang(HttpServletResponse response,@RequestParam Optional<Integer> page) throws IOException {
 		response.setContentType("text/csv");
+		response.setCharacterEncoding("UTF-8");
 		String fileName = "fileDonhang.csv";
 		String headerKey ="Content-Disposition";
 		String headerValue ="attachment; filename="+fileName;
@@ -138,6 +139,8 @@ public class AdminController {
 	@GetMapping(value = "/quanly/nhasanxuat/export")
 	public void exportNSX(HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
+		response.setCharacterEncoding("UTF-8");
+
 		String fileName = "fileNsx.csv";
 		String headerKey ="Content-Disposition";
 		String headerValue ="attachment; filename="+fileName;
@@ -257,6 +260,7 @@ public class AdminController {
 	@GetMapping(value = "/quanly/sanpham/export")
 	public void exportSanPham(HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
+		response.setCharacterEncoding("UTF-8");
 		String fileName = "fileSanpham.csv";
 		String headerKey ="Content-Disposition";
 		String headerValue ="attachment; filename="+fileName;
@@ -426,6 +430,7 @@ public class AdminController {
 	@GetMapping(value = "/quanly/user/export")
 	public void exportUser(HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
+		response.setCharacterEncoding("UTF-8");
 		String fileName = "fileUser.csv";
 		String headerKey ="Content-Disposition";
 		String headerValue ="attachment; filename="+fileName;
