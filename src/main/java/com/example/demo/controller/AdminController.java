@@ -113,28 +113,38 @@ public class AdminController {
 		}
 		return "quanly-donhang";
 	}
-	// export Đơn Hàng
+// export Đơn Hàng
 	@GetMapping(value = "/quanly/donhang/export")
 	public void exportDonHang(HttpServletResponse response,@RequestParam Optional<Integer> page) throws IOException {
-		response.setContentType("text/csv");
 		response.setCharacterEncoding("UTF-8");
+		
+		response.setContentType("text/csv");
 		String fileName = "fileDonhang.csv";
 		String headerKey ="Content-Disposition";
 		String headerValue ="attachment; filename="+fileName;
 		response.setHeader(headerKey, headerValue);
-		Iterable<ChiTietHoaDonDTO> list =  new ArrayList<ChiTietHoaDonDTO>();
-		
+		Iterable<HoaDon> list =  new ArrayList<HoaDon>();
+		list =  hoaDonRepository.findAll();
+		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
+		for(HoaDon hd: list) {
+			ChiTietHoaDonDTO chiTietDTO = new ChiTietHoaDonDTO(hd.getMaHoaDon(),
+					hd.getNgayLap(),
+					hd.getKhachHang().getHoTenKhachHang(),
+					hd.getKhachHang().getSoDienThoai(),
+					hd.getKhachHang().getDiaChi(),
+					hd.getTongTien(), hd.getDssp().size());
+			listDTO.add(chiTietDTO);
+		}
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 		String[] csvHeader = {"Full Name", "Name Product","Address", "Amount", "Order Date", "Total"};
 		String[] nameMapping = {"hoTenKhachHang", "tenSanPham","diaChi","soLuong","ngayLap","tongTien"};
 		csvWriter.writeHeader(csvHeader);
-		for (ChiTietHoaDonDTO chiTietDTO : list) {
+		for (ChiTietHoaDonDTO chiTietDTO : listDTO) {
 			csvWriter.write(chiTietDTO,nameMapping);
 		}
 		csvWriter.close();
 		
 	}
-
 	// export NhaSanXuat
 	@GetMapping(value = "/quanly/nhasanxuat/export")
 	public void exportNSX(HttpServletResponse response) throws IOException {
