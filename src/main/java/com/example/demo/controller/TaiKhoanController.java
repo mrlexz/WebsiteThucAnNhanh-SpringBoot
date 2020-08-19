@@ -28,6 +28,14 @@ import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.TaiKhoanRepository;
 import com.example.demo.service.TaiKhoanService;
+import java.io.IOException;
+import com.sendgrid.Mail;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.Method;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
 
 @Controller
 public class TaiKhoanController {
@@ -40,8 +48,8 @@ public class TaiKhoanController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	
-	
+ 
+
 	@RequestMapping("/dangnhap")
 	public String enterLoginPage() {
 
@@ -63,20 +71,39 @@ public class TaiKhoanController {
 	}
 
 	@RequestMapping(value = "/dangky", method = RequestMethod.POST)
-	public String createNewUser(@Valid @ModelAttribute("tkDTO") RegisterDTO tkDTO,BindingResult bindingResult1,@Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult bindingResult) {
-
-		if (bindingResult.hasErrors()|| bindingResult1.hasErrors()) {
+	public String createNewUser(@Valid @ModelAttribute("tkDTO") RegisterDTO tkDTO, BindingResult bindingResult1,
+			@Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult bindingResult) throws IOException {
+		if (bindingResult.hasErrors() || bindingResult1.hasErrors()) {
 			return "dangky";
 		} else {
 
-//			KhachHang kh = taiKhoan.getKhachHang()
-			KhachHang kh = new KhachHang(tkDTO.getHoTenKhachHang(),tkDTO.getEmail(), tkDTO.getSoDienThoai(), tkDTO.getDiaChi());
+			KhachHang kh = new KhachHang(tkDTO.getHoTenKhachHang(), tkDTO.getEmail(), tkDTO.getSoDienThoai(),
+					tkDTO.getDiaChi());
 			TaiKhoan taiKhoan = new TaiKhoan(tkDTO.getTenTaiKhoan(), tkDTO.getMatKhau());
 			kh.setTaiKhoan(taiKhoan);
 			taiKhoan.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByTen("user"))));
 			taiKhoan.setKhachHang(kh);
 			if (TaiKhoanService.save(taiKhoan)) {
 				khachHangRepository.save(kh);
+				Email from = new Email("fastfoodstore76@gmail.com");
+				String subject = "Welcome To Website";
+				Email to = new Email(khachHang.getEmail());
+				Content content = new Content("text/plain", "Thank you for using the website!!!");
+				Mail mail = new Mail(from, subject, to, content);
+				SendGrid sg = new SendGrid("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");
+				Request request = new Request();
+				try {
+					request.setMethod(Method.POST);
+					request.setEndpoint("mail/send");
+					request.setBody(mail.build());
+					Response response = sg.api(request);
+					System.out.println(response.getStatusCode());
+					System.out.println(response.getBody());
+					System.out.println(response.getHeaders());
+				} catch (IOException ex) {
+
+					throw ex;
+				}
 				return "redirect:/dangnhap";
 			}
 		}
