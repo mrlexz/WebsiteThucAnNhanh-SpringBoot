@@ -35,14 +35,14 @@ public class TaiKhoan implements Serializable {
 	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}",
 			    message = "Mật khẩu ít nhất 6 kí tự, 1 chữ số, 1 chữ thường và một chữ hoa")
 	private String matKhau;
-	@OneToOne
+	@OneToOne // đánh dấu mối quan hệ 1-1 với Khách Hàng 
 	@MapsId
-	@JoinColumn(name="maTaiKhoan", referencedColumnName = "maKhachHang")
-	@Cascade(CascadeType.ALL)
+	@JoinColumn(name="maTaiKhoan", referencedColumnName = "maKhachHang")// Liên kết với nhau thông qua maTaiKhoan
+	@Cascade(CascadeType.ALL) // Truyền tải tất cả các hoạt động từ thực thể mẹ sang thực thể con
 	@NotNull
 	private KhachHang khachHang;
 
-	@ManyToMany
+	@ManyToMany // đánh dấu mối quan hệ nhiều nhiều của 2 bảng role và tài khoản
 	private Set<Role> roles;
 
 	public TaiKhoan() {

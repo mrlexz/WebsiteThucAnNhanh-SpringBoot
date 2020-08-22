@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
+@Embeddable //để khai báo rằng một lớp sẽ được nhúng bởi các thực thể khác.
 public class ChiTietHoaDonPK implements Serializable {
 
 	/**

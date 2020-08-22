@@ -15,11 +15,11 @@ public class ChiTietHoaDon implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@ManyToOne
+	@ManyToOne // quan hệ nhiều một bao gồm có nhiều chi tiết hóa đơn trong một hóa đơn
 	@JoinColumn(name="mahoadon",referencedColumnName = "maHoaDon")
 	private HoaDon hoaDon;
 	@Id
-	@ManyToOne
+	@ManyToOne // nhiều chi tiết hóa với một sản phẩm
 	@JoinColumn(name="maSanPham", referencedColumnName = "maSanPham")
 	private SanPham sanPham;
 	private double donGia;

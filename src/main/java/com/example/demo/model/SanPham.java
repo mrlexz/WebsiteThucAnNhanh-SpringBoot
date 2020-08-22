@@ -40,7 +40,7 @@ public class SanPham implements Serializable {
 	@JoinColumn(name="maNhaSanXuat", referencedColumnName = "maNhaSanXuat")
 	private NhaSanXuat nhaSanXuat;
 	
-	@Transient
+	@Transient // để không tồn tại trong DB (chỉ để hiển thị cho các hoạt động view hoặc client / trung gian)
 	private MultipartFile  fileImage;
 	
 	

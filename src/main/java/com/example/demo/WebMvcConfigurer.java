@@ -74,8 +74,8 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
     
     @Bean 
     public LocaleChangeInterceptor localeChangeInterceptor() {
-    	LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-    	lci.setParamName("lang");
+    	LocaleChangeInterceptor lci = new LocaleChangeInterceptor(); //Thay đổi ngôn ngữ hiện tại theo yêu cầu
+    	lci.setParamName("lang"); // Tham số chứa đặc tả ngôn ngữ thay đổi
     	
     	return lci;
     }

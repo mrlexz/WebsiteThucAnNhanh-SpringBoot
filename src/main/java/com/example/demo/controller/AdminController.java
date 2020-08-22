@@ -240,7 +240,7 @@ public class AdminController {
 		
 		if(name != null && name.length()> 0) {
 			try {
-			File serverFile = new File("G:\\cdw\\WebsiteThucAnNhanh-SpringBoot\\src\\main\\resources\\static\\assets\\img\\scenery"+ File.separator   + name);
+			File serverFile = new File("src\\main\\resources\\static\\assets\\img\\scenery"+ File.separator   + name);
 			images = "/assets/img/scenery/"  +name;
 			sanPham.setImgURL(images);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));

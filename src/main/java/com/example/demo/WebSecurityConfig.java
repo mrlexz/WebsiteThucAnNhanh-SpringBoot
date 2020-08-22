@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -27,36 +28,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 
 	@Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/quanly/sanpham","/quanly/donhang").access("hasRole('ADMIN')");
+		http.authorizeRequests().antMatchers("/quanly/sanpham", "/quanly/donhang").access("hasRole('ADMIN')");
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/");
-		http.authorizeRequests()
-		.antMatchers("/","/dangnhap","/sanpham","/dangky").permitAll()
-		.and().csrf().disable()
-		.authorizeRequests()
-		.antMatchers("/giohang/thanhtoan","/sanpham_danhgia/{maSanPham}","/giohang/checkout","/hoantat").authenticated()
-		.and()
-		.formLogin()
-		.loginPage("/dangnhap").permitAll()
-		.and()
-		.logout()
-		.logoutUrl("/dangxuat")
-		.permitAll();
+		http.authorizeRequests().antMatchers("/", "/dangnhap", "/sanpham", "/dangky").permitAll().and().csrf().disable()
+				.authorizeRequests()
+				.antMatchers("/giohang/thanhtoan", "/sanpham_danhgia/{maSanPham}", "/giohang/checkout", "/hoantat")
+				.authenticated().and().formLogin().loginPage("/dangnhap").permitAll().and().logout()
+				.logoutUrl("/dangxuat").permitAll();
 	}
+
 	public void configure(WebSecurity web) throws Exception {
-		web
-		.ignoring()
-		.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**", "/bootstrap/***");
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
+				"/bootstrap/***");
 	}
+
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
 		return authenticationManager();
