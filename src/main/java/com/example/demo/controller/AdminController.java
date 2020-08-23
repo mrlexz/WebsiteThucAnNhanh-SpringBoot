@@ -86,9 +86,11 @@ public class AdminController {
 		if (sort.equals("DESC")) {
 			sortable = Sort.by("ngayLap").descending();
 		}
+		// orElse trả về giá trị nếu có trả về danh sách trang có giá trị là 1
 		int currentPage = page.orElse(1);
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
+		//tạo mới PageRequest với thông số được áp dụng 
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
 		Page<HoaDon> pageHoaDon = hoaDonRepository.findHoaDonhd(searchTenKH, pageable);
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
@@ -106,6 +108,7 @@ public class AdminController {
 		model.addAttribute("listDTO", cthdDTO);
 		int totalPage = pageHoaDon.getTotalPages();
 		if (totalPage > 0) {
+			//IntStream.rangeClosed một chuổi các phần tử có giá trị nguyên thủy bao gồm giá trị ban đầu và giới hạn trên của chuổi.boxed để trả về chuổi đóng hộp.
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());
 			model.addAttribute("pageNumbers", pageNumbers);
 			model.addAttribute("searchTenKH", searchTenKH);
