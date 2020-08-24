@@ -20,14 +20,16 @@
 </div>
 <style type="text/css">
 ::placeholder {
-  color: white;
-}</style>
+	color: white;
+}
+</style>
 </head>
 
 <body>
 	<div th:fragment="navbar">
 		<nav
-			class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar nav-custom" id="nav-custom">
+			class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar nav-custom"
+			id="nav-custom">
 			<div class="container">
 				<a class="navbar-brand logo nav-item-custom" th:href="@{/}">HQStore</a>
 				<button class="navbar-toggler" data-toggle="collapse"
@@ -37,31 +39,39 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navcol-1">
 					<ul class="nav navbar-nav ml-auto">
-						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/}">Trang chủ</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/sanpham}">Sandwiches</a></li>
-						<li class="nav-item" role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/giohang}">Giỏ hàng<i class="fa fa-shopping-cart"></i></a></li>
-						<th:block th:if="${#request.userPrincipal}">
-						<li class="nav-item"
-							role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/taikhoan}">
-								<p th:text="${#request.userPrincipal.name}"></p>
+						<li class="nav-item" role="presentation"><a
+							class="nav-link nav-item-custom" th:href="@{/}">[[#{nav.home}]]</a></li>
+						<li class="nav-item" role="presentation"><a
+							class="nav-link nav-item-custom" th:href="@{/sanpham}">[[#{nav.sandwiches}]]</a></li>
+						<li class="nav-item" role="presentation"><a
+							class="nav-link nav-item-custom" th:href="@{/giohang}">[[#{nav.cart}]]<i class="fa fa-shopping-cart"></i>
 						</a></li>
-						<li th:if="${#request.userPrincipal.name} == 'admin'" role="presentation" class="nav-item">
-									<a class="nav-link nav-item-custom" th:href="@{/quanly/sanpham}">Quản Lý</a>
-								</li>
+						<th:block th:if="${#request.userPrincipal}">
+							<li class="nav-item" role="presentation"><a
+								class="nav-link nav-item-custom" th:href="@{/taikhoan}">
+									<p th:text="${#request.userPrincipal.name}"></p>
+							</a></li>
+							<li th:if="${#request.userPrincipal.name} == 'admin'"
+								role="presentation" class="nav-item"><a
+								class="nav-link nav-item-custom" th:href="@{/quanly/sanpham}">[[#{nav.manage}]]</a></li>
 						</th:block>
 						<li th:if="${#request.userPrincipal}" class="nav-item"
 							role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/dangxuat}">Đăng Xuất</a></li>
+							th:href="@{/dangxuat}">[[#{nav.logout}]]</a></li>
 						<li th:unless="${#request.userPrincipal}" class="nav-item"
 							role="presentation"><a class="nav-link nav-item-custom"
-							th:href="@{/dangnhap}">Đăng nhập</a></li>
+							th:href="@{/dangnhap}">[[#{nav.login}]]</a></li>
 						<li th:unless="${#request.userPrincipal}" class="nav-item"
-							role="presentation"><a class="nav-link nav-item-custom" th:href="@{/dangky}">Đăng
-								Ký</a></li>
+							role="presentation"><a class="nav-link nav-item-custom"
+							th:href="@{/dangky}">[[#{nav.register}]]</a></li>
+						<li class="nav-item" role="presentation">
+							<div style="display: flex;">
+								<a class="nav-link" th:href="@{?lang=en}"><img width="40"
+									height="25" src="/assets/img/english-language.png" /></a> <a
+									class="nav-link" th:href="@{?lang=vi}"><img width="40"
+									height="25" src="/assets/img/vietnam-flags.png" /></a>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -72,39 +82,39 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
-						<h5>Bắt đầu</h5>
+						<h5>[[#{footer.getStart}]]</h5>
 						<ul>
-							<li><a th:href="@{/}">Trang chủ</a></li>
-							<li><a th:href="@{/dangky}">Đăng ký</a></li>
-							<li><a th:href="@{/dangnhap}">Đăng nhập</a></li>
+							<li><a th:href="@{/}">[[#{nav.home}]]</a></li>
+							<li><a th:href="@{/dangky}">[[#{nav.register}]]</a></li>
+							<li><a th:href="@{/dangnhap}">[[#{nav.login}]]</a></li>
 						</ul>
 					</div>
 					<div class="col-sm-4">
-						<h5>Thông tin</h5>
+						<h5>[[#{footer.information}]]</h5>
 						<ul>
-							<li><a th:href="@{/thongtin}">Thông tin nhóm</a></li>
-							<li><a th:href="@{/thongtin}">Liên hệ</a></li>
-							<li><a th:href="@{/thongtin}">Đánh giá</a></li>
+							<li><a th:href="@{/thongtin}">[[#{footer.informationGroup}]]</a></li>
+							<li><a th:href="@{/thongtin}">[[#{footer.contact}]]</a></li>
+							<li><a th:href="@{/thongtin}">[[#{footer.evaluate}]]</a></li>
 						</ul>
 					</div>
 					<div class="col-sm-4">
-						<h5>Chính sách</h5>
+						<h5>[[#{footer.policy}]]</h5>
 						<ul>
-							<li><a th:href="@{/chinhsach}">Điều khoản về dịch vụ</a></li>
-							<li><a th:href="@{/chinhsach}">Điều khoản sử dụng</a></li>
-							<li><a th:href="@{/chinhsach}">Chính sách riêng tư</a></li>
+							<li><a th:href="@{/chinhsach}">[[#{footer.termsOfService}]]</a></li>
+							<li><a th:href="@{/chinhsach}">[[#{footer.termsOfUse}]]</a></li>
+							<li><a th:href="@{/chinhsach}">[[#{footer.privacyPolicy}]]</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="footer-copyright">
-				<p>© 2020 Copyright by LexZ</p>
+				<p>© 2020 Copyright by TEAM</p>
 			</div>
 		</footer>
 		<script src="/assets/js/jquery.min.js"></script>
 		<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 		<script
-				src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+			src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 		<script src="/assets/js/smoothproducts.min.js"></script>
 		<script src="/assets/js/theme.js"></script>
 	</div>

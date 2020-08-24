@@ -1,69 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 
-<head><title>Đăng Ký</title>
+<head>
+<title>Dang Ky</title>
 <div th:replace="/header :: header"></div>
+
 </head>
 
 <body class="body-custom">
-<div th:replace="/header :: navbar"></div>
+	<div th:replace="/header :: navbar"></div>
 	<main class="page login-page">
-	<section class="clean-block clean-form dark">
-		<div class="container">
-			<div class="block-heading">
-				<h2 class="text-info">Đăng kí</h2>
-			</div>
-			<form id = "registation"class="login-custom" th:action="@{/dangky}" th:object="${taikhoan}" method="POST">
-				<p th:if="${param.error}" class="error" style="color: red">Thông tin không hợp lệ vui lòng kiểm tra lại</p>
-				<div class="register-input-group">
-					<div style="width: 40%">
-						<div class="form-group">
-							<label for="username" style="margin-bottom: 0px !important;">Tên đăng nhập</label><input
-								class="form-control item" type="text" id="usernameDK" placeholder="Tên đăng nhập"
-								th:field="*{tenTaiKhoan}" required >
-						</div>
-						<span class="status"></span>
-						<div class="form-group">
-							<label for="password" style="margin-bottom: 0px !important;">Mật khẩu</label><input class="form-control"
-								type="password" id="password" placeholder="Mật khẩu" th:field="*{matKhau}" size="6" required>
-						</div>
-						<span class="status2" style="font-size: 15px"></span>
-					</div>
-					<div style="width: 40%">
-						<div class="form-group register-input" style="border-bottom: none !important;">
-							<p>
-								Họ và tên: <input class="form-control" type="text"
-										  th:field="*{khachHang.hoTenKhachHang}" placeholder="Nhập họ và tên " required/>
-							</p>
-							<p>
-								Địa chỉ: <input class="form-control" type="text"
-										th:field="*{khachHang.diaChi}" placeholder="Nhập địa chỉ" required/>
-							</p>
-							<p>
-								Email: <input class="form-control" type="email" placeholder="Nhập email"
-									  th:field="*{khachHang.email}" required/>
-							</p>
-							<p>
-								Số điện thoại: <input id ="sdt" class="form-control" type="text" spellcheck="false" placeholder="Nhập số điện thoại" maxlength="10" size ="10"
-												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"								
-											  th:field="*{khachHang.soDienThoai}" required/>
-							</p>
-							<span class="status1" style="font-size: 15px"></span>
-						</div>
-					</div>
+		<section class="clean-block clean-form dark">
+			<div class="container">
+				<div class="block-heading">
+					<h2 class="text-info">[[#{register.register}]]</h2>
 				</div>
-				<div class="form-group-button-group">
-				<button class="btn btn-light" type="reset" style="color: white">Nhập lại</button>
-					<button id="registaionSubmit" class="btn btn-primary" type="submit">Đăng kí</button>
-					
+				<form id="registation" class="login-custom" th:action="@{/dangky}"
+					th:object="${tkDTO}" method="POST">
+					<p th:if="${param.error}" class="error" style="color: red">ThÃ´ng
+						tin khÃ´ng há»£p lá»‡ vui lÃ²ng kiá»ƒm tra láº¡i</p>
+					<div class="register-input-group">
+						<div style="width: 40%">
+							<div class="form-group">
+								<label for="username" style="margin-bottom: 0px !important;">[[#{register.username}]]</label><input class="form-control item" type="text"
+									id="usernameDK" th:attr="placeholder=#{register.username}"
+									th:field="*{tenTaiKhoan}" required>
+							</div>
+							<span id="errorUserDk" style="font-size: 15px"> <span
+								class="text text-danger" style="font-size: 15px"
+								th:if="${#fields.hasErrors('tenTaiKhoan')}"
+								th:errors="*{tenTaiKhoan}"></span>
+							</span>
+							<div class="form-group">
+								<label for="password" style="margin-bottom: 0px !important;">[[#{register.password}]]</label><input class="form-control" type="password" id="password"
+									th:attr="placeholder=#{register.password}" th:field="*{matKhau}" size="6" required>
+
+							</div>
+							<span id="errorpassDK" style="font-size: 15px"><span
+								class="text text-danger" style="font-size: 15px"
+								th:if="${#fields.hasErrors('matKhau')}" th:errors="*{matKhau}">
+							</span> </span>
+						</div>
+						<div style="width: 40%">
+							<div class="form-group register-input"
+								style="border-bottom: none !important;">
+								<p>
+									[[#{register.fullName}]] <input class="form-control" id="inputHVT"  type="text"
+										th:field="*{hoTenKhachHang}" th:attr="placeholder=#{register.placeholderFullname}"
+										required />
+
+								</p>
+								<span class="text text-danger" id="errorHVT" style="font-size: 15px"
+									th:if="${#fields.hasErrors('hoTenKhachHang')}"
+									th:errors="*{hoTenKhachHang}"></span>
+								<p>
+									[[#{register.address}]] <input class="form-control" id="inputDC" type="text"
+										th:field="*{diaChi}" th:attr="placeholder=#{register.placeholderAddress}" required />
+
+								</p>
+								<span class="text text-danger" id="errorDC" style="font-size: 15px"
+									th:if="${#fields.hasErrors('diaChi')}" th:errors="*{diaChi}">
+								</span>
+								<p>
+									Email: <input class="form-control" type="email"
+										th:attr="placeholder=#{register.placeholderEmail}" th:field="*{email}" required />
+								</p>
+								<span class="text text-danger" style="font-size: 15px"
+									th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+								<p>
+									[[#{register.phoneNumber}]] <input id="sdt" class="form-control" type="text"
+										spellcheck="false" th:attr="placeholder=#{register.placeholderPhonenumber}"
+										maxlength="10" size="10" th:field="*{soDienThoai}" required />
+								</p>
+								<span id="errorSDT" style="font-size: 15px"> <span
+									class="text text-danger" style="font-size: 15px"
+									th:if="${#fields.hasErrors('soDienThoai')}"
+									th:errors="*{soDienThoai}"></span>
+								</span>
+							</div>
+						</div>
 					</div>
-			</form>
-		</div>
-	</section>
+					<div class="form-group-button-group">
+						<a th:href="@{/dangky}"><button class="btn btn-light"
+								type="button" onclick="customReset();" style="color: white">[[#{register.reenter}]]</button></a>
+						<button id="registaionSubmit" class="btn btn-primary"
+							type="submit">[[#{register.register}]]</button>
+
+					</div>
+				</form>
+			</div>
+		</section>
 	</main>
-<footer>
-	<div th:replace="/header :: footer"></div>
-</footer>
+	<footer>
+		<div th:replace="/header :: footer"></div>
+	</footer>
 </body>
 
 </html>

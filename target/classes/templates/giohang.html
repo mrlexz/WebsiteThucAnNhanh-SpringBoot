@@ -13,7 +13,7 @@
 			<div class="container">
 				<div class="block-heading">
 					<h1></h1>
-					<h2 class="text-info">Giỏ hàng</h2>
+					<h2 class="text-info">[[#{shop.shopCart}]]</h2>
 				</div>
 				<div class="content checkout-custom">
 					<div class="row no-gutters">
@@ -34,22 +34,23 @@
 												th:text="${hang.getKey().tenSanPham}"></a>
 										</div>
 										<div class="col-md-3 product-info">
-											<label class="d-none d-md-block" style="color: #007bff">Loại : &nbsp;</label><span
+											<label class="d-none d-md-block" style="color: #007bff">[[#{shop.species}]] &nbsp;</label><span
 												class="value"
 												th:text="${hang.getKey().nhaSanXuat.tenNhaSanXuat}"></span>
 										</div>
 										<div class="col-6 col-md-2 quantity">
 											<label class="d-none d-md-block" for="quantity"
-												style="color: #007bff">Số lượng </label><span
+												style="color: #007bff">[[#{shop.amount}]] </label><span
 												th:text="${hang.getValue()}"></span>
+												<input id="countOfProduct" type="hidden" th:value="${hang.getValue()}" >
 										</div>
 										<div class="col-6 col-md-2">
-											<label class="d-none d-md-block" style="color: #007bff">Giá</label>
-											<h7 th:text="${hang.getKey().donGia+'00VND'}"></h7>
+											<label class="d-none d-md-block" style="color: #007bff">[[#{shop.price}]]</label>
+											<h7 th:text="${'$'+hang.getKey().donGia}"></h7>
 										</div>
 										<a
 											th:href="@{'/giohang/xoasanpham/{maSanPham}'(maSanPham=${hang.getKey().maSanPham})}"><button
-												class="btn add-button" type="button">Xóa</button></a>
+												class="btn add-button" type="button">[[#{shop.delete}]]</button></a>
 									</div>
 								</div>
 								<div class="product"></div>
@@ -57,14 +58,13 @@
 						</div>
 						<div class="col-md-12 col-lg-4">
 							<div class="summary checkout-info">
-								<h2 style="color: white">Thanh toán</h2>
+								<h2 style="color: white">[[#{shop.payMent}]]</h2>
 								<h4 class="total-money">
-									<span class="text">Tổng tiền: </span><span class="price"
-										th:text="${tongtien+'00VND'}"></span>
+									<span class="text">[[#{shop.total}]]: </span><span class="price"
+										th:text="${'$'+tongtien}"></span>
 								</h4>
-								<a th:href="@{'/giohang/checkout'}"><button
-										class="btn btn-primary btn-block btn-lg" type="button">Thanh
-										toán</button></a>
+								<a th:href="@{'/giohang/checkout'}"><button id="btnCheckout"
+										class="btn btn-primary btn-block btn-lg" type="button">[[#{shop.payMent}]]</button></a>
 
 							</div>
 						</div>

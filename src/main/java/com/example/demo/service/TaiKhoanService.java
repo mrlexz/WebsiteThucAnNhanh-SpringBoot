@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.model.KhachHang;
 import com.example.demo.model.TaiKhoan;
 
 public interface TaiKhoanService {

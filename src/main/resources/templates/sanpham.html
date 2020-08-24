@@ -12,7 +12,7 @@
 		<section class="clean-block clean-catalog dark">
 			<div class="container">
 				<div class="block-heading">
-					<h2 class="text-info">Fresh Sandwich</h2>
+					<h2 class="text-info">[[#{product.sandwiches}]]</h2>
 				</div>
 				<div class="content cart-custom">
 					<div class="row">
@@ -21,35 +21,35 @@
 								<div class="filters search-box-details">
 									<div class="search-container">
 										<form>
-											<input type="text" placeholder="Search..." name="name"
+											<input type="text" th:attr="placeholder=#{app.search}" name="name"
 												style="width: 132px;">
 											<button type="submit"
 												th:action="@{/sanpham/{name}'(name=${name})}">
 												<i class="fa fa-search" style="color: white"></i>
 											</button>
 											<a th:href="@{/sanpham}"><button type="button"
-													style="margin-left: 5px; color: white;">All</button></a>
+													style="margin-left: 5px; color: white;">[[#{app.all}]]</button></a>
 										</form>
 									</div>
 									<div class="filter-item">
-										<h3>Lọc theo giá</h3>
+										<h3>[[#{product.filterPrice}]]</h3>
 										<form>
 											<input type="hidden" value="loai1" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												Giá < 50k</button>
+												[[#{product.priceDown}]]</button>
 										</form>
 										<form>
 											<input type="hidden" value="loai2" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												50k - 100k</button>
+												50$ - 100$</button>
 										</form>
 										<form>
 											<input type="hidden" value="loai3" name="price">
 											<button type="submit"
 												th:action="@{/sanpham/{price}'(price=${price})}">
-												Giá > 100k</button>
+												[[#{product.priceUp}]]</button>
 										</form>
 									</div>
 								</div>
@@ -100,15 +100,14 @@
 															th:text="${sanpham.tenSanPham}"></a>
 													</div>
 													<div class="price details-item details-item-price">
-														<h3 th:text="${sanpham.donGia+'00 VND'}"></h3>
+														<h3 th:text="${'$'+sanpham.donGia}"></h3>
 													</div>
 												</div>
 												<div class="about add-cart-button">
 													<div class="rating details-item">
 														<a
 															th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
-															<button class="btn btn-sm" type="button">Thêm
-																vào giỏ hàng</button>
+															<button class="btn btn-sm" type="button">[[#{product.addToCart}]]</button>
 														</a>
 													</div>
 
@@ -126,7 +125,7 @@
 									</ul>
 									<div style="display: flex; justify-content: flex-end;">
 										<p style="color: white">
-											Total: <a th:text=${total}></a>
+											[[#{app.total}]]: <a th:text=${total}></a>
 										</p>
 									</div>
 								</nav>

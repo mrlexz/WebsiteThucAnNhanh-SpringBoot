@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Thống Kê</title>
+<div th:replace="/header :: header"></div>
+<style type="text/css">
+.searchCol {
+	margin-bottom: 30px;
+}
+
+.summary {
+	background-color: #fff !important;
+}
+
+.add {
+	margin-left: 800px;
+}
+</style>
+<script>
+	window.onload = function() {
+		var dataPoints = [];
+		$.ajax({
+			url: 'http://localhost:8080/thongke',
+			dataType: "text",
+			method: 'GET',
+			success: function(data) {
+				const newData = JSON.parse(data);
+				dataPoints = newData.map(item => {
+					return {x: new Date(item.ngayBan), y: item.soLuong}
+				});
+				var chart = new CanvasJS.Chart("chartContainer",
+				    {
+
+				    title:{
+						fontWeight: "bolder",
+        				fontColor: "#008B8B",
+        				fontFamily: "tahoma",  
+				      	text: "[[#{manage.statistical}]]"
+				    },
+					axisX:{
+       					title: "[[#{manage.saleDate}]]",
+						titleFontColor: "red"
+     				 },
+      				axisY:{
+       					title: "[[#{shop.amount}]]",
+						titleFontColor: "red"
+      				},
+				    data: [
+				      {
+				        type: "line",
+				        dataPoints: dataPoints,
+				      }
+				      ]
+					});
+		
+				    chart.render();
+				}
+			});
+
+	}
+</script>
+</head>
+<body class="body-custom">
+	<div th:replace="/header :: navbar"></div>
+	<div th:replace="/quanly :: navbar"></div>
+	<main class="page shopping-cart-page">
+		<section class="clean-block clean-cart dark">
+			<div class="container">
+				<div class="block-heading" style="padding-top: 0px">
+					<h2 class="text-info">[[#{manage.salesStatistics}]]</h2>
+				</div>
+				<div class="content">
+					<div class="row no-gutters">
+						<div class="col-md-12 col-lg-12">
+							<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<div th:replace="/header :: footer"></div>
+</body>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</html>

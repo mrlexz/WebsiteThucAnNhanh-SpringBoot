@@ -5,12 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.example.demo.model.DanhGia;
-import com.example.demo.model.KhachHang;
-import com.example.demo.model.TaiKhoan;
-import com.example.demo.repository.DanhGiaRepository;
-import com.example.demo.repository.TaiKhoanRepository;
-import org.springframework.beans.factory.annotation.;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +13,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.model.DanhGia;
 import com.example.demo.model.SanPham;
+import com.example.demo.model.TaiKhoan;
+import com.example.demo.repository.DanhGiaRepository;
 import com.example.demo.repository.NhaSanXuatRepository;
 import com.example.demo.repository.SanPhamRepository;
-import org.springframework.web.servlet.ModelAndView;
+import com.example.demo.repository.TaiKhoanRepository;
 
 @Controller
 public class SanPhamController {
@@ -43,7 +45,6 @@ public class SanPhamController {
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
 			@RequestParam(name = "name", required = false, defaultValue = "") String name,
 			@RequestParam(name = "price", required = false, defaultValue ="") String price
-//			
 	) {
 		if (!price.equals("")) {
 			double start = 0;
@@ -59,7 +60,6 @@ public class SanPhamController {
 			if (price.equals("loai3")) {
 				start = 100;
 				end = 1000;
-				System.out.println("loai3");
 			}
 			Sort sortable = null;
 			if (sort.equals("ASC")) {

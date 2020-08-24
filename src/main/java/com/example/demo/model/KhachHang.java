@@ -3,7 +3,17 @@ package com.example.demo.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 @Entity
@@ -17,10 +27,18 @@ public class KhachHang implements Serializable{
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String maKhachHang;
 	@Column(columnDefinition = "NVARCHAR(255)")
+	@NotNull
+	@Size(min=2, max=30)
 	private String hoTenKhachHang;
+	@NotNull
+	@Email
 	private String email;
+	@NotNull
+	@Pattern(regexp = "(\\+61|0)[0-9]{9}")
 	private String soDienThoai;
 	@Column(columnDefinition = "NVARCHAR(255)")
+	@NotNull
+	@Size(min=2, max= 20)
 	private String diaChi;
 	@OneToOne(mappedBy = "khachHang")
 	@PrimaryKeyJoinColumn

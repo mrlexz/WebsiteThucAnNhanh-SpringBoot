@@ -2,9 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.model.KhachHang;
-import com.example.demo.repository.KhachHangRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,8 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.TaiKhoan;
 import com.example.demo.repository.TaiKhoanRepository;
 
-import javax.management.Query;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -23,9 +20,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	@Autowired
-	private KhachHangRepository khachHangRepository;
-
+	
 	@Override
 	public boolean save(TaiKhoan taikhoan) {
 		if(taiKhoanRepository.findByTenTaiKhoan(taikhoan.getTenTaiKhoan()) == null) {

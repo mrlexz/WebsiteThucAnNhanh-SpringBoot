@@ -12,7 +12,7 @@
 		<section class="clean-block clean-product dark">
 			<div class="container">
 				<div class="block-heading">
-					<h2 class="text-info">Chi tiết sản phẩm</h2>
+					<h2 class="text-info">[[#{details.name}]]</h2>
 				</div>
 				<div class="block-content cart-details">
 					<div class="product-info">
@@ -31,12 +31,11 @@
 								<div class="info">
 									<h3 th:text="${sanpham.tenSanPham}"></h3>
 									<div class="price">
-										<h3 th:text="${sanpham.donGia+'00 VND'} "></h3>
+										<h3 th:text="${'$'+sanpham.donGia}"></h3>
 									</div>
 									<a
 										th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
-										<button class="btn btn-sm add-button" type="button">Thêm
-											vào giỏ hàng</button>
+										<button class="btn btn-sm add-button" type="button">[[#{product.addToCart}]]</button>
 									</a>
 									<div class="summary">
 										<p th:text="${sanpham.moTa}"></p>
@@ -47,7 +46,7 @@
 					</div>
 
 					<div class="clean-related-items comment-details">
-						<h3>Các đánh giá khách hàng</h3>
+						<h3>[[#{details.review}]]</h3>
 						<div class="items">
 							<div class="row justify-content-center">
 								<div class="col-sm-6 col-md-6 col-lg-6">
@@ -69,12 +68,11 @@
 										th:object="${danhgianew}" method="POST">
 										<div class="form-group input-comment">
 											<textarea class="form-control" required="required"
-												placeholder="Để lại đánh giá của bạn" th:field="*{noiDung}"></textarea>
+												th:attr="placeholder=#{details.comment}" th:field="*{noiDung}"></textarea>
 											<input class="form-control" type="hidden"
 												th:field="*{sanPham}" th:value="*{sanPham}" />
 											<div class="button-wrap">
-												<button class="btn btn-primary add-button" type="submit">Gửi
-													đánh giá</button>
+												<button class="btn btn-primary add-button" type="submit">[[#{details.submitReview}]]</button>
 											</div>
 										</div>
 									</form>

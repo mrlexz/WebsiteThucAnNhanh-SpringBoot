@@ -36,27 +36,30 @@
 			<div class="container">
 				<div class="block-heading" style="padding-top: 0px">
 					<h1></h1>
-					<h2 class="text-info">Quản lý sản phẩm</h2>
+					<h2 class="text-info">[[#{manage.productManagement}]]</h2>
 				</div>
 				<div class="content">
 					<div class="col-md-12 col-lg-12">
 						<div class="items">
 							<div class="searchCol">
 								<form class="form-inline mr-auto" target="_self">
-									<div class="form-group">
-										<input class="form-control search-field" type="text"
-											required="required" name="name" id="search-field">
-									</div>
-									<button type="submit"
-										th:action="@{/quanly/sanpham/{name}'(name=${name})}"
-										class="btn btn-primary">Search</button>
-									<a th:href="@{/quanly/sanpham}"><button type="button"
-											style="margin-left: 10px;" class="btn btn-primary btn">All</button></a>
-									<div
-										style="width: 65%; display: flex; justify-content: flex-end;">
-										<button class="btn btn-primary" type="button"
-											data-toggle="modal" data-target=".inputmodal">Thêm
-											sản phẩm</button>
+									<div style="width: 100%;display: flex;">
+										<div class="form-group">
+											<input class="form-control search-field" type="text"
+												required="required" name="name" id="search-field">
+										</div>
+										<button type="submit"
+											th:action="@{/quanly/sanpham/{name}'(name=${name})}"
+											class="btn btn-primary">[[#{app.search}]]</button>
+										<a th:href="@{/quanly/sanpham}"><button type="button"
+												style="margin-left: 10px;" class="btn btn-primary btn">[[#{app.all}]]</button></a>
+										<div
+											style="width: 65%; display: flex; justify-content: flex-end;">
+											<button class="btn btn-primary" type="button"
+												data-toggle="modal" data-target=".inputmodal">[[#{manage.addProduct}]]</button>
+												<a th:href="@{/quanly/sanpham/export}"><button type="button" style="margin-left: 10px;"
+													class="btn btn-primary btn">Export to CSV</button></a>
+										</div>
 									</div>
 								</form>
 
@@ -65,38 +68,38 @@
 								<table id="quanlysanphamTable" class="table">
 									<thead>
 										<tr>
-											<th>Image</th>
-											<th>ID</th>
-											<th>Products</th>
-											<th>Description</th>
-											<th>Type</th>
-											<th>Year</th>
+											<th>[[#{manage.image}]]</th>
+											<th>[[#{manage.id}]]</th>
+											<th>[[#{manage.product}]]</th>
+											<th>[[#{manage.description}]]</th>
+											<th>[[#{manage.type}]]</th>
+											<th>[[#{manage.year}]]</th>
 											<th><div style="display: flex; align-items: center;">
-														Price
-														<form class="form-inline" target="_self">
-															<div class="form-group">
-																<input value="ASC" type="hidden" name="sort"
-																	id="search-field">
-															</div>
-															<button type="submit"
-																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
-																class="btn btn-primary sort">
-																<i class="fa fa-arrow-up" aria-hidden="true"></i>
-															</button>
-														</form>
-														<form class="form-inline" target="_self">
-															<div class="form-group">
-																<input value="DESC" type="hidden" name="sort"
-																	id="search-field">
-															</div>
-															<button type="submit"
-																th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
-																class="btn btn-primary sort">
-																<i class="fa fa-arrow-down" aria-hidden="true"></i>
-															</button>
-														</form>
-													</div></th>
-											<th>Action</th>
+													[[#{shop.price}]]
+													<form class="form-inline" target="_self">
+														<div class="form-group">
+															<input value="ASC" type="hidden" name="sort"
+																id="search-field">
+														</div>
+														<button type="submit"
+															th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+															class="btn btn-primary sort">
+															<i class="fa fa-arrow-up" aria-hidden="true"></i>
+														</button>
+													</form>
+													<form class="form-inline" target="_self">
+														<div class="form-group">
+															<input value="DESC" type="hidden" name="sort"
+																id="search-field">
+														</div>
+														<button type="submit"
+															th:action="@{/quanly/sanpham/{sort}'(sort=${sort})}"
+															class="btn btn-primary sort">
+															<i class="fa fa-arrow-down" aria-hidden="true"></i>
+														</button>
+													</form>
+												</div></th>
+											<th>[[#{manage.action}]]</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -108,14 +111,14 @@
 											<td th:text="${sanpham.moTa}"></td>
 											<td th:text="${sanpham.nhaSanXuat.tenNhaSanXuat}"></td>
 											<td th:text="${sanpham.namSanXuat}"></td>
-											<td th:text="${sanpham.donGia+'00VND'}"></td>
+											<td th:text="${'$'+sanpham.donGia}"></td>
 											<td><div class="modal fade inputmodal1" tabindex="-1"
 													role="dialog" aria-hidden="true" id="inputmodal1"
 													th:attrappend="id=${idx.index}">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header">
-																<h5 class="modal-title">Sản phẩm</h5>
+																<h5 class="modal-title">[[#{model.addProduct}]]</h5>
 															</div>
 															<div class="modal-body">
 																<div class="container">
@@ -123,44 +126,47 @@
 																		<div class="col">
 																			<form
 																				th:action="@{'/quanly/sanpham/edit/{id}'(id=${sanpham.maSanPham})}"
-																				th:object="${sanPhamEdit}" method="post"
+																				th:object="${sanPhamEdit}" method="GET"
 																				id="formEditSanPham">
 																				<div class="form-group">
-																					<label for="tenSanPham">Tên sản phẩm</label> <input
+																					<label for="tenSanPham">[[#{model.nameProduct}]]</label> <input
 																						type="text" class="form-control" id="tenSanPham"
 																						name="tenSanPham" th:value="${sanpham.tenSanPham}">
 
 																				</div>
+																				<span id="errorTSP" style="font-size: 15px"></span>
 																				<div class="form-group">
-																					<label for="moTa">Mô tả</label> <input type="text"
+																					<label for="moTa">[[#{manage.description}]]</label> <input type="text"
 																						class="form-control" id="moTa" name="moTa"
 																						th:value="${sanpham.moTa}">
 
 
 																				</div>
 																				<div class="form-group">
-																					<label for="donGia">Đơn giá</label> <input
+																					<label for="donGia">[[#{shop.price}]]</label> <input
 																						type="text" class="form-control" id="donGia"
 																						name="donGia" th:value="${sanpham.donGia}">
 
 																				</div>
 																				<div class="form-group">
-																					<label for="namSanXuat">Năm sản xuất</label> <input
+																					<label for="namSanXuat">[[#{model.yearOfManufacture}]]</label> <input
 																						type="number" class="form-control" id="namSanXuat"
 																						name="namSanXuat" th:value="${sanpham.namSanXuat}">
 
 																				</div>
-																				<div class="form-group">
-																					<button type="submit" class="btn btn-primary">Lưu</button>
-																					<button type="button" class="btn btn-danger"
-																						data-dismiss="modal">Cancel</button>
+																				<div
+																					style="display: flex; justify-content: flex-end;">
+																					<div class="form-group">
+																						<button type="submit" class="btn btn-primary">[[#{model.save}]]</button>
+																						<button type="button" class="btn btn-danger"
+																							data-dismiss="modal">[[#{model.cancel}]]</button>
+																					</div>
 																				</div>
 																			</form>
 																		</div>
 																	</div>
 																</div>
 															</div>
-															<div class="modal-footer"></div>
 														</div>
 													</div>
 												</div> <!-- Modal -->
@@ -170,23 +176,23 @@
 													<div class="modal-dialog" role="document">
 														<div class="modal-content">
 															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">Delete
-																	Product</h5>
+																<h5 class="modal-title" id="exampleModalLabel">[[#{delete.deleteProduct}]]</h5>
 																<button type="button" class="close" data-dismiss="modal"
 																	aria-label="Close">
 																	<span aria-hidden="true">&times;</span>
 																</button>
 															</div>
-															<div class="modal-body">Are you want to delete this
+															<div class="modal-body">[[#{delete.accept}]]
 																?</div>
 															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-dismiss="modal">No</button>
-																<form action="#"
+															<form action="#"
 																	th:action="@{'/quanly/sanpham/delete/{id}'(id=${sanpham.maSanPham})}"
 																	th:method="delete">
-																	<button type="submit" class="btn btn-danger">Yes</button>
+																	<button type="submit" class="btn btn-danger">[[#{delete.yes}]]</button>
 																</form>
+																<button type="button" class="btn btn-secondary"
+																	data-dismiss="modal">[[#{delete.no}]]</button>
+																
 															</div>
 														</div>
 													</div>
@@ -202,7 +208,7 @@
 															<button type="button" id="editButton"
 																class="btn btn-info btn-md" data-toggle="modal"
 																data-target="#inputmodal1"
-																th:attrappend="data-target=${idx.index}">Edit</button>
+																th:attrappend="data-target=${idx.index}">[[#{manage.edit}]]</button>
 
 														</form>
 													</div>
@@ -213,7 +219,7 @@
 															<button type="button" class="btn btn-danger"
 																data-toggle="modal" data-target="#deleteItem"
 																th:attrappend="data-target=${idx.index}">
-																Delete</button>
+																[[#{manage.delete}]]</button>
 														</form>
 													</div>
 												</div></td>
@@ -230,7 +236,7 @@
 								</ul>
 								<div style="display: flex; justify-content: flex-end;">
 									<p style="color: blue">
-										Total: <a th:text=${total}></a>
+										[[#{app.total}]]: <a th:text=${total}></a>
 									</p>
 								</div>
 							</nav>
@@ -246,53 +252,58 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Nhập sản phẩm</h5>
+					<h5 class="modal-title">[[#{model.addProduct}]]</h5>
 				</div>
 				<div class="modal-body">
 					<div class="container">
 						<div class="row">
 							<div class="col">
 								<form th:action="@{/quanly/sanpham}" th:object="${modalsanpham}"
-									method="post" id="formSanPhama">
+									method="post" id="formSanPhama" enctype="multipart/form-data">
 									<div class="form-group">
-										<label for="tenSanPham">Tên sản phẩm</label> <input
+										<label for="tenSanPham">[[#{model.nameProduct}]]</label> <input
 											type="text" class="form-control" id="tsp"
-											th:field="*{tenSanPham}">
+											th:field="*{tenSanPham}"/>
 									</div>
 									<span class="status"></span>
 									<div class="form-group">
-										<label for="moTa">Mô tả</label> <input type="text"
+										<label for="moTa">[[#{manage.description}]]</label> <input type="text"
 											class="form-control" id="moTa1" th:field="*{moTa}">
-
 									</div>
 									<span class="status4"></span>
 									<div class="form-group">
-										<label for="donGia">Đơn giá</label> <input type="text"
+										<label for="donGia">[[#{shop.price}]]</label> <input type="text"
 											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 											class="form-control" id="donGia" th:field="*{donGia}">
 									</div>
 									<span class="status5"></span>
 									<div class="dropdown">
-										<label for="nhaSanXuat">Nhà sản xuất</label> <select id="nsx"
+										<label for="nhaSanXuat">[[#{model.producer}]]</label> <select id="nsx"
 											class="form-control" th:field="*{nhaSanXuat.maNhaSanXuat}">
 										</select>
 									</div>
 									<div class="form-group">
-										<label for="namSanXuat">Năm sản xuất</label> <input
+										<label for="namSanXuat">[[#{model.yearOfManufacture}]]</label> <input
 											type="text" class="form-control" id="namSanXuat"
 											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 											th:field="*{namSanXuat}">
 									</div>
 									<span class="status6"></span>
+									<div class="form-group">
+									<label for="fileImage">[[#{manage.image}]]</label>
+									<input type="file" class="form-control" id="fileImage" th:field="*{fileImage}">
+									
+									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="submitAddProduct" type="submit" th:action="@{/quanly/sanpham}"
-						form="formSanPhama" class="btn btn-primary">Lưu</button>
-					<button type="reset" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button id="submitAddProduct" type="submit"
+						th:action="@{/quanly/sanpham}" form="formSanPhama"
+						class="btn btn-primary" >[[#{model.save}]]</button>
+					<button type="reset" class="btn btn-danger" data-dismiss="modal">[[#{model.cancel}]]</button>
 				</div>
 			</div>
 
@@ -309,4 +320,5 @@
 	}
 </script>
 </html>
+
 

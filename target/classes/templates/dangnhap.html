@@ -9,26 +9,26 @@
 	<section class="clean-block clean-form dark">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-info">Đăng nhập</h2>
+				<h2 class="text-info">[[#{login.login}]]</h2>
 			</div>
 			<form autocomplete="off" class="login-custom" th:action="@{/dangnhap}" method="POST">
 				<p th:if="${param.error}" class="error" style="color: red">Tài khoản hoặc mật khẩu không chính xác, vui lòng kiểm tra lại</p>
 				<div class="form-group">
-					<label for="username">Tài khoản</label><input
-						class="form-control item" type="text" id="username" placeholder="Tên đăng nhập" required
+					<label for="username">[[#{login.account}]]</label><input
+						class="form-control item" type="text" id="username" th:attr="placeholder=#{register.username}" required
 						name="username" autocomplete="false">
 				</div>
 				<div class="form-group">
-					<label for="password">Mật khẩu</label><input class="form-control" required
-						type="password" id="password" name="password" placeholder="Mật khẩu" autocomplete="false">
+					<label for="password">[[#{login.password}]]</label><input class="form-control" required
+						type="password" id="password" name="password" th:attr="placeholder=#{register.password}" autocomplete="false">
 				</div>
-				<div class="form-group-custom">
+				<!-- <div class="form-group-custom">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" id="checkbox"><label
 							class="form-check-label" for="checkbox">Remember me</label>
 					</div>
-				</div>
-				<button class="btn btn-primary btn-block" type="submit">Đăng nhập
+				</div> -->
+				<button class="btn btn-primary btn-block" type="submit">[[#{login.login}]]
 				</button>
 			</form>
 		</div>
