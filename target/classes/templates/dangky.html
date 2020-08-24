@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 
 <head>
-<title>Đăng Ký</title>
+<title>Dang Ky</title>
 <div th:replace="/header :: header"></div>
 
 </head>
@@ -17,16 +17,14 @@
 				</div>
 				<form id="registation" class="login-custom" th:action="@{/dangky}"
 					th:object="${tkDTO}" method="POST">
-					<p th:if="${param.error}" class="error" style="color: red">Thông
-						tin không hợp lệ vui lòng kiểm tra lại</p>
+					<p th:if="${param.error}" class="error" style="color: red">ThÃ´ng
+						tin khÃ´ng há»£p lá»‡ vui lÃ²ng kiá»ƒm tra láº¡i</p>
 					<div class="register-input-group">
 						<div style="width: 40%">
 							<div class="form-group">
 								<label for="username" style="margin-bottom: 0px !important;">[[#{register.username}]]</label><input class="form-control item" type="text"
 									id="usernameDK" th:attr="placeholder=#{register.username}"
 									th:field="*{tenTaiKhoan}" required>
-
-
 							</div>
 							<span id="errorUserDk" style="font-size: 15px"> <span
 								class="text text-danger" style="font-size: 15px"

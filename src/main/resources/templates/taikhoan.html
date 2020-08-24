@@ -19,8 +19,9 @@
 								th:text="${taikhoan.maTaiKhoan}" th:value="*{maTaiKhoan}" />
 						</p>
 						<p>
-							[[#{account.accountName}]]: <input class="form-control" type="text"
-								th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}" disabled />
+							[[#{account.accountName}]]: <input class="form-control"
+								type="text" th:field="*{tenTaiKhoan}" th:value="*{tenTaiKhoan}"
+								disabled />
 						</p>
 						<p>
 							[[#{register.fullName}]]: <input class="form-control" type="text"
@@ -38,11 +39,12 @@
 								required />
 						</p>
 						<p>
-							[[#{register.phoneNumber}]]: <input class="form-control" type="number"
+							[[#{register.phoneNumber}]]: <input class="form-control"
+								type="text" maxlength="10" size="10"
 								th:field="*{khachHang.soDienThoai}"
 								th:value="*{khachHang.soDienThoai}" required />
 						</p>
-						<button type="submit" class="btn btn-primary">[[#{model.save}]]</button>
+						<button  type="submit" class="btn btn-primary">[[#{model.save}]]</button>
 					</div>
 				</form>
 			</div>

@@ -64,8 +64,9 @@ public class AdminController {
 	private ThongKeReposity tkRe;
 	@Autowired
 	private TaiKhoanRepository taiKhoanReponsitory;
-	@Autowired KhachHangRepository khachHangRepository;
-	
+	@Autowired
+	KhachHangRepository khachHangRepository;
+
 	@RequestMapping(value = "/quanly")
 	public String quanlyPage(Model model) {
 
@@ -113,38 +114,37 @@ public class AdminController {
 		}
 		return "quanly-donhang";
 	}
+
 // export Đơn Hàng
 	@GetMapping(value = "/quanly/donhang/export")
-	public void exportDonHang(HttpServletResponse response,@RequestParam Optional<Integer> page) throws IOException {
+	public void exportDonHang(HttpServletResponse response, @RequestParam Optional<Integer> page) throws IOException {
 		response.setCharacterEncoding("UTF-8");
-		
+
 		response.setContentType("text/csv");
 		String fileName = "fileDonhang.csv";
-		String headerKey ="Content-Disposition";
-		String headerValue ="attachment; filename="+fileName;
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=" + fileName;
 		response.setHeader(headerKey, headerValue);
-		Iterable<HoaDon> list =  new ArrayList<HoaDon>();
-		list =  hoaDonRepository.findAll();
+		Iterable<HoaDon> list = new ArrayList<HoaDon>();
+		list = hoaDonRepository.findAll();
 		ArrayList<ChiTietHoaDonDTO> listDTO = new ArrayList<ChiTietHoaDonDTO>();
-		for(HoaDon hd: list) {
-			ChiTietHoaDonDTO chiTietDTO = new ChiTietHoaDonDTO(hd.getMaHoaDon(),
-					hd.getNgayLap(),
-					hd.getKhachHang().getHoTenKhachHang(),
-					hd.getKhachHang().getSoDienThoai(),
-					hd.getKhachHang().getDiaChi(),
-					hd.getTongTien(), hd.getDssp().size());
+		for (HoaDon hd : list) {
+			ChiTietHoaDonDTO chiTietDTO = new ChiTietHoaDonDTO(hd.getMaHoaDon(), hd.getNgayLap(),
+					hd.getKhachHang().getHoTenKhachHang(), hd.getKhachHang().getSoDienThoai(),
+					hd.getKhachHang().getDiaChi(), hd.getTongTien(), hd.getDssp().size());
 			listDTO.add(chiTietDTO);
 		}
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		String[] csvHeader = {"Full Name", "Name Product","Address", "Amount", "Order Date", "Total"};
-		String[] nameMapping = {"hoTenKhachHang", "tenSanPham","diaChi","soLuong","ngayLap","tongTien"};
+		String[] csvHeader = { "Full Name", "Name Product", "Address", "Amount", "Order Date", "Total" };
+		String[] nameMapping = { "hoTenKhachHang", "tenSanPham", "diaChi", "soLuong", "ngayLap", "tongTien" };
 		csvWriter.writeHeader(csvHeader);
 		for (ChiTietHoaDonDTO chiTietDTO : listDTO) {
-			csvWriter.write(chiTietDTO,nameMapping);
+			csvWriter.write(chiTietDTO, nameMapping);
 		}
 		csvWriter.close();
-		
+
 	}
+
 	// export NhaSanXuat
 	@GetMapping(value = "/quanly/nhasanxuat/export")
 	public void exportNSX(HttpServletResponse response) throws IOException {
@@ -152,45 +152,44 @@ public class AdminController {
 		response.setCharacterEncoding("UTF-8");
 
 		String fileName = "fileNsx.csv";
-		String headerKey ="Content-Disposition";
-		String headerValue ="attachment; filename="+fileName;
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=" + fileName;
 		response.setHeader(headerKey, headerValue);
-		Iterable<NhaSanXuat> list =  new ArrayList<NhaSanXuat>();
+		Iterable<NhaSanXuat> list = new ArrayList<NhaSanXuat>();
 		list = nhaSanXuatRepository.findAll();
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		String[] csvHeader = {"ID_NSX", "NAME_NSX","ADDRESS"};
-		String[] nameMapping = {"maNhaSanXuat", "tenNhaSanXuat","diaChi"};
+		String[] csvHeader = { "ID_NSX", "NAME_NSX", "ADDRESS" };
+		String[] nameMapping = { "maNhaSanXuat", "tenNhaSanXuat", "diaChi" };
 		csvWriter.writeHeader(csvHeader);
 		for (NhaSanXuat nsx : list) {
-			csvWriter.write(nsx,nameMapping);
+			csvWriter.write(nsx, nameMapping);
 		}
 		csvWriter.close();
-		
-	}	
 
+	}
 
 // Thống kê
 	@RequestMapping(value = "/quanly/thongke")
-		public String chartThongKe(Model model) {
-			LocalDate endDate = LocalDate.now();
-			LocalDate startDate = endDate.minusDays(7);
-			List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
-			list = tkRe.transactions(startDate, endDate);
-			model.addAttribute("list", list);
-			return "thongke";
+	public String chartThongKe(Model model) {
+		LocalDate endDate = LocalDate.now();
+		LocalDate startDate = endDate.minusDays(7);
+		List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
+		list = tkRe.transactions(startDate, endDate);
+		model.addAttribute("list", list);
+		return "thongke";
 	}
 
 // ajax
-@RequestMapping(value = "/thongke")
-@ResponseBody
-		public List<ThongKeDTO> thongKe() {
-			LocalDate endDate = LocalDate.now();
-			LocalDate startDate = endDate.minusDays(7);
-			List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
-			list = tkRe.transactions(startDate, endDate);
-			return list;
+	@RequestMapping(value = "/thongke")
+	@ResponseBody
+	public List<ThongKeDTO> thongKe() {
+		LocalDate endDate = LocalDate.now();
+		LocalDate startDate = endDate.minusDays(7);
+		List<ThongKeDTO> list = new ArrayList<ThongKeDTO>();
+		list = tkRe.transactions(startDate, endDate);
+		return list;
 	}
-	
+
 // Quản lý sản phẩm
 	@RequestMapping(value = "/quanly/sanpham")
 	public String listSanPham(Model model,
@@ -198,8 +197,7 @@ public class AdminController {
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
 			@ModelAttribute(name = "sanPhamEdit") SanPham sanPham,
-			@RequestParam(name = "name", defaultValue = "", required = false) String name
-			) {
+			@RequestParam(name = "name", defaultValue = "", required = false) String name) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("donGia").ascending();
@@ -235,58 +233,58 @@ public class AdminController {
 		File uploadFiles;
 		String failedFile;
 		String images;
-		
+
 		String name = fileData.getOriginalFilename();
-		
-		if(name != null && name.length()> 0) {
+
+		if (name != null && name.length() > 0) {
 			try {
-			File serverFile = new File("G:\\cdw\\WebsiteThucAnNhanh-SpringBoot\\src\\main\\resources\\static\\assets\\img\\scenery"+ File.separator   + name);
-			images = "/assets/img/scenery/"  +name;
-			sanPham.setImgURL(images);
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(fileData.getBytes());
-			stream.close();
-			
-			uploadFiles = serverFile;
+				File serverFile = new File(
+						"D:\\CDWeb\\WebsiteThucAnNhanh-SpringBoot\\src\\main\\resources\\static\\assets\\img\\scenery\\"
+								+ File.separator + name);
+				images = "/assets/img/scenery/" + name;
+				sanPham.setImgURL(images);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(fileData.getBytes());
+				stream.close();
+
+				uploadFiles = serverFile;
 			} catch (Exception e) {
 				failedFile = name;
 				System.out.println("Failes");
 			}
-		}	
-		
-		
+		}
+
 		Random rd = new Random();
 		int maSp = rd.nextInt(1000);
 		sanPham.setMaSanPham("SP" + maSp);
 		sanPham.setNhaSanXuat(sanPham.getNhaSanXuat());
-//			sanPham.setNhaSanXuat(new NhaSanXuat(sanPham.getNhaSanXuat().getMaNhaSanXuat(),
-//					sanPham.getNhaSanXuat().getTenNhaSanXuat(), sanPham.getNhaSanXuat().getDiaChi()));
-		if (sanPhamRepository.save(sanPham).equals(sanPham)) {
-			return "redirect:/quanly/sanpham";
-		}
-		return null;
+		sanPhamRepository.save(sanPham);
+		return "redirect:/quanly/sanpham";
+
 	}
+
 // export Sản Phẩm
 	@GetMapping(value = "/quanly/sanpham/export")
 	public void exportSanPham(HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
 		response.setCharacterEncoding("UTF-8");
 		String fileName = "fileSanpham.csv";
-		String headerKey ="Content-Disposition";
-		String headerValue ="attachment; filename="+fileName;
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=" + fileName;
 		response.setHeader(headerKey, headerValue);
-		Iterable<SanPham> list =  new ArrayList<SanPham>();
+		Iterable<SanPham> list = new ArrayList<SanPham>();
 		list = sanPhamRepository.findAll();
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		String[] csvHeader = {"Mã Sản Phẩm", "Tên Sản Phẩm","Mô Tả", "Loại", "Năm Sản Xuất", "Giá"};
-		String[] nameMapping = {"maSanPham", "tenSanPham","moTa","nhaSanXuat","namSanXuat","donGia"};
+		String[] csvHeader = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Mô Tả", "Loại", "Năm Sản Xuất", "Giá" };
+		String[] nameMapping = { "maSanPham", "tenSanPham", "moTa", "nhaSanXuat", "namSanXuat", "donGia" };
 		csvWriter.writeHeader(csvHeader);
 		for (SanPham sp : list) {
-			csvWriter.write(sp,nameMapping);
+			csvWriter.write(sp, nameMapping);
 		}
 		csvWriter.close();
-		
+
 	}
+
 //Ajax thêm sản phẩm
 	@PostMapping(value = "/ajax/createsanpham")
 	@ResponseBody
@@ -356,12 +354,9 @@ public class AdminController {
 //Thêm nhà sản xuất
 	@PostMapping("/quanly/nhasanxuat")
 	public String addNhaSanXuat(@ModelAttribute(name = "modelnhasanxuat") NhaSanXuat nsx) {
+		nhaSanXuatRepository.save(nsx);
+		return "redirect:/quanly/nhasanxuat";
 
-		nsx.getTenNhaSanXuat();
-		if (nhaSanXuatRepository.save(nsx).equals(nsx)) {
-			return "redirect:/quanly/nhasanxuat";
-		}
-		return null;
 	}
 
 //Xóa nhà sản xuất
@@ -405,14 +400,14 @@ public class AdminController {
 		nhaSanXuatRepository.save(nhaSanXuat);
 		return "redirect:/quanly/nhasanxuat";
 	}
+
 //Quản lý User
 	@RequestMapping(value = "/quanly/user")
 	public String listUser(Model model,
 			@RequestParam(name = "page", required = false, defaultValue = "1") Optional<Integer> page,
 			@RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
 			@RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort,
-			@RequestParam(name = "searchUser", defaultValue = "", required = false) String searchUser
-			) {
+			@RequestParam(name = "searchUser", defaultValue = "", required = false) String searchUser) {
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by("maKhachHang").ascending();
@@ -424,7 +419,7 @@ public class AdminController {
 		// Page nó đếm từ 0 - > end - Nên phải trừ giá trị hiện tại xuống 1 để khớp với
 		// cái Pageable
 		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
-		Page<KhachHang> pageKhachHang = khachHangRepository.findKhachHangss(searchUser,pageable);
+		Page<KhachHang> pageKhachHang = khachHangRepository.findKhachHangss(searchUser, pageable);
 
 		int totalPage = pageKhachHang.getTotalPages();
 		if (totalPage > 0) {
@@ -432,29 +427,30 @@ public class AdminController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 		model.addAttribute("searchUser", searchUser);
-		model.addAttribute("listKhachHang", khachHangRepository.findKhachHangss(searchUser,pageable));
+		model.addAttribute("listKhachHang", khachHangRepository.findKhachHangss(searchUser, pageable));
 		model.addAttribute("total", pageKhachHang.getTotalElements());
 		return "user";
 	}
-	//Export User
+
+	// Export User
 	@GetMapping(value = "/quanly/user/export")
 	public void exportUser(HttpServletResponse response) throws IOException {
 		response.setContentType("text/csv");
 		response.setCharacterEncoding("UTF-8");
 		String fileName = "fileUser.csv";
-		String headerKey ="Content-Disposition";
-		String headerValue ="attachment; filename="+fileName;
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=" + fileName;
 		response.setHeader(headerKey, headerValue);
-		Iterable<KhachHang> list =  new ArrayList<KhachHang>();
+		Iterable<KhachHang> list = new ArrayList<KhachHang>();
 		list = khachHangRepository.findAll();
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-		String[] csvHeader = {"ID_KH", "CUSTOMER","ADDRESS","EMAIL","PHONE NUMBER"};
-		String[] nameMapping = {"maKhachHang", "hoTenKhachHang","diaChi","email","soDienThoai"};
+		String[] csvHeader = { "ID_KH", "CUSTOMER", "ADDRESS", "EMAIL", "PHONE NUMBER" };
+		String[] nameMapping = { "maKhachHang", "hoTenKhachHang", "diaChi", "email", "soDienThoai" };
 		csvWriter.writeHeader(csvHeader);
 		for (KhachHang kh : list) {
-			csvWriter.write(kh,nameMapping);
+			csvWriter.write(kh, nameMapping);
 		}
 		csvWriter.close();
-		
-	}	
+
+	}
 }
