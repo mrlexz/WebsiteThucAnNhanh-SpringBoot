@@ -62,7 +62,7 @@ $('#usernameDK').keyup(delay(function(e) {
 		dataType: "json",
 		method: 'POST',
 		contentType: "application/json; charset=utf-8",
-		data: this.value,
+		data: 	this.value,
 		success: function(res) {
 			if (res) {
 				$("#errorUserDk").html("<font color=red>Account already exists</font>");

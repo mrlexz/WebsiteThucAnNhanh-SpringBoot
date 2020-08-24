@@ -31,7 +31,7 @@
 								<div class="info">
 									<h3 th:text="${sanpham.tenSanPham}"></h3>
 									<div class="price">
-										<h3 th:text="${sanpham.donGia+'00 VND'} "></h3>
+										<h3 th:text="${'$'+sanpham.donGia}"></h3>
 									</div>
 									<a
 										th:href="@{'/giohang/themsanpham/{maSanPham}'(maSanPham=${sanpham.maSanPham})}">
